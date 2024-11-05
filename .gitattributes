@@ -1,0 +1,4 @@
+# Ignores html/css in lanuage stats
+*.css linguist-documentation
+*.html linguist-documentation
+*.htm linguist-documentation
