@@ -1,0 +1,23 @@
+.projects-container-div {
+    display: flex;
+    flex-flow: row wrap;
+
+    position: relative;
+    margin: auto;
+    width: 60%;
+    padding: 40px 10px 10px;
+}
+
+.project-item-div {
+    margin: auto;
+    width: 400px;
+    max-width: 100%;
+
+    padding: 0 32px 32px 0;
+
+    border-radius: 8px;
+}
+
+* {
+    box-sizing: border-box;
+}
