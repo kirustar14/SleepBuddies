@@ -7,7 +7,7 @@ const Sleep = () => {
             <div className="applet">
                 <img className="image" src={Image} alt={"Sleep icon"}/>
                 <div className="overlay">
-                    <div className="overlayText">Appointments</div>
+                    <div className="overlayText">Sleep</div>
                 </div>
             </div>
         </Link>

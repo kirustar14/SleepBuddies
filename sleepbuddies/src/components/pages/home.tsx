@@ -3,7 +3,7 @@ import Meditation from "../elements/Meditation";
 import Sleep from "../elements/Sleep";
 import Alarm from "../elements/Alarm";
 
-export const Home = () => {
+const Home = () => {
     return (
         <>
             <h1>Home</h1>
@@ -15,3 +15,5 @@ export const Home = () => {
         </>
     );
 };
+
+export default Home;

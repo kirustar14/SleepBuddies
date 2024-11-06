@@ -3,7 +3,7 @@ import "./css/App.css";
 import "./css/home.css"
 
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {Home} from "./components/pages/home";
+import Home from "./components/pages/home";
 import Sleep from "./components/elements/Sleep";
 import Meditation from "./components/elements/Meditation";
 import Alarm from "./components/elements/Alarm";

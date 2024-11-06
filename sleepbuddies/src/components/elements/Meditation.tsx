@@ -7,7 +7,7 @@ const Meditation = () => {
             <div className="applet">
                 <img className="image" src={Image} alt={"Meditation icon"}/>
                 <div className="overlay">
-                    <div className="overlayText">Appointments</div>
+                    <div className="overlayText">Meditation</div>
                 </div>
             </div>
         </Link>
