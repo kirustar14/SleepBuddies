@@ -1,0 +1,14 @@
+p {
+    font: 10;
+}
+
+h3 {
+    color: blue;
+}
+
+.Comps {
+    display: flexbox;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
