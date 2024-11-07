@@ -10,13 +10,10 @@ const Sleep = () => {
         <>
             <h1>Sleep Analytics</h1>
             <div className="Comps">
-                <div className="Item"><SleepLog/></div>
-                
-                <div className="Item"><Chart/></div>
+                <div className="item"><SleepLog/></div>
+
+                <div className="item"><Chart/></div>
             </div>
-            {/* <div className="Comps">
-                <Chart/>
-            </div> */}
         </>
     );
 };
