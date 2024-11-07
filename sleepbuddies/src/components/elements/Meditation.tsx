@@ -1,4 +1,4 @@
-import Image from "../../assets/medical-report.png";
+import Image from "../../assets/meditation.svg";
 import {Link} from "react-router-dom";
 
 const Meditation = () => {

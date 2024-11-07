@@ -1,4 +1,4 @@
-import Image from "../../assets/medical-report.png";
+import Image from "../../assets/moon-sleep.svg";
 import {Link} from "react-router-dom";
 
 const Sleep = () => {
