@@ -7,8 +7,7 @@ h3 {
 }
 
 .Comps {
-    display: flexbox;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     justify-content: space-between;
-    flex-direction: column;
-    flex-wrap: wrap;
 }
