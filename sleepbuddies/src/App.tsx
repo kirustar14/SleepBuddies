@@ -1,12 +1,13 @@
 import React from 'react';
+import "./css/applet.css"
 import "./css/App.css";
 import "./css/home.css"
 
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Home from "./components/pages/home";
-import Sleep from "./components/elements/Sleep";
-import Meditation from "./components/elements/Meditation";
-import Alarm from "./components/elements/Alarm";
+import Sleep from "./components/pages/sleep";
+import Meditation from "./components/pages/meditation";
+import Alarm from "./components/pages/alarm";
 
 function App() {
   return (
