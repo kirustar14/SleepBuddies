@@ -1,0 +1,65 @@
+.App {
+    text-align: center;
+}
+
+.App-header {
+    color: #3fe1e7;
+    font-family: "Paytone One", sans-serif;
+    font-size: 50px;
+    text-shadow: 0 5px 10px rgba(67, 77, 128, 0.49);
+}
+
+.Page-title {
+    color: #ffffff;
+    font-family: "Paytone One", sans-serif;
+    font-size: 15px;
+    text-shadow: 0 5px 10px rgba(46, 41, 112, 0.49);
+}
+
+.clickable {
+    text-decoration: none;
+    will-change: transform;
+    transition: transform 450ms;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #e3d6ff;
+}
+
+.clickable:hover {
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -o-transition: all .25s ease;
+    transition: transform 125ms;
+    transform: translateY(-10px);
+}
+
+.clickable:hover .overlay {
+    opacity: 1.0;
+    width: 300px;
+    height: 225px;
+    margin: 20px;
+    border-radius: 20px;
+}
+
+.overlayText {
+    color: #8a6d9c;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
