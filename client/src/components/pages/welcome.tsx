@@ -1,16 +1,20 @@
 import React from "react";
-import Login from "../elements/Login";
-import Signup from "../elements/Signup";
-const welcome = () => {
+import { Link } from "react-router-dom";
+
+const Welcome = () => {
     return (
         <>
-            <h1>Welcome to Sleep Buddies </h1>
+            <h1>Welcome to Sleep Buddies</h1>
             <div className="welcome_page-div">
-                <Login />
-                <Signup />
+                <Link to="/login">
+                    <button>Login</button>
+                </Link>
+                <Link to="/signup">
+                    <button>Sign Up</button>
+                </Link>
             </div>
         </>
     );
 };
 
-export default welcome;
+export default Welcome;
