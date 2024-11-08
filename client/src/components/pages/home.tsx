@@ -2,6 +2,7 @@ import React from "react";
 import Meditation from "../elements/Meditation";
 import Sleep from "../elements/Sleep";
 import Alarm from "../elements/Alarm";
+import Music from "../elements/Music";
 
 const Home = () => {
     return (
@@ -11,6 +12,7 @@ const Home = () => {
                 <Sleep/>
                 <Meditation/>
                 <Alarm/>
+                <Music/>
             </div>
         </>
     );

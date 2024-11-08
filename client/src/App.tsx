@@ -11,6 +11,7 @@ import Sleep from "./components/pages/sleep";
 import Meditation from "./components/pages/meditation";
 import Alarm from "./components/pages/alarm";
 import welcome from './components/pages/welcome';
+import Music from "./components/pages/music";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/sleep" Component={Sleep}/>
               <Route path="/meditation" Component={Meditation}/>
               <Route path="/alarm" Component={Alarm}/>
+              <Route path="/music" Component={Music}/>
           </Routes>
       </div>
   );
