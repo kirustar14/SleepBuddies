@@ -6,9 +6,6 @@ const Signup = () => {
         <Link className="clickable" to="/signup">
             <div className="applet">
                 <img className="image" src={Image} alt={"Login icon"}/>
-                {/* <div className="overlay">
-                    <div className="overlayText">Sign Up</div>
-                </div> */}
             </div>
         </Link>
     );
