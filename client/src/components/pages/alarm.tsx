@@ -25,18 +25,6 @@ const Alarm = () => {
                     onChange={handleTimeChange}
                     placeholder="Enter custom time"
                 />
-                <select
-                    id="alarmTimeDropdown"
-                    value={alarmTime}
-                    onChange={handleTimeChange}
-                >
-                    <option value="">Select a time</option>
-                    <option value="06:00">6:00 AM</option>
-                    <option value="07:00">7:00 AM</option>
-                    <option value="08:00">8:00 AM</option>
-                    <option value="09:00">9:00 AM</option>
-                    <option value="10:00">10:00 AM</option>
-                </select>
 
                 <button onClick={handleSave}>Save Alarm Time</button>
             </div>
