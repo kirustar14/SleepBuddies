@@ -15,4 +15,3 @@ const Meditation = () => {
 };
 
 export default Meditation;
-
