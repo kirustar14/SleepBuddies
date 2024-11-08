@@ -1,4 +1,4 @@
-import Image from "../../assets/meditation.svg";
+import Image from "../../assets/music.svg";
 import {Link} from "react-router-dom";
 
 const Music = () => {
