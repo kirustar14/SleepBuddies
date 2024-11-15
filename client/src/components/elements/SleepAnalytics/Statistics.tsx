@@ -74,17 +74,19 @@ export const Statistics: React.FC = () => {
                     <div key={index}>
                         <label>{day} ({weekDates[index]}):</label>
                         <input
+                            data-testid={"start" + day}
                             type="time"
                             value={sleepTimes[index]}
                             onChange={(e) => handleTimeChange(index, e.target.value, wakeTimes[index])}
                         />
                         <span> to </span>
                         <input
+                            data-testid={"end" + day}
                             type="time"
                             value={wakeTimes[index]}
                             onChange={(e) => handleTimeChange(index, sleepTimes[index], e.target.value)}
                         />
-                        <span> - {hoursSlept[index] > 0 ? hoursSlept[index].toFixed(2) : ""}</span>
+                        <span> : {hoursSlept[index] > 0 ? hoursSlept[index].toFixed(2) : ""}</span>
                     </div>
                 ))}
             </div>
