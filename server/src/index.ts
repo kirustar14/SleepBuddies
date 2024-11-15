@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 
 const express = require("express");
 const cors = require("cors");
@@ -14,11 +14,10 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
+
 // Root endpoint to get test if the server is running
 app.get("/", (req: Request, res: Response) => {
-  res.send({ "data": "Hello, TypeScript Express!" });
-  res.status(200);
+  res.status(200).send({ "data": "Hello, TypeScript Express!" });
 });
 
-createExpenseEndpoints(app, expenses);
-
+export{}

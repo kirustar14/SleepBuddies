@@ -1,5 +1,5 @@
 {
-  "name": "express-typescript-api",
+  "name": "sleepbuddies-express-typescript-api",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "express": "^4.21.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.7.9",
     "ts-node": "^10.9.2",
@@ -24,4 +25,3 @@
   },
   "description": ""
 }
-
