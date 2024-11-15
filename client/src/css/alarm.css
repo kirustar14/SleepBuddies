@@ -1,0 +1,43 @@
+.alarm-page {
+    padding: 0px;
+  }
+
+  .alarm-icon {
+    width: 20%;
+    height: 20%;
+  }
+
+  .alarm-icon-container {
+    margin-bottom: 90px;
+    margin-right: 60px;
+    opacity: 90%;
+    align-self: center;
+  }
+  
+  .alarm-setting-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+  }
+  
+  .alarm-label {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .saved-alarm {
+    margin-top: 10px;
+  }
+  
+  input[type="time"] {
+    font-size: 1.5em;
+    padding: 20px;
+    width: 300px;
+  }
+  
+  button {
+    font-size: 1.2em;
+    padding: 10px;
+  }
