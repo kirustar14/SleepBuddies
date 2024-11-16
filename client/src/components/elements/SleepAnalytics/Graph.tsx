@@ -4,15 +4,16 @@ import { Chart } from "react-google-charts";
 // https://www.react-google-charts.com/docs/quick-walkthrough
 
 export const Graph = () =>{
+    const goal = 6;
     const hardCodeData = [
-        ["Day", "Hours"],
-        ["Monday", 6],
-        ["Tuesday", 7],
-        ["Wednesday", 7.5],
-        ["Thursday", 6],
-        ["Friday", 9],
-        ["Saturday", 10],
-        ["Sunday", 8],
+        ["Day", "Hours", {role: "style"}],
+        ["Monday", 6, 6 > goal ? "#2DA84E": "#E52B2B"],
+        ["Tuesday", 7, 7 > goal ? "#2DA84E": "#E52B2B"],
+        ["Wednesday", 7.5, 7.5 > goal ? "#2DA84E": "#E52B2B"],
+        ["Thursday", 6, 6 > goal ? "#2DA84E": "#E52B2B"],
+        ["Friday", 9, 9 > goal ? "#2DA84E": "#E52B2B"],
+        ["Saturday", 10, 10 > goal ? "#2DA84E": "#E52B2B"],
+        ["Sunday", 8, 8 > goal ? "#2DA84E": "#E52B2B"],
     ];
 
     const options = {
