@@ -5,7 +5,6 @@ import "./css/home.css"
 
 import {Route, Routes} from "react-router-dom";
 import Login from "./components/pages/login";
-import SignUp from "./components/pages/signup";
 import Home from "./components/pages/home";
 import Sleep from "./components/pages/sleep";
 import Meditation from "./components/pages/meditation";
