@@ -55,7 +55,7 @@ body {
     width: 100%;
     opacity: 0;
     transition: 0.5s ease;
-    background-color: #001f3f; 
+    background-color: #ccc; 
 }
 
 .clickable:hover .overlay {
@@ -68,7 +68,7 @@ body {
 
 /* Overlay Text: Text inside hover overlays */
 .overlayText {
-    color: #FFFFFF; 
+    color: #001f3f; 
     font-family: "Helvetica Neue", sans-serif;
     font-size: 25px;
     position: absolute;

@@ -2,9 +2,9 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-import Welcome from "./welcome";
-import Login from "./login";
-import Signup from "./signup";
+import Welcome from "../components/pages/welcome";
+import Login from "../components/pages/login";
+import Signup from "../components/pages/signup";
 
 describe("Welcome page button testing", () => {
     test("should go to the login page when the login button is clicked", async () => {
