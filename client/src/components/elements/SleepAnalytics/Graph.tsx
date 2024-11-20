@@ -1,11 +1,12 @@
 //import { title } from "process";
-import React from "react";
+import React, {useState} from "react";
 import { Chart } from "react-google-charts";
 // https://www.react-google-charts.com/docs/quick-walkthrough
 
 export const Graph: React.FC<{ hoursSlept: number[] }> = ({ hoursSlept }) =>{
-    const goal = 6;
-    const hardCodeData = [
+    const [goal, setGoal] = useState<number>(6);
+
+    const sleepData = [
         ["Day", "Hours", { role: "style" }],
         ["Sun", hoursSlept[0], hoursSlept[0] > goal ? "#2DA84E" : "#E52B2B"],
         ["Mon", hoursSlept[1], hoursSlept[1] > goal ? "#2DA84E" : "#E52B2B"],
@@ -28,8 +29,17 @@ export const Graph: React.FC<{ hoursSlept: number[] }> = ({ hoursSlept }) =>{
             <h2>Sleep Throughout the Week</h2>
             <Chart
                 chartType="ColumnChart"
-                data={hardCodeData}
+                data={sleepData}
                 options={options}
+            />
+            
+            <label>Set your Sleep Goal (hours): </label>
+                <input
+                    type="number"
+                    value={goal}
+                    onChange={(e) => setGoal(Number(e.target.value))}
+                    min={1}
+                    max={24}
             />
         </>
     );

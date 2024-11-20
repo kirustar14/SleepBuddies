@@ -20,6 +20,7 @@ const Sleep = () => {
                 <div className="item"><Graph hoursSlept={hoursSlept}/></div>
                 <div className="item"><Statistics updateSleepData={updateSleepData}/></div> 
             </div>
+            <h1>Previous Sleep Logs</h1>
         </>
     );
 };
