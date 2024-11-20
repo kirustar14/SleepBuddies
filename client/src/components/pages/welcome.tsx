@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "../elements/Login";
 import Signup from "../elements/Signup";
 import "../../css/welcome.css";
 
-const welcome = () => {
+const Welcome = () => {
+
+    useEffect(() => {
+        document.title = "Sleep Buddies";
+    }, []);
+
     return (
         <>
             <div className="welcome_page-div">
@@ -14,4 +19,4 @@ const welcome = () => {
     );
 };
 
-export default welcome;
+export default Welcome;

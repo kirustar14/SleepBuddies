@@ -1,8 +1,12 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "../../css/meditation.css";
 
 const Meditation = () => {
     const [step, setStep] = useState(0);
+
+    useEffect(() => {
+        document.title = "Sleep Buddies - Meditation";
+    }, []);
 
     // Meditation steps
     const meditationSteps = [

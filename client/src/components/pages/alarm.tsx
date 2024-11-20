@@ -1,6 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 const Alarm = () => {
+
+    useEffect(() => {
+        document.title = "Sleep Buddies - Alarms";
+    }, []);
+
     const [alarmTime, setAlarmTime] = useState("");
     const [savedAlarmTime, setSavedAlarmTime] = useState("");
 
