@@ -33,7 +33,7 @@ export const Graph: React.FC<{ hoursSlept: number[] }> = ({ hoursSlept }) =>{
                 options={options}
             />
             
-            <label>Set your Sleep Goal (hours): </label>
+            <label htmlFor="sleepGoal">Set your Sleep Goal (hours): </label>
                 <input
                     type="number"
                     value={goal}
