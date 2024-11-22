@@ -7,7 +7,6 @@ const initDB = async () => {
         filename: "database.sqlite",
         driver: sqlite3.Database,
     });
-    // Create a "budget" table if it doesn't exist
     // TODO change to actual format
     await db.exec(`
         CREATE TABLE IF NOT EXISTS expenses (        
