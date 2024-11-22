@@ -3,9 +3,9 @@ import "../../css/alarm.css";
 
 const Alarm = () => {
   const alarms = [
-    "07:00 AM - Morning Alarm",
-    "12:00 PM - Lunch Alarm",
-    "05:00 PM - Evening Workout Alarm",
+    { title: "Morning Alarm", time: "07:00 AM" },
+    { title: "Lunch Alarm", time: "12:00 PM" },
+    { title: "Evening Workout Alarm", time: "05:00 PM" }
   ];
 
   return (
@@ -17,7 +17,8 @@ const Alarm = () => {
       <div className="alarm-list">
         {alarms.map((alarm, index) => (
           <div key={index} className="alarm-item">
-            {alarm}
+            <h2 className="alarm-title">{alarm.title}</h2>
+            <strong className="alarm-time">{alarm.time}</strong>
           </div>
         ))}
       </div>
@@ -26,6 +27,7 @@ const Alarm = () => {
 };
 
 export default Alarm;
+
 
 
 
