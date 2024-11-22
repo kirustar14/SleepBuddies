@@ -3,6 +3,7 @@ import "../../css/meditation.css";
 import axios from "axios";
 import waterImage from "../../assets/water.webp";
 import waterImageHappy from "../../assets/water1.webp";
+import {API_BASE_URL} from "../constants/constants";
 
 const Meditation = () => {
   const [step, setStep] = useState(0);
@@ -86,7 +87,7 @@ const Meditation = () => {
   
     setIsSubmitting(true);
     try {
-      await axios.post("http://localhost:8080/journal", {
+      await axios.post(API_BASE_URL, {
         mood,
         entry: userMessage,
       });

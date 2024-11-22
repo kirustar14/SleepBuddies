@@ -1,12 +1,16 @@
 const bcrypt = require ('bcrypt');
 const saltRounds = 10;
 
-export function generateSaltedHash(password: string ) {
-    bcrypt.genSalt(saltRounds, function(err: any, salt: string) {
-        bcrypt.hash(password, salt, function(err: any, hash: string) {
-            return hash;
-        });
-    });
+export function generateSaltedHash(password: string) : string {
+    let saltedHash : string = '';
+    bcrypt
+        .hash(password, saltRounds)
+        .then((hash: string) => {
+            console.log(`Hash: ${hash}`);
+            saltedHash = hash;
+        })
+        .catch((err: { message: any; }) => console.error(err.message));
+    return saltedHash;
 }
 
 export function checkCorrectPassword(password:string, hash: string) {
