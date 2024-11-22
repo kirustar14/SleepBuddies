@@ -2,10 +2,12 @@
   padding: 0px;
 }
 
-.alarm-icon-container {
-  margin-top: 10px; /* Moved the container closer to the top */
-  text-align: center;
-  opacity: 90%;
+.alarm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding: 0 20px;
 }
 
 .alarm-page-title {
@@ -13,3 +15,34 @@
   font-weight: bold;
 }
 
+.add-alarm-button {
+  font-size: 2em;
+  padding: 10px;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-alarm-button:hover {
+  background-color: #f1f1f1;
+}
+
+.alarm-list {
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+.alarm-item {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
