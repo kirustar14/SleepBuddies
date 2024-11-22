@@ -35,8 +35,6 @@ const LoginPage = () => {
                            name="username"
                            placeholder="Enter your username"
                            className="input-field"
-                           aria-describedby="username"
-                           aria-invalid="false"
                            onChange={handleInput}
                     />
                 </div>
@@ -47,8 +45,6 @@ const LoginPage = () => {
                            name="password"
                            placeholder="Enter your password"
                            className="input-field"
-                           aria-describedby="password"
-                           aria-invalid="false"
                            onChange={handleInput}
                     />
                 </div>
