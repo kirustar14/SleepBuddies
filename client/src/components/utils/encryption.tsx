@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt-ts");
 const saltRounds = 10;
 
 export function generateSaltedHash(password: string): string {
