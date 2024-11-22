@@ -48,18 +48,86 @@
   position: relative;
 }
 
+.alarm-title-time {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .alarm-title {
   font-size: 1.6em;
   font-weight: bold;
+  color: black;
   margin: 0;
-  padding-bottom: 10px;
-  position: absolute;
-  top: 10px;
-  left: 15px;
 }
 
 .alarm-time {
   font-size: 1.4em;
   font-weight: bold;
-  margin-top: 50px; /* Provides space between the title and time */
+  color: black;
+  text-align: center;
+}
+
+.alarm-description-frequency {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.alarm-description {
+  font-size: 1.2em;
+  color: #555;
+  margin: 0;
+}
+
+.alarm-frequency {
+  font-size: 1em;
+  color: #777;
+  text-align: right;
+  margin: 0;
+}
+
+.alarm-toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  margin-left: 20px;
+}
+
+.alarm-toggle input {
+  display: none;
+}
+
+.alarm-toggle .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: background-color 0.4s;
+  border-radius: 25px;
+}
+
+.alarm-toggle .slider:before {
+  position: absolute;
+  content: "";
+  height: 21px;
+  width: 21px;
+  background-color: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.4s;
+}
+
+.alarm-toggle input:checked + .slider {
+  background-color: #66bb6a;
+}
+
+.alarm-toggle input:checked + .slider:before {
+  transform: translateX(25px);
 }
