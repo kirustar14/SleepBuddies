@@ -14,16 +14,16 @@ const SignUpPage = () => {
     const handleConfirmPasswordChange = () => { setConfirmPw(confirmPw); };
 
     const handleCredentials = () => {
-        if (username == '' || password == '') {
+        if (username === '' || password === '') {
             console.error("Field cannot be empty");
             // TODO add popup warning
         }
-        if (password != confirmPw) {
+        if (password !== confirmPw) {
             console.error("Passwords don't match");
             // TODO add popup warning
         } else {
             let hash = generateSaltedHash(password);
-            if (hash == '') {
+            if (hash === '') {
                 // TODO add error
             }
             // TODO send server username and hash
