@@ -88,6 +88,13 @@
   margin: 0;
 }
 
+.alarm-sound {
+  font-size: 1em;
+  color: #777;
+  text-align: right;
+  margin-top: 10px;
+}
+
 .alarm-toggle {
   position: relative;
   display: inline-block;
