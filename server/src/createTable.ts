@@ -11,9 +11,9 @@ const initDB = async () => {
     // TODO change to actual format
     await db.exec(`
         CREATE TABLE IF NOT EXISTS expenses (        
-            id TEXT PRIMARY KEY,
-            description TEXT NOT NULL,
-            cost INTEGER NOT NULL
+            id INTEGER PRIMARY KEY,
+            username TEXT NOT NULL,
+            encryptedPw TEXT NOT NULL
         );
     `);
 
