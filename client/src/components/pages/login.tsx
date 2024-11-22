@@ -1,27 +1,22 @@
 import React, { useState } from "react";
 import "../../css/login.css";
+import {checkCorrectPassword} from "../utils/encryption";
 
 const LoginPage = () => {
 
-    const [input, setInput] = useState({
-        username: "",
-        password: "",
-    });
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
 
-    const handleSubmitEvent = (e: { preventDefault: () => void; }) => {
-        e.preventDefault();
-        if (input.username !== "" && input.password !== "") {
-            //dispatch action from hooks
+    const handleUsernameChange = () => { setUsername(username); };
+    const handlePasswordChange = () => { setPassword(password); };
+
+    const handleSubmit = () => {
+        let hash = ''; // TODO fetch hash from db
+
+        if (checkCorrectPassword(password, hash)) {
+            // TODO set user as logged in
+            // TODO redirect to home
         }
-        alert("please provide a valid input");
-    };
-
-    const handleInput = (e: { target: { name: any; value: any; }; }) => {
-        const { name, value } = e.target;
-        setInput((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
     };
 
     return (
@@ -33,9 +28,10 @@ const LoginPage = () => {
                     <input type="text"
                            id="username"
                            name="username"
+                           value={username}
                            placeholder="Enter your username"
                            className="input-field"
-                           onChange={handleInput}
+                           onChange={handleUsernameChange}
                     />
                 </div>
                 <div className="input-group">
@@ -43,12 +39,13 @@ const LoginPage = () => {
                     <input type="password"
                            id="password"
                            name="password"
+                           value={password}
                            placeholder="Enter your password"
                            className="input-field"
-                           onChange={handleInput}
+                           onChange={handlePasswordChange}
                     />
                 </div>
-                <button type="submit" className="login-button">Log In</button>
+                <button type="submit" className="login-button" onSubmit={handleSubmit}>Log In</button>
             </form>
         </div>
     );

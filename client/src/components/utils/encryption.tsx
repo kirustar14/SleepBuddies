@@ -1,8 +1,8 @@
-const bcrypt = require ('bcrypt');
+const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-export function generateSaltedHash(password: string) : string {
-    let saltedHash : string = '';
+export function generateSaltedHash(password: string): string {
+    let saltedHash: string = '';
     bcrypt
         .hash(password, saltRounds)
         .then((hash: string) => {
@@ -13,8 +13,9 @@ export function generateSaltedHash(password: string) : string {
     return saltedHash;
 }
 
-export function checkCorrectPassword(password:string, hash: string) {
-    bcrypt.compare(password, hash, function(err: any, result: boolean) {
+export function checkCorrectPassword(password: string, hash: string) {
+    bcrypt.compare(password, hash, function (err: any, result: boolean) {
         return result;
     });
+    return false;
 }
