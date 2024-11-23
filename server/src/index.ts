@@ -65,8 +65,28 @@ app.use(express.json());
       process.exit(0);
     });
 
+    app.post("/dailyJournal", async (req: Request, res: Response) => {
+      const { text } = req.body;
+      const mood = "neutral"; // Replace this logic to capture actual mood data.
+      try {
+        const result = await db.run(
+          `INSERT INTO journal (mood, entry) VALUES (?, ?)`,
+          [mood, text]
+        );
+        res.status(201).send({ id: result.lastID, mood, entry: text });
+      } catch (err) {
+        res.status(500).send({ error: "Failed to save the journal entry." });
+      }
+    });
+    
+
+
   // Start the server
   app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
   });
+
+
 })(); 
+
+

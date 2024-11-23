@@ -27,6 +27,15 @@ const initDB = async () => {
         );
     `);
 
+    await db.exec(`
+        CREATE TABLE IF NOT EXISTS daily_journal (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          text TEXT NOT NULL,
+          timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+    `);
+      
+
     
     return db;
 };
