@@ -7,6 +7,7 @@ const initDB = async () => {
         filename: "database.sqlite",
         driver: sqlite3.Database,
     });
+
     // TODO change to actual format
     await db.exec(`
         CREATE TABLE IF NOT EXISTS expenses (        
@@ -26,7 +27,7 @@ const initDB = async () => {
         );
     `);
 
-    
+
     return db;
 };
 

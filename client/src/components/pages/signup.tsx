@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import "../../css/signup.css";
 import {generateSaltedHash} from "../utils/encryption";
 
@@ -8,10 +8,18 @@ const SignUpPage = () => {
     const [password, setPassword] = useState<string>('');
     const [confirmPw, setConfirmPw] = useState<string>('');
 
-    const handleCheckboxChange = () => { setIsChecked(!isChecked); };
-    const handleUsernameChange = () => { setUsername(username); };
-    const handlePasswordChange = () => { setPassword(password); };
-    const handleConfirmPasswordChange = () => { setConfirmPw(confirmPw); };
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+    };
+    const handleUsernameChange = () => {
+        setUsername(username);
+    };
+    const handlePasswordChange = () => {
+        setPassword(password);
+    };
+    const handleConfirmPasswordChange = () => {
+        setConfirmPw(confirmPw);
+    };
 
     const handleCredentials = () => {
         if (username === '' || password === '') {
@@ -99,7 +107,8 @@ const SignUpPage = () => {
                     className="login-button"
                     disabled={!isChecked}
                     onSubmit={handleCredentials}
-                >Sign Up</button>
+                >Sign Up
+                </button>
             </form>
         </div>
     );
