@@ -1,27 +1,50 @@
+/* App.css */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+/* Global Styles */
+body {
+    background: linear-gradient(135deg, #001f3f, #001f3f);
+    color: #FFFFFF;
+    font-family: 'Quicksand', sans-serif; 
+    margin: 0;
+    padding: 0;
+}
+
+/* App Container: Center everything */
 .App {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center; 
 }
 
+/* Header: "Sleep Buddies" */
 .App-header {
-    color: #3fe1e7;
-    font-family: "Paytone One", sans-serif;
-    font-size: 50px;
-    text-shadow: 0 5px 10px rgba(67, 77, 128, 0.49);
+    color: #FFFFFF; 
+    font-size: 40px; 
+    font-family: 'Quicksand', sans-serif; 
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.3); 
+    margin-bottom: 15px; 
 }
 
-.Page-title {
-    color: #ffffff;
-    font-family: "Paytone One", sans-serif;
-    font-size: 15px;
-    text-shadow: 0 5px 10px rgba(46, 41, 112, 0.49);
-}
-
+/* Clickable Items: General reusable styles for links or buttons */
 .clickable {
-    text-decoration: none;
+    text-decoration: none; /* Remove underline for links */
     will-change: transform;
-    transition: transform 450ms;
+    transition: transform 450ms; 
 }
 
+.clickable:hover {
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: transform 125ms;
+    transform: translateY(-10px); /* Slight upward movement on hover */
+}
+
+/* Overlay Styles: Used for hover overlays */
 .overlay {
     position: absolute;
     top: 0;
@@ -31,35 +54,26 @@
     height: 100%;
     width: 100%;
     opacity: 0;
-    transition: .5s ease;
-    background-color: #e3d6ff;
-}
-
-.clickable:hover {
-    -webkit-transition: all .25s ease;
-    -moz-transition: all .25s ease;
-    -o-transition: all .25s ease;
-    transition: transform 125ms;
-    transform: translateY(-10px);
+    transition: 0.5s ease;
+    background-color: #ccc; 
 }
 
 .clickable:hover .overlay {
-    opacity: 1.0;
-    width: 300px;
+    opacity: 1.0; 
+    width: 300px; 
     height: 225px;
     margin: 20px;
-    border-radius: 20px;
+    border-radius: 20px; 
 }
 
+/* Overlay Text: Text inside hover overlays */
 .overlayText {
-    color: #8a6d9c;
+    color: #001f3f; 
     font-family: "Helvetica Neue", sans-serif;
     font-size: 25px;
     position: absolute;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); /* Center the text */
     text-align: center;
 }

@@ -1,21 +1,27 @@
-.welcome_page-div {
+.button-text {
+    color: #001f3f;
+    font-size: 26px; 
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.welcome_page-div .applet {
+    background-color: #FFFFFF;
+    color: #001f3f;
+    border-radius: 15px; 
+    width: 140px; 
+    height: 55px; 
     display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.welcome-button {
-    padding: 10px 20px;
-    font-size: 18px;
-    color: white;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 5px;
+    align-items: center; 
+    justify-content: center; 
+    margin: 15px; 
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease; 
 }
 
-.welcome-button:hover {
-    background-color: #45a049;
+.welcome_page-div .applet:hover {
+    background-color: #E6E6E6;
+    color: #001f3f;
+    transform: scale(1.1); 
 }

@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../css/login.css";
 
 const LoginPage = () => {
+
+    useEffect(() => {
+        document.title = "Login to Sleep Buddies";
+    }, []);
+
     return (
         <div className="login-page">
             <h1>Login</h1>

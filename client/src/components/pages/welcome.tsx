@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "../elements/Login";
 import Signup from "../elements/Signup";
 import "../../css/welcome.css";
 
-const welcome = () => {
+const Welcome = () => {
+
+    useEffect(() => {
+        document.title = "Sleep Buddies";
+    }, []);
+
     return (
         <>
-            <h1>Welcome to Sleep Buddies</h1>
             <div className="welcome_page-div">
                 <Login/>
                 <Signup/>
@@ -15,4 +19,4 @@ const welcome = () => {
     );
 };
 
-export default welcome;
+export default Welcome;

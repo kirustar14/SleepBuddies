@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import '../../css/Sleep.css';
 
@@ -7,6 +7,11 @@ import { Graph } from "../elements/SleepAnalytics/Graph";
 import { Statistics } from "../elements/SleepAnalytics/Statistics";
 
 const Sleep = () => {
+
+    useEffect(() => {
+        document.title = "Sleep Buddies - Sleep Report";
+    }, []);
+
     return (
         <>
             <h1>Sleep Analytics</h1>
