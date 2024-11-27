@@ -11,6 +11,9 @@ const Welcome = () => {
 
     return (
         <>
+            <div className="welcome-header">
+                <h1>Sleep Buddies 🌠</h1>
+            </div>
             <div className="welcome_page-div">
                 <Login/>
                 <Signup/>
