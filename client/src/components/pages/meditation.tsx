@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, {useState, useEffect} from "react";
+
 import "../../css/meditation.css";
 import axios from "axios";
 import waterImage from "../../assets/water.webp";
@@ -11,6 +12,10 @@ const Meditation = () => {
   const [userMessage, setUserMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+        document.title = "Sleep Buddies - Meditation";
+    }, []);
+      
   const meditationSteps = [
     {
       title: "Welcome to Your Meditation!",

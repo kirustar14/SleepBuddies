@@ -3,6 +3,11 @@ import AlarmModal from "../elements/AlarmModal";
 import "../../css/alarm.css";
 
 const Alarm = () => {
+  
+  useEffect(() => {
+        document.title = "Sleep Buddies - Alarms";
+    }, []);
+  
   const [alarmTime, setAlarmTime] = useState<string>("");
   const [savedAlarmTime, setSavedAlarmTime] = useState<string>("");
   const [isAlarmTriggered, setIsAlarmTriggered] = useState<boolean>(false);

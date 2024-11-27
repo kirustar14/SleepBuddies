@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "../../css/signup.css";
 import {generateSaltedHash} from "../utils/encryption";
 
@@ -39,6 +39,10 @@ const SignUpPage = () => {
             // TODO jump back to welcome page
         }
     }
+
+    useEffect(() => {
+        document.title = "Sign Up for Sleep Buddies";
+    }, []);
 
     return (
         <div className="signup-page">

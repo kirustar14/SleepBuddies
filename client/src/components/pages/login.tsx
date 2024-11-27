@@ -1,9 +1,8 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "../../css/login.css";
 import {checkCorrectPassword} from "../utils/encryption";
 
 const LoginPage = () => {
-
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
@@ -22,6 +21,10 @@ const LoginPage = () => {
             // TODO redirect to home
         }
     };
+
+    useEffect(() => {
+        document.title = "Login to Sleep Buddies";
+    }, []);
 
     return (
         <div className="login-page">
