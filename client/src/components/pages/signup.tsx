@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "../../css/signup.css";
 import {generateSaltedHash} from "../utils/encryption";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
 
 const SignUpPage = () => {
     const [isChecked, setIsChecked] = useState(false);
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPw, setConfirmPw] = useState<string>('');
+
+    const [emptyField, openEmptyFieldBox] = React.useState(false);
+    const [pwMatch, openPasswordMatchBox] = React.useState(false);
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
@@ -17,11 +26,11 @@ const SignUpPage = () => {
         console.log(password);
         if (username === '' || password === '') {
             console.error("Field cannot be empty");
-            // TODO add popup warning
+            openEmptyFieldBox(true);
         }
         if (password !== confirmPw) {
             console.error("Passwords don't match");
-            // TODO add popup warning
+            openPasswordMatchBox(true);
         } else {
             let hash = generateSaltedHash(password);
             if (hash === '') {
@@ -32,6 +41,14 @@ const SignUpPage = () => {
             // TODO jump back to welcome page
         }
     }
+
+    const handleEmptyFieldClose = () => {
+        openEmptyFieldBox(false);
+    };
+
+    const handlePwMatchClose = () => {
+        openPasswordMatchBox(false);
+    };
 
     useEffect(() => {
         document.title = "Sign Up for Sleep Buddies";
@@ -108,6 +125,32 @@ const SignUpPage = () => {
                     Sign Up
                 </button>
             </form>
+
+            <Dialog className="emptyfield-dialog"
+                    open={emptyField}
+                    onClose={handleEmptyFieldClose}
+                    aria-labelledby="alert-dialog-title"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Field cannot be empty"}
+                </DialogTitle>
+                <DialogActions>
+                    <Button onClick={handleEmptyFieldClose}>Try again</Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog className="pwmatch-dialog"
+                    open={pwMatch}
+                    onClose={handlePwMatchClose}
+                    aria-labelledby="alert-dialog-title"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Passwords don't match"}
+                </DialogTitle>
+                <DialogActions>
+                    <Button onClick={handlePwMatchClose}>Try again</Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };

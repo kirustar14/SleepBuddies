@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "../../css/login.css";
 import {checkCorrectPassword} from "../utils/encryption";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import {grey} from "@mui/material/colors";
 
 const LoginPage = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [wrongPw, openWrongPwBox] = React.useState(false);
 
     const handleSubmit = () => {
         let hash = ''; // TODO fetch hash from db
@@ -12,7 +20,13 @@ const LoginPage = () => {
         if (checkCorrectPassword(password, hash)) {
             // TODO set user as logged in
             // TODO redirect to home
+        } else {
+            openWrongPwBox(true);
         }
+    };
+
+    const handleClose = () => {
+        openWrongPwBox(false);
     };
 
     useEffect(() => {
@@ -47,6 +61,25 @@ const LoginPage = () => {
                 </div>
                 <button type="submit" className="login-button" onSubmit={handleSubmit}>Log In</button>
             </form>
+
+            <Dialog className="login-dialog"
+                open={wrongPw}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Invalid credentials"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Incorrect username or password.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Try again</Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };
