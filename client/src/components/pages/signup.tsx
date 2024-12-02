@@ -11,17 +11,10 @@ const SignUpPage = () => {
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
-    const handleUsernameChange = () => {
-        setUsername(username);
-    };
-    const handlePasswordChange = () => {
-        setPassword(password);
-    };
-    const handleConfirmPasswordChange = () => {
-        setConfirmPw(confirmPw);
-    };
 
     const handleCredentials = () => {
+        console.log(username);
+        console.log(password);
         if (username === '' || password === '') {
             console.error("Field cannot be empty");
             // TODO add popup warning
@@ -48,7 +41,7 @@ const SignUpPage = () => {
         <div className="signup-page">
             <h1>Sign Up</h1>
             {/* Username*/}
-            <form className="signup-form">
+            <form className="signup-form" >
                 <div className="input-group">
                     <label>Username:</label>
                     <input
@@ -57,7 +50,7 @@ const SignUpPage = () => {
                         value={username}
                         placeholder="Enter your username"
                         className="input-field"
-                        onChange={handleUsernameChange}
+                        onChange={e => setUsername(e.target.value)}
                     />
                 </div>
                 <div className="input-group">
@@ -68,7 +61,7 @@ const SignUpPage = () => {
                         value={password}
                         placeholder="Enter your password"
                         className="input-field"
-                        onChange={handlePasswordChange}
+                        onChange={e => setPassword(e.target.value)}
                     />
                 </div>
                 <div className="input-group">
@@ -78,7 +71,7 @@ const SignUpPage = () => {
                            value={confirmPw}
                            placeholder="Confirm your password"
                            className="input-field"
-                           onChange={handleConfirmPasswordChange}
+                           onChange={e => setConfirmPw(e.target.value)}
                     />
                 </div>
 
@@ -111,7 +104,8 @@ const SignUpPage = () => {
                     className="login-button"
                     disabled={!isChecked}
                     onSubmit={handleCredentials}
-                >Sign Up
+                >
+                    Sign Up
                 </button>
             </form>
         </div>
