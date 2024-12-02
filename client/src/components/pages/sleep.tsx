@@ -45,20 +45,36 @@ const Sleep = () => {
 
     return (
         <>
+            
             <h1>Sleep Analytics</h1>
+            <div className="sleep-goal-container">
+                <label htmlFor="sleep-goal">
+                    <strong>Set Your Sleep Goal (hours): </strong>
+                </label>
+                <input
+                    id="sleep-goal"
+                    type="number"
+                    value={sleepGoal}
+                    min={0}
+                    max={24}
+                    onChange={(e) => setSleepGoal(Number(e.target.value))}
+                />
+            </div>
+            
             <div className="Comps">
                 <div className="item">
                     <SleepLog 
                         averageSleep={averageSleep} 
                         bestDay={bestDay}
                         worstDay={worstDay}
+                        goal={sleepGoal}
                     />
                 </div>
-                <div className="item"><Graph hoursSlept={hoursSlept}/></div>
+                <div className="item"><Graph hoursSlept={hoursSlept} goal={sleepGoal}/></div>
                 <div className="item"><Statistics updateSleepData={updateSleepData}/></div> 
             </div>
 
-            {averageSleep > sleepGoal && averageSleep > 0 && (
+            {averageSleep >= sleepGoal && averageSleep > 0 && (
                 <div className="feedback">
                     <img
                         src={GoodJobImage}

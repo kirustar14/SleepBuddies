@@ -1,19 +1,20 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { SleepLog } from "./SleepLog"; 
 
 describe("SleepLog Component", () => {
-    it("should render average sleep and percent achieved", () => {
+    it("should render average sleep", () => {
         const averageSleep = 7.2;
         const percentAchieved = 120;
         const bestDay = { day: "Monday", hours: 8 };
         const worstDay = { day: "Wednesday", hours: 5 };
+        const goal = 0;
 
         render(
             <SleepLog 
                 averageSleep={averageSleep} 
                 bestDay={bestDay} 
                 worstDay={worstDay} 
+                goal ={goal}
             />
         );
 
@@ -27,12 +28,14 @@ describe("SleepLog Component", () => {
         const percentAchieved = 0;
         const bestDay = { day: "Sunday", hours: 0 };
         const worstDay = { day: "Sunday", hours: 0 };
+        const goal = 0;
 
         render(
             <SleepLog 
                 averageSleep={averageSleep} 
                 bestDay={bestDay} 
                 worstDay={worstDay} 
+                goal ={goal}
             />
         );
 
@@ -46,12 +49,14 @@ describe("SleepLog Component", () => {
         const percentAchieved = 0;
         const bestDay = { day: "Sunday", hours: 0 };
         const worstDay = { day: "Sunday", hours: 0 };
+        const goal = 0;
 
         render(
             <SleepLog 
                 averageSleep={averageSleep} 
                 bestDay={bestDay} 
                 worstDay={worstDay} 
+                goal ={goal}
             />
         );
 
@@ -65,12 +70,14 @@ describe("SleepLog Component", () => {
         const percentAchieved = 110;
         const bestDay = { day: "Friday", hours: 9 };
         const worstDay = { day: "Tuesday", hours: 4 };
+        const goal = 0;
 
         render(
             <SleepLog 
                 averageSleep={averageSleep} 
                 bestDay={bestDay} 
                 worstDay={worstDay} 
+                goal={goal}
             />
         );
 
