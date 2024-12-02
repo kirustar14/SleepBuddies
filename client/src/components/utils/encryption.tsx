@@ -7,6 +7,10 @@ export function generateSaltedHash(password: string): string {
 }
 
 export function checkCorrectPassword(password: string, hash: string) {
+    if (typeof password !== "string" || typeof hash !== "string") {
+        throw Error("Illegal arguments: " + typeof password + ", " + typeof hash);
+    }
+
     if (hash.length !== 60){
         return false;
     }
