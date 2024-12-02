@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import '../../css/Sleep.css';
 
 import { SleepLog } from "../elements/SleepAnalytics/SleepLog";
@@ -9,6 +10,7 @@ import GoodJobImage from "../../assets/goodFeedback.png";
 import BadJobImage from "../../assets/badFeedback.png";
 
 const Sleep = () => {
+
     const [hoursSlept, setHoursSlept] = useState<number[]>(Array(7).fill(0));
     const [sleepGoal, setSleepGoal] = useState<number>(6); 
 
