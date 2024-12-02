@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import '../../css/Sleep.css';
 
 import { SleepLog } from "../elements/SleepAnalytics/SleepLog";
@@ -36,6 +36,10 @@ const Sleep = () => {
         day: daysOfWeek[minSleepIndex],
         hours: hoursSlept[minSleepIndex],
     };
+
+    useEffect(() => {
+        document.title = "Sleep Buddies - Sleep Report";
+    }, []);
 
     return (
         <>
