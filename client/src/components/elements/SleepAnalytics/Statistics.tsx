@@ -69,19 +69,21 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
 
     return (
         <>
-            <h2>Sleeping Data</h2>
+            <h2>Sleeping Log</h2>
             <h3>Enter Sleep Time and Wake Up Time for Each Day:</h3>
             <div className="weekLog">
                 {daysOfWeek.map((day, index) => (
                     <div key={index}>
                         <label>{day} ({weekDates[index]}):</label>
                         <input
+                            data-testid={"start" + day}
                             type="time"
                             value={sleepTimes[index]}
                             onChange={(e) => handleTimeChange(index, e.target.value, wakeTimes[index])}
                         />
                         <span> to </span>
                         <input
+                            data-testid={"end" + day}
                             type="time"
                             value={wakeTimes[index]}
                             onChange={(e) => handleTimeChange(index, sleepTimes[index], e.target.value)}
