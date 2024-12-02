@@ -1,21 +1,15 @@
-const bcrypt = require("bcrypt-ts");
+import { genSaltSync, hashSync} from "bcrypt-ts";
 const saltRounds = 10;
 
 export function generateSaltedHash(password: string): string {
-    let saltedHash: string = '';
-    bcrypt
-        .hash(password, saltRounds)
-        .then((hash: string) => {
-            console.log(`Hash: ${hash}`);
-            saltedHash = hash;
-        })
-        .catch((err: { message: any; }) => console.error(err.message));
-    return saltedHash;
+    const salt = genSaltSync(saltRounds);
+    return hashSync(password, salt);
 }
 
 export function checkCorrectPassword(password: string, hash: string) {
-    bcrypt.compare(password, hash, function (err: any, result: boolean) {
-        return result;
-    });
-    return false;
+    if (hash.length !== 60){
+        return false;
+    }
+
+    return hashSync(password, hash.substring(0, hash.length - 31)) === hash;
 }

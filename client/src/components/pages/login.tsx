@@ -7,20 +7,23 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import {grey} from "@mui/material/colors";
 
 const LoginPage = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [wrongPw, openWrongPwBox] = React.useState(false);
 
-    const handleSubmit = () => {
-        let hash = ''; // TODO fetch hash from db
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+
+        let hash = '$2a$10$GENriBFPvrc6TECKVcydouMiMgg1c1TX6TISwqfSsvSP3IRYstgF6'; // TODO fetch hash from db
 
         if (checkCorrectPassword(password, hash)) {
+            console.log("Login Successful");
             // TODO set user as logged in
             // TODO redirect to home
         } else {
+            console.log("Login Failed");
             openWrongPwBox(true);
         }
     };
@@ -59,7 +62,7 @@ const LoginPage = () => {
                            onChange={e => setPassword(e.target.value)}
                     />
                 </div>
-                <button type="submit" className="login-button" onSubmit={handleSubmit}>Log In</button>
+                <button type="submit" className="login-button" onClick={handleSubmit}>Log In</button>
             </form>
 
             <Dialog className="login-dialog"

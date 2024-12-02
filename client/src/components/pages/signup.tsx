@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import "../../css/signup.css";
 import {generateSaltedHash} from "../utils/encryption";
 import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -21,9 +19,11 @@ const SignUpPage = () => {
         setIsChecked(!isChecked);
     };
 
-    const handleCredentials = () => {
-        console.log(username);
-        console.log(password);
+    const handleCredentials = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+
+        // TODO Check if username already in database
+
         if (username === '' || password === '') {
             console.error("Field cannot be empty");
             openEmptyFieldBox(true);
@@ -33,8 +33,10 @@ const SignUpPage = () => {
             openPasswordMatchBox(true);
         } else {
             let hash = generateSaltedHash(password);
-            if (hash === '') {
-                // TODO add error
+            console.log(hash);
+            if (hash === '' || hash === null) {
+                console.error("Hash gen error");
+                throw Error("Hash is null");
             }
             // TODO send server username and hash
             // TODO adds success message
@@ -120,7 +122,7 @@ const SignUpPage = () => {
                     type="submit"
                     className="login-button"
                     disabled={!isChecked}
-                    onSubmit={handleCredentials}
+                    onClick={handleCredentials}
                 >
                     Sign Up
                 </button>
