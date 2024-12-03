@@ -22,7 +22,6 @@ type MeditationTheme =
 const Meditation = () => {
   const [step, setStep] = useState(0);
   const [theme, setTheme] = useState<MeditationTheme | "">("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     document.title = "Sleep Buddies - Meditation";
