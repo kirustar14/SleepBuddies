@@ -7,13 +7,14 @@ const initDB = async () => {
         filename: "database.sqlite",
         driver: sqlite3.Database,
     });
-    // Create a "budget" table if it doesn't exist
-    // TODO change to actual format
+
+    // Create a table for the users
     await db.exec(`
-        CREATE TABLE IF NOT EXISTS expenses (        
-            id TEXT PRIMARY KEY,
-            description TEXT NOT NULL,
-            cost INTEGER NOT NULL
+        CREATE TABLE IF NOT EXISTS users (        
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            encryptedPw TEXT NOT NULL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         );
     `);
 
@@ -27,7 +28,7 @@ const initDB = async () => {
         );
     `);
 
-    
+
     return db;
 };
 
