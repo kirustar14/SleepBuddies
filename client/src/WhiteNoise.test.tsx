@@ -1,7 +1,12 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import MusicPlayer from './components/pages/music'; // Import the MusicPlayer component
+import MusicPlayer from "./components/pages/music"; // Import the MusicPlayer component
+
+// Mock static assets in your test file
+jest.mock("../../assets/cover-photo.jpg", () => "mocked-cover-photo.jpg");
+jest.mock("../../assets/music-photo.jpg", () => "mocked-music-photo.jpg");
+
 // Mock playlist to use in tests
 const whiteNoiseSounds = [
   { name: "White Noise", file: "white-noise.mp3" },
