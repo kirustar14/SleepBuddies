@@ -82,7 +82,7 @@
 
 .period-toggle {
   background-color: #e0e0e0;
-  border: 1px solid #404040;
+  border: 1px solid #ccc;
   padding: 10px 20px; /* Increased padding for better appearance */
   font-size: 1.2em;
   font-weight: bold;
@@ -95,6 +95,26 @@
 .period-toggle:hover {
   background-color: #d8f0fd;
 }
+
+.save-time-button {
+  margin-left: 25px;
+  padding: 3px;
+  border: 1px solid #ccc;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.save-time-button:hover {
+  background-color: #d0d0d0;
+}
+
+.confirmed-time {
+  font-size: 0.9em;
+  color: #888; /* Lighter color to indicate it's a preview */
+  margin-top: 10px;
+}
+
 
 .alarm-modal-sound-options {
   display: flex;
@@ -154,4 +174,10 @@
 
 .alarm-modal-cancel-button:hover {
   background-color: #999;
+}
+
+.save-time-note {
+  color: #d00000; /* Faint grey color */
+  font-size: 0.875rem; /* Small font size */
+  margin-top: 10px; /* Add some spacing above the note */
 }

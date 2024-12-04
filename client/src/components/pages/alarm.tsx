@@ -29,13 +29,14 @@ const Alarm = () => {
   }>({
     title: "",
     description: "",
-    time: "",
+    time: "", // Let time be empty initially, it will be set in the AlarmModal
     sound: true,
     frequency: []
   });
 
   const handleAddAlarmClick = () => {
     setIsModalOpen(true);
+    setNewAlarm({ ...newAlarm }); // Open the modal without resetting `newAlarm`, keep the current values
   };
 
   const handleCloseModal = () => {

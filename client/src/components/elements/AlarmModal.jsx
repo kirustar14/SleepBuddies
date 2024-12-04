@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../css/AlarmModal.css";
 
 const AlarmModal = ({
@@ -9,10 +9,21 @@ const AlarmModal = ({
   handleInputChange,
   handleFrequencyChange,
 }) => {
-  // Set initial state for hour and minute to start at 1 hour and 00 minute
+  // Set initial state for hour, minute, and period
   const [hour, setHour] = useState(1);
   const [minute, setMinute] = useState("00");
   const [period, setPeriod] = useState("AM");
+  const [confirmedTime, setConfirmedTime] = useState("");
+
+  useEffect(() => {
+    if (newAlarm.time) {
+      const [initialHour, initialMinutePeriod] = newAlarm.time.split(":");
+      const [initialMinute, initialPeriod] = initialMinutePeriod.split(" ");
+      setHour(parseInt(initialHour, 10));
+      setMinute(initialMinute.padStart(2, "0"));
+      setPeriod(initialPeriod);
+    }
+  }, [newAlarm.time]);
 
   const handleHourChange = (e) => {
     let newHour = parseInt(e.target.value, 10);
@@ -45,7 +56,7 @@ const AlarmModal = ({
       setMinute("00"); // Reset to "00" if input is empty after clicking out
     } else if (!isNaN(numericMinute)) {
       if (numericMinute < 0 || numericMinute > 59) {
-        alert("Invalid input. Please enter a value between 0 and 59. \nMinute will be resetted to 00."); // Alert for invalid input
+        alert("Invalid input. Please enter a value between 0 and 59. \nMinute will be reset to 00."); // Alert for invalid input
         setMinute("00"); // Reset to "00" if the value is invalid
       } else {
         setMinute(numericMinute.toString().padStart(2, "0")); // Pad single digit with zero
@@ -57,13 +68,22 @@ const AlarmModal = ({
     setPeriod((prevPeriod) => (prevPeriod === "AM" ? "PM" : "AM"));
   };
 
-  const handleSave = () => {
-    // Ensure final values are valid even if unchanged
+  const handleSaveTime = () => {
+    // Save the selected time when the "Save Time" button is clicked
     const finalHour = hour || 1;
     const finalMinute = minute.padStart(2, "0");
-
     const formattedTime = `${finalHour}:${finalMinute} ${period}`;
+    setConfirmedTime(formattedTime);
     setNewAlarm({ ...newAlarm, time: formattedTime });
+  };
+
+  const handleSave = () => {
+    // Ensure the user clicks "Save Time" before saving the alarm
+    if (!confirmedTime) {
+      alert("Please confirm the alarm time by clicking 'Save Time' before saving.");
+      return;
+    }
+
     handleSaveAlarm();
   };
 
@@ -73,7 +93,7 @@ const AlarmModal = ({
         <h2 className="alarm-modal-title">Add New Alarm</h2>
 
         <div className="alarm-modal-field">
-          <label className="alarm-modal-label">Alarm Title (Optional)</label>
+          <label className="alarm-modal-label">Alarm Title</label>
           <input
             type="text"
             name="title"
@@ -85,7 +105,7 @@ const AlarmModal = ({
         </div>
 
         <div className="alarm-modal-field">
-          <label className="alarm-modal-label">Alarm Description (Optional)</label>
+          <label className="alarm-modal-label">Alarm Description</label>
           <input
             type="text"
             name="description"
@@ -97,7 +117,7 @@ const AlarmModal = ({
         </div>
 
         <div className="alarm-modal-field">
-          <label className="alarm-modal-label">Select Alarm Time (Required)</label>
+          <label className="alarm-modal-label">Select Alarm Time</label>
           <div className="alarm-time-selection">
             <input
               type="number"
@@ -124,7 +144,16 @@ const AlarmModal = ({
             <button onClick={togglePeriod} className="period-toggle">
               {period}
             </button>
+
+            <button onClick={handleSaveTime} className="save-time-button">
+              Save Time
+            </button>
           </div>
+          {confirmedTime && (
+            <p className="confirmed-time">
+              Confirmed Time: {confirmedTime}
+            </p>
+          )}
         </div>
 
         <div className="alarm-modal-field">
@@ -154,9 +183,9 @@ const AlarmModal = ({
         </div>
 
         <div className="alarm-modal-field">
-          <label className="alarm-modal-label">Alarm Frequency (Optional)</label>
+          <label className="alarm-modal-label">Alarm Frequency</label>
           <div className="alarm-modal-checkbox-group">
-            {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map((day) => (
+            {["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"].map((day) => (
               <label key={day}>
                 <input
                   type="checkbox"
@@ -170,9 +199,18 @@ const AlarmModal = ({
         </div>
 
         <div className="alarm-modal-buttons">
-          <button className="alarm-modal-save-button" onClick={handleSave}>
+          <button
+            className="alarm-modal-save-button"
+            onClick={handleSave}
+            disabled={!confirmedTime} // Disable "Save" button until time is confirmed
+          >
             Save
           </button>
+          {!confirmedTime && (
+            <p className="save-time-note">
+              Please confirm the alarm time by clicking "Save Time" before saving.
+            </p>
+          )}
           <button className="alarm-modal-cancel-button" onClick={handleCloseModal}>
             Cancel
           </button>
