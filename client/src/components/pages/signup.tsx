@@ -8,7 +8,7 @@ import Dialog from "@mui/material/Dialog";
 import axios from "axios";
 import {API_BASE_URL} from "../constants/constants";
 import {Link} from "react-router-dom";
-import {checkUsernameExists, fetchUsers} from "../utils/user-utils";
+import {checkUsernameExists} from "../utils/user-utils";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 

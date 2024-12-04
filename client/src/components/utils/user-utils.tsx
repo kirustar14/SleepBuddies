@@ -30,7 +30,7 @@ export const getUserHash = async (username: string) => {
     const userData: string[] = await fetchUsers();
     for (let i = 0; i < userData.length; i++) {
         let index = userData[i].search('"username":"' + username + '"');
-        if (index != -1) {
+        if (index !== -1) {
             return userData[i].substring(index + 29 + username.length, index + 29 + username.length + hashLength);
         }
     }
