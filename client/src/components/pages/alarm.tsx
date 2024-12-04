@@ -33,7 +33,7 @@ const Alarm = () => {
       title: "Brush Teeth Alarm",
       time: "09:00 PM",
       description: "Reminder to brush your teeth before bed",
-      frequency: ["Tue", "Thu"],
+      frequency: ["Tue", "Thurs"],
       sound: true,
       active: true,
       hasRung: false,
