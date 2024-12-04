@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../css/alarm.css";
+import { v4 as uuidv4 } from "uuid"; // Importing uuid for unique IDs
 import AlarmModal from "../elements/AlarmModal";
 import AlarmRingingModal from "../elements/AlarmRingingModal";
 
 // Define the type for an alarm
 type AlarmType = {
+  id: string; // Unique ID for each alarm
   title: string;
   time: string;
   description: string;
@@ -17,6 +19,7 @@ type AlarmType = {
 const Alarm = () => {
   const [alarms, setAlarms] = useState<AlarmType[]>([
     {
+      id: uuidv4(),
       title: "Medication Alarm",
       time: "08:00 PM",
       description: "Take evening medication",
@@ -26,6 +29,7 @@ const Alarm = () => {
       hasRung: false,
     },
     {
+      id: uuidv4(),
       title: "Brush Teeth Alarm",
       time: "09:00 PM",
       description: "Reminder to brush your teeth before bed",
@@ -39,6 +43,7 @@ const Alarm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [newAlarm, setNewAlarm] = useState<AlarmType>({
+    id: uuidv4(),
     title: "",
     description: "",
     time: "",
@@ -89,7 +94,7 @@ const Alarm = () => {
           setRingingAlarm(alarm); // Set the ringing alarm
           setAlarms((prevAlarms) =>
             prevAlarms.map((a) =>
-              a === alarm ? { ...a, hasRung: true } : a
+              a.id === alarm.id ? { ...a, hasRung: true } : a
             )
           ); // Mark alarm as rung
         }
@@ -111,51 +116,78 @@ const Alarm = () => {
       );
     };
 
-    // Calculate the time until midnight
     const now = new Date();
     const timeUntilMidnight =
       new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).getTime() -
       now.getTime();
 
-    // Set a timeout to reset alarms at midnight
     const midnightTimeout = setTimeout(() => {
       resetAlarms();
       setInterval(resetAlarms, 24 * 60 * 60 * 1000); // Repeat daily
     }, timeUntilMidnight);
 
-    return () => clearTimeout(midnightTimeout); // Cleanup on unmount
+    return () => clearTimeout(midnightTimeout);
   }, []);
 
-  const handleDeleteAlarm = (alarmToDelete: AlarmType) => {
-    setAlarms((prevAlarms) =>
-      prevAlarms.filter((alarm) => alarm !== alarmToDelete)
-    );
+  const handleDeleteAlarm = (alarmId: string) => {
+    setAlarms((prevAlarms) => prevAlarms.filter((alarm) => alarm.id !== alarmId));
   };
 
   const handleSnoozeAlarm = () => {
     if (ringingAlarm) {
-      const snoozeTime = new Date();
-      snoozeTime.setMinutes(snoozeTime.getMinutes() + 5);
-
-      const snoozedAlarm: AlarmType = {
-        ...ringingAlarm,
-        time: snoozeTime.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        }),
-        hasRung: false, // Reset hasRung for the snoozed alarm
-      };
-
-      // Delete the current ringing alarm
-      handleDeleteAlarm(ringingAlarm);
-
-      // Add the snoozed alarm
-      setAlarms((prevAlarms) => sortAlarmsByTime([...prevAlarms, snoozedAlarm]));
+      setAlarms((prevAlarms) =>
+        prevAlarms.map((alarm) => {
+          if (alarm.id === ringingAlarm.id) {
+            if (alarmSoundRef.current) {
+              alarmSoundRef.current.pause();
+              alarmSoundRef.current.currentTime = 0;
+            }
+  
+            const snoozeTime = new Date();
+            const [hoursStr, minutesStr, period] = alarm.time.split(/[: ]/);
+  
+            // Parse hours and minutes safely
+            const hours = parseInt(hoursStr, 10);
+            const minutes = parseInt(minutesStr, 10);
+  
+            if (isNaN(hours) || isNaN(minutes)) {
+              console.error("Invalid time format in alarm.");
+              return alarm; // Leave the alarm unchanged
+            }
+  
+            // Convert to 24-hour time and calculate snoozed time
+            const newHours = (hours % 12) + (period === "PM" ? 12 : 0);
+            snoozeTime.setHours(newHours);
+            snoozeTime.setMinutes(minutes + 5); // Add 5 minutes
+  
+            // Handle overflow past 59 minutes
+            if (snoozeTime.getMinutes() >= 60) {
+              snoozeTime.setHours(snoozeTime.getHours() + 1);
+              snoozeTime.setMinutes(snoozeTime.getMinutes() - 60);
+            }
+  
+            // Format back to 12-hour time
+            const newTime = snoozeTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            });
+  
+            // Update the alarm's time
+            return { ...alarm, time: newTime, hasRung: false };
+          }
+          return alarm;
+        })
+      );
+  
+      // Clear the ringing alarm state
+      setRingingAlarm(null);
     }
-
-    handleStopAlarm();
   };
+  
+  
+  
+  
 
   const handleStopAlarm = () => {
     if (alarmSoundRef.current) {
@@ -168,19 +200,17 @@ const Alarm = () => {
         ringingAlarm.frequency.length === 0 ||
         ringingAlarm.frequency.includes("Just once")
       ) {
-        setAlarms((prevAlarms) =>
-          prevAlarms.filter((alarm) => alarm !== ringingAlarm)
-        );
+        handleDeleteAlarm(ringingAlarm.id);
       }
     }
 
     setRingingAlarm(null);
   };
-  
 
   const handleAddAlarmClick = () => {
     setEditIndex(null);
     setNewAlarm({
+      id: uuidv4(),
       title: "",
       description: "",
       time: "",
@@ -235,7 +265,7 @@ const Alarm = () => {
       <div className="alarm-list">
         {alarms.map((alarm, index) => (
           <div
-            key={index}
+            key={alarm.id}
             className={`alarm-item ${alarm.active ? "" : "inactive"}`}
           >
             <div className="alarm-title-time-container">
@@ -269,6 +299,7 @@ const Alarm = () => {
                 Description: {alarm.description}
               </p>
             </div>
+
             <div className="alarm-actions">
               <button
                 className="edit-alarm-button"
@@ -282,7 +313,7 @@ const Alarm = () => {
               </button>
               <button
                 className="delete-alarm-button"
-                onClick={() => handleDeleteAlarm(alarm)}
+                onClick={() => handleDeleteAlarm(alarm.id)}
               >
                 Delete
               </button>
@@ -314,12 +345,16 @@ const Alarm = () => {
 
       {/* Ringing Alarm Modal */}
       {ringingAlarm && (
-        <AlarmRingingModal
-          ringingAlarm={ringingAlarm}
-          handleStopAlarm={handleStopAlarm}
-          handleSnoozeAlarm={handleSnoozeAlarm}
-        />
+        <>
+          <div className="alarm-overlay"></div> {/* Semi-transparent background */}
+          <AlarmRingingModal
+            ringingAlarm={ringingAlarm}
+            handleStopAlarm={handleStopAlarm}
+            handleSnoozeAlarm={handleSnoozeAlarm}
+          />
+        </>
       )}
+
     </div>
   );
 };

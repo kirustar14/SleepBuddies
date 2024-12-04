@@ -156,6 +156,42 @@
   text-align: left; /* Ensures text is always left-aligned */
 }
 
+/* Actions for Ringing Alarms */
+.ringing-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.stop-alarm-button,
+.snooze-alarm-button {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.stop-alarm-button {
+  background-color: #e53935;
+  color: white;
+}
+
+.stop-alarm-button:hover {
+  background-color: #d32f2f;
+}
+
+.snooze-alarm-button {
+  background-color: #ff9800;
+  color: white;
+}
+
+.snooze-alarm-button:hover {
+  background-color: #fb8c00;
+}
+
 /* Alarm Actions Styling */
 .alarm-actions {
   display: flex;

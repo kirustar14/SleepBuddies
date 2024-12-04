@@ -1,4 +1,6 @@
 import React from "react";
+import "../../css/AlarmRingingModal.css";
+
 
 type AlarmType = {
   title: string;
