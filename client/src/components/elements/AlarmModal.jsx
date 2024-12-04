@@ -101,13 +101,14 @@ const AlarmModal = ({
             onChange={(e) => {
               if (e.target.value.length <= 16) {
                 handleInputChange(e);
-              } else {
-                alert("Alarm title cannot exceed 16 characters.");
               }
             }}
             className="alarm-modal-input"
             placeholder="Alarm"
           />
+          <div className="alarm-title-info">
+            <p className="alarm-title-count">{newAlarm.title.length}/16</p>
+          </div>
         </div>
 
         <div className="alarm-modal-field">
@@ -116,10 +117,17 @@ const AlarmModal = ({
             type="text"
             name="description"
             value={newAlarm.description}
-            onChange={handleInputChange}
+            onChange={(e) => {
+              if (e.target.value.length <= 50) {
+                handleInputChange(e);
+              }
+            }}
             className="alarm-modal-input"
             placeholder="e.g., Take iron pill, Go for a run, etc."
           />
+          <div className="alarm-description-info">
+            <p className="alarm-description-count">{newAlarm.description.length}/50</p>
+          </div>
         </div>
 
         <div className="alarm-modal-field">

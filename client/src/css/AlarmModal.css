@@ -51,6 +51,40 @@
   color: #000;
 }
 
+.alarm-title-info {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.alarm-title-count {
+  color: #666666; /* Faint grey color */
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.alarm-description-info {
+  color: red;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+}
+
+.alarm-description-count {
+  color: #555;
+  font-size: 12px;
+  margin: 0;
+}
+
+
+.save-time-note {
+  color: #a9a9a9; /* Faint grey color for the note */
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+
 .alarm-time-selection {
   display: flex;
   align-items: center;
