@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./css/applet.css"
 import "./css/App.css";
 import "./css/home.css"
@@ -18,6 +18,7 @@ const App = () => {
     // Check if the navbar should be displayed
     const hideNavbar = ["/", "/login", "/signup"].includes(location.pathname);
 
+    const [showHelp, setShowHelp] = useState(false);
 
     return (
         <div className="App">
@@ -42,8 +43,25 @@ const App = () => {
                                 <Link to="/music">Music</Link>
                             </li>
                         </ul>
+                        <button className="help-button" onClick={() => setShowHelp(true)}>Help</button>
                     </nav>
                 </header>
+            )}
+
+            {showHelp && (
+                <div className="help-modal">
+                    <div className="help-content">
+                        <button className="close-button" onClick={() => setShowHelp(false)}>X</button>
+                        <h2>Navigation Help</h2>
+                        <ul>
+                            <li><strong>Home:</strong> Go back to the main page.</li>
+                            <li><strong>Sleep:</strong> Track your sleep and get reports.</li>
+                            <li><strong>Meditation:</strong> Access guided meditation exercises.</li>
+                            <li><strong>Alarm:</strong> Set and manage your alarms.</li>
+                            <li><strong>Music:</strong> Play calming music for relaxation.</li>
+                        </ul>
+                    </div>
+                </div>
             )}
 
             <main>

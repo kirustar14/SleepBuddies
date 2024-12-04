@@ -77,3 +77,89 @@ body {
     transform: translate(-50%, -50%); /* Center the text */
     text-align: center;
 }
+
+/* Help Modal */
+.help-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1000;
+    width: 80%;
+    max-width: 500px;
+}
+
+.help-content {
+    text-align: left;
+    font-size: 16px;
+}
+
+.help-content h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.help-content ul {
+    padding-left: 20px;
+}
+
+.help-content ul li {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Close Button */
+.close-button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #666;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.close-button:hover {
+    color: #000;
+}
+
+.menu {
+    display: flex; /* Horizontal alignment */
+    align-items: center; /* Vertically center items */
+    justify-content: space-between; /* Push items to the edges */
+    width: 100%; /* Ensure the nav spans the full width */
+}
+
+.menu-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-item {
+    margin-right: 0px; /* Space between menu items */
+}
+
+.help-button {
+    margin-right: 0px;
+    background-color: #3f9647;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.help-button:hover {
+    background-color: #307136; 
+}
