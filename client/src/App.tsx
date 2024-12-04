@@ -14,6 +14,15 @@ import Welcome from './components/pages/welcome';
 import Music from "./components/pages/music";
 import Journal from "./components/pages/journal";
 
+// TODO For later
+// export let sessionLoggedIn = false;
+// export let user = "guest";
+//
+// export function setLoggedIn(username: string) {
+//     sessionLoggedIn = true;
+//     user = username;
+// }
+
 function App() {
     return (
         <div className="App">

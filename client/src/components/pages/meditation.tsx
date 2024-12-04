@@ -19,6 +19,7 @@ type MeditationTheme =
   | "stress-relief"
   | "self-compassion";
 
+
 const Meditation = () => {
   const [step, setStep] = useState(0);
   const [theme, setTheme] = useState<MeditationTheme | "">("");
@@ -103,9 +104,6 @@ const Meditation = () => {
           setStep(0);
         }
       }
-    }
-  };
-  
 
   const handleStartOver = () => {
     setStep(0);
