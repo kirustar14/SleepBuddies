@@ -1,5 +1,5 @@
 import axios from "axios";
-import {API_BASE_URL} from "../constants/constants";
+import {API_BASE_URL, hashLength} from "../constants/constants";
 
 export const fetchUsers = async(): Promise<string[]> => {
     let userData: string[] | PromiseLike<string[]> = [];
@@ -16,12 +16,23 @@ export const fetchUsers = async(): Promise<string[]> => {
 };
 
 export const checkUsernameExists = async (username: string) => {
-    let userData: string[] = await fetchUsers();
+    const userData: string[] = await fetchUsers();
     for (let i = 0; i < userData.length; i++) {
-        console.log(username + ': ' + userData[i].toString().includes('"username":"' + username + '"') )
+        console.log(userData[i]);
         if (userData[i].includes('"username":"' + username + '"')) {
             return true;
         }
     }
     return false;
+}
+
+export const getUserHash = async (username: string) => {
+    const userData: string[] = await fetchUsers();
+    for (let i = 0; i < userData.length; i++) {
+        let index = userData[i].search('"username":"' + username + '"');
+        if (index != -1) {
+            return userData[i].substring(index + 29 + username.length, index + 29 + username.length + hashLength);
+        }
+    }
+    return "";
 }

@@ -7,29 +7,36 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
+import {getUserHash} from "../utils/user-utils";
+import {Link} from "react-router-dom";
 
 const LoginPage = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [wrongPw, openWrongPwBox] = React.useState(false);
+    const [loggedIn, openLoggedInBox] = React.useState(false);
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
-        let hash = '$2a$10$GENriBFPvrc6TECKVcydouMiMgg1c1TX6TISwqfSsvSP3IRYstgF6'; // TODO fetch hash from db
+        let hash = getUserHash(username);
 
-        if (checkCorrectPassword(password, hash)) {
+        if (checkCorrectPassword(password, await hash)) {
             console.log("Login Successful");
-            // TODO set user as logged in
-            // TODO redirect to home
+            // setLoggedIn(username);
+            openLoggedInBox(true);
         } else {
             console.log("Login Failed");
             openWrongPwBox(true);
         }
     };
 
-    const handleClose = () => {
+    const handleWrongPwBoxClose = () => {
         openWrongPwBox(false);
+    };
+
+    const handleLoggedInBoxClose = () => {
+        openLoggedInBox(false);
     };
 
     useEffect(() => {
@@ -67,7 +74,7 @@ const LoginPage = () => {
 
             <Dialog className="login-dialog"
                 open={wrongPw}
-                onClose={handleClose}
+                onClose={handleWrongPwBoxClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
@@ -80,7 +87,28 @@ const LoginPage = () => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Try again</Button>
+                    <Button onClick={handleWrongPwBoxClose}>Try again</Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog className="login-dialog"
+                    open={loggedIn}
+                    onClose={handleLoggedInBoxClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Login Successful"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        You are now logged in.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Link to="/home">
+                        <Button onClick={handleLoggedInBoxClose}>Go to Home</Button>
+                    </Link>
                 </DialogActions>
             </Dialog>
         </div>

@@ -9,14 +9,24 @@ const Welcome = () => {
         document.title = "Sleep Buddies";
     }, []);
 
-    return (
-        <>
-            <div className="welcome_page-div">
-                <Login/>
-                <Signup/>
-            </div>
-        </>
-    );
+    // if (sessionLoggedIn) {
+    //     return (
+    //         <>
+    //             <div className="welcome_page-div">
+    //                 <Home/>
+    //             </div>
+    //         </>
+    //     );
+    // } else {
+        return (
+            <>
+                <div className="welcome_page-div">
+                    <Login/>
+                    <Signup/>
+                </div>
+            </>
+        );
+    // }
 };
 
 export default Welcome;
