@@ -48,6 +48,7 @@ app.use(express.json());
     }
   });
 
+  /*
     // Function to clear the journal entries when the server shuts down
     const clearDatabaseOnExit = async () => {
       try {
@@ -64,6 +65,8 @@ app.use(express.json());
       await clearDatabaseOnExit();
       process.exit(0);
     });
+
+    */
 
   // Start the server
   app.listen(port, () => {

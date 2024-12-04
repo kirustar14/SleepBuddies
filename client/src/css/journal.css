@@ -1,147 +1,129 @@
-/* General layout for the journal page */
+/* General Container */
 .journal-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
+  width: 90%;
+  margin: 20px auto;
+  background-color: #fff;
   padding: 20px;
-  flex-wrap: wrap;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.journal-left {
-  width: 45%;
-  max-height: 500px;
-  overflow-y: auto;
-  border-right: 2px solid #ddd;
-  padding-right: 20px;
+/* Question of the Day */
+.question-of-the-day {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  color: #333;
 }
 
-.journal-right {
-  width: 45%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.journal-left h2 {
-  font-size: 1.5em;
-  margin-bottom: 15px;
-  color: black;
-}
-
-.journal-entries {
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.entry {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-}
-
-.entry p {
-  margin: 5px 0;
-  color: black;
-}
-
-.entry strong {
-  font-size: 1.1em;
-  color: black;
-}
-
-.journal-right h1 {
-  font-size: 2em;
-  margin-bottom: 10px;
-  color: black;
-}
-
-textarea {
-  width: 100%;
-  height: 150px;
-  padding: 10px;
-  font-size: 1em;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  resize: none;
-  color: black;
-}
-
-/* Mood selection buttons */
+/* Mood Selection */
 .mood-selection {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   flex-wrap: wrap;
-}
-
-.mood-selection button {
-  padding: 10px;
-  font-size: 1em;
-  border-radius: 5px;
-  border: 2px solid #ddd;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  background-color: white; /* Default background color */
-  color: black; /* Default text color */
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.mood-selection button:hover {
-  opacity: 0.8;
-  color: white; /* Change text color to white on hover */
-}
-
-.mood-selection button[data-selected="true"] {
-  background-color: var(--mood-color); /* Selected background color */
-  color: white; /* Text color for selected button */
-}
-
-/* Save entry button */
-button {
-  padding: 10px 20px;
-  background-color: white; /* White background */
-  color: black; /* Black text */
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1em;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-button:hover {
-  background-color: #ddd; /* Light gray on hover */
-}
-
-button:disabled {
-  background-color: #f9f9f9;
-  color: #ccc;
-  cursor: not-allowed;
-}
-
-.mood-chart {
+  justify-content: center;
   margin-top: 20px;
 }
 
-.journal-left .entry p em {
-  font-size: 0.9em;
+.mood-button {
+  min-width: 50px;
+  padding: 15px;
+  font-size: 1.5em;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #f8f8f8;
+  transition: background 0.3s;
+}
+
+.mood-button.selected {
+  background-color: #e0e0e0;
+}
+
+.mood-button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Journal Entry Textarea */
+.journal-entry-textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 1em;
+  font-family: Arial, sans-serif;
+  resize: none;
+}
+
+/* Save Entry Button */
+.save-entry-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.save-entry-button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.save-entry-button:hover {
+  background-color: #45a049;
+}
+
+/* Mood Chart Section */
+.mood-chart {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+}
+
+.mood-chart h3 {
+  text-align: center;
+  color: #333;
+}
+
+.mood-chart canvas {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Past Entries Section */
+.past-entries {
+  max-height: 70vh;
+  overflow-y: auto;
+  margin-top: 30px;
+}
+
+.entry-card {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.entry-card strong {
+  font-size: 1.1em;
+  color: #333;
+}
+
+.entry-card em {
+  font-style: italic;
+  color: #555;
+}
+
+.entry-card p {
   color: #666;
 }
-
-/* Media queries for responsiveness */
-@media (max-width: 768px) {
-  .journal-container {
-    flex-direction: column;
-  }
-
-  .journal-left,
-  .journal-right {
-    width: 100%;
-    max-height: none;
-    border-right: none;
-  }
-}
-
 
 

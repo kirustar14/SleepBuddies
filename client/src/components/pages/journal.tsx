@@ -1,139 +1,159 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Chart } from "react-google-charts";
-import "../../css/journal.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import '../../css/journal.css'; 
 
-type JournalEntry = {
-  id: number;
-  mood: string;
-  entry: string;
-  timestamp: string;
-};
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+
+const questions = [
+  "What made you happy today?",
+  "What was the most challenging part of your day?",
+  "What are you grateful for today?",
+  "How are you feeling right now?",
+  "What is one thing you'd like to achieve tomorrow?",
+  "What was something you learned today?"
+];
 
 const Journal = () => {
-  const [entries, setEntries] = useState<JournalEntry[]>([]);
-  const [journalText, setJournalText] = useState("");
-  const [selectedMood, setSelectedMood] = useState("");
-  const [moodCounts, setMoodCounts] = useState<Record<string, number>>({});
+  const [entry, setEntry] = useState('');
+  const [mood, setMood] = useState('');
+  const [moods] = useState([
+    { emoji: '😊', name: 'Happy' },
+    { emoji: '😢', name: 'Sad' },
+    { emoji: '😄', name: 'Excited' },
+    { emoji: '😴', name: 'Tired' },
+    { emoji: '😰', name: 'Stressed' },
+    { emoji: '😌', name: 'Calm' },
+    { emoji: '💪', name: 'Motivated' },
+    { emoji: '😟', name: 'Anxious' }
+  ]);
+  const [journalEntries, setJournalEntries] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('journal'); // Default active tab is 'journal'
+  const [questionOfTheDay, setQuestionOfTheDay] = useState<string>('');
 
-  const moodOptions = [
-    { label: "Happy", color: "#ffeb3b", emoji: "😊" },
-    { label: "Sad", color: "#2196f3", emoji: "😢" },
-    { label: "Angry", color: "#f44336", emoji: "😡" },
-    { label: "Neutral", color: "#9e9e9e", emoji: "😐" },
-    { label: "Excited", color: "#4caf50", emoji: "😄" },
-  ];
-
-  const handleMoodSelection = (mood: string) => {
-    setSelectedMood(mood);
-  };
-
-  const saveJournal = async () => {
-    if (!selectedMood || !journalText) {
-      alert("Please select a mood and write a journal entry.");
-      return;
-    }
-
-    try {
-      const response = await axios.post("http://localhost:8080/journal", {
-        mood: selectedMood,
-        entry: journalText,
-      });
-
-      // Update mood counts for the chart
-      const newMoodCounts = { ...moodCounts };
-      newMoodCounts[selectedMood] = (newMoodCounts[selectedMood] || 0) + 1;
-      setMoodCounts(newMoodCounts);
-
-      // Save the entry and reset the form
-      setEntries([...entries, response.data]);
-      setJournalText("");
-      setSelectedMood("");
-    } catch (err) {
-      console.error("Error saving journal entry", err);
-    }
-  };
-
+  // Randomize Question of the Day
   useEffect(() => {
-    const fetchEntries = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/journal");
-        setEntries(response.data);
+    const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+    setQuestionOfTheDay(randomQuestion);
+  }, []);
 
-        const newMoodCounts: Record<string, number> = {};
-        response.data.forEach((entry: any) => {
-          const mood = entry.mood;
-          newMoodCounts[mood] = (newMoodCounts[mood] || 0) + 1;
-        });
-        setMoodCounts(newMoodCounts);
-      } catch (err) {
-        console.error("Error fetching journal entries", err);
+  // Fetch past journal entries on component mount
+  useEffect(() => {
+    const fetchJournalEntries = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/journal');
+        setJournalEntries(response.data);
+      } catch (error) {
+        console.error('Error fetching journal entries:', error);
       }
     };
+    fetchJournalEntries();
+  }, []);
 
-    fetchEntries();
-  }, [entries]);
+  // Handle saving the journal entry
+  const handleSaveEntry = async () => {
+    if (!mood || !entry) {
+      return; // Ensure both mood and entry are provided
+    }
 
-  const chartData = [
-    ["Mood", "Count"],
-    ...Object.entries(moodCounts).map(([mood, count]) => [mood, count]),
-  ];
+    setLoading(true);
 
-  // Fix: Add type definition for slices
-  const slices: Record<number, { offset: number; color: string }> = moodOptions.reduce((acc, mood, index) => {
-    acc[index] = { offset: 0.1, color: mood.color };
-    return acc;
-  }, {} as Record<number, { offset: number; color: string }>);
+    try {
+      const response = await axios.post('http://localhost:8080/journal', { mood, entry });
+      console.log('Entry saved', response.data);
+      setEntry('');
+      setMood('');
+      setJournalEntries([response.data, ...journalEntries]);  // Prepend new entry
+    } catch (error) {
+      console.error('Error saving entry', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Prepare data for the pie chart
+  const moodCounts = journalEntries.reduce((counts: any, entry) => {
+    counts[entry.mood] = (counts[entry.mood] || 0) + 1;
+    return counts;
+  }, {});
+
+  const moodData = {
+    labels: Object.keys(moodCounts),
+    datasets: [
+      {
+        label: 'Mood Distribution',
+        data: Object.values(moodCounts),
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#FF9800', '#8E44AD', '#E74C3C', '#2ECC71'],
+        borderColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#FF9800', '#8E44AD', '#E74C3C', '#2ECC71'],
+        borderWidth: 1,
+      },
+    ],
+  };
 
   return (
     <div className="journal-container">
-      <div className="journal-left">
-        <h2>Journal Entries</h2>
-        <div className="journal-entries">
-          {entries.map((entry) => (
-            <div key={entry.id} className="entry">
-              <p><strong>{entry.mood} {moodOptions.find(m => m.label === entry.mood)?.emoji}</strong></p>
+      <div className="tabs">
+        <button className={activeTab === 'journal' ? 'active' : ''} onClick={() => setActiveTab('journal')}>Journal Entry</button>
+        <button className={activeTab === 'chart' ? 'active' : ''} onClick={() => setActiveTab('chart')}>Mood Chart</button>
+        <button className={activeTab === 'entries' ? 'active' : ''} onClick={() => setActiveTab('entries')}>Past Entries</button>
+      </div>
+
+      {activeTab === 'journal' && (
+        <div className="journal-entry">
+          {/* Question of the Day */}
+          <div className="question-container">
+            <h3>Question of the Day</h3>
+            <p className="question-of-the-day">{questionOfTheDay}</p>  {/* Updated class name here */}
+          </div>
+          <textarea
+            className="journal-entry-textarea"
+            value={entry}
+            onChange={(e) => setEntry(e.target.value)}
+            placeholder="Write your response here..."
+          />
+          <div className="mood-selection">
+            {moods.map((moodObj, index) => (
+              <button
+                key={index}
+                className={`mood-button ${mood === moodObj.emoji ? 'selected' : ''}`}
+                onClick={() => setMood(moodObj.emoji)}
+              >
+                {moodObj.emoji} {moodObj.name}
+              </button>
+            ))}
+          </div>
+
+          <button
+            className="save-entry-button"
+            onClick={handleSaveEntry}
+            disabled={!mood || !entry || loading}
+          >
+            {loading ? 'Saving...' : 'Save Entry'}
+          </button>
+        </div>
+      )}
+
+      {activeTab === 'chart' && (
+        <div className="mood-chart">
+          <h3>Mood Distribution</h3>
+          <Pie data={moodData} />
+        </div>
+      )}
+
+      {activeTab === 'entries' && (
+        <div className="past-entries">
+          <h3>Past Entries</h3>
+          {journalEntries.map((entry: any, index: number) => (
+            <div key={index} className="entry-card">
+              <strong>{entry.mood}</strong>
               <p>{entry.entry}</p>
-              <p><em>{new Date(entry.timestamp).toLocaleString()}</em></p>
+              <em>{new Date(entry.timestamp).toLocaleString()}</em>
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="journal-right">
-        <h1>Daily Journal</h1>
-        <textarea
-          value={journalText}
-          onChange={(e) => setJournalText(e.target.value)}
-          placeholder="Write your thoughts..."
-        />
-        <div className="mood-selection">
-          {moodOptions.map((mood) => (
-            <button
-              key={mood.label}
-              style={{ backgroundColor: mood.color }}
-              onClick={() => handleMoodSelection(mood.label)}
-            >
-              {mood.emoji} {mood.label}
-            </button>
-          ))}
-        </div>
-        <button onClick={saveJournal}>Save Entry</button>
-
-        <div className="mood-chart">
-          <Chart
-            chartType="PieChart"
-            data={chartData}
-            options={{
-              title: "Mood Distribution",
-              is3D: true,
-              slices: slices, // Use the slices object here
-            }}
-            width={"100%"}
-            height={"400px"}
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 };
