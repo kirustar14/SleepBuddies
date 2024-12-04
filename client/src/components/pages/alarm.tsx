@@ -143,37 +143,38 @@ const Alarm = () => {
               alarmSoundRef.current.currentTime = 0;
             }
   
-            const snoozeTime = new Date();
-            const [hoursStr, minutesStr, period] = alarm.time.split(/[: ]/);
+            const [hourMinute, period] = alarm.time.split(" ");
+            const [hours, minutes] = hourMinute.split(":").map(Number);
   
-            // Parse hours and minutes safely
-            const hours = parseInt(hoursStr, 10);
-            const minutes = parseInt(minutesStr, 10);
-  
+            // Validate and handle potential parsing issues
             if (isNaN(hours) || isNaN(minutes)) {
               console.error("Invalid time format in alarm.");
               return alarm; // Leave the alarm unchanged
             }
   
-            // Convert to 24-hour time and calculate snoozed time
-            const newHours = (hours % 12) + (period === "PM" ? 12 : 0);
-            snoozeTime.setHours(newHours);
-            snoozeTime.setMinutes(minutes + 5); // Add 5 minutes
+            // Convert to 24-hour format for calculations
+            let newHours = (hours % 12) + (period === "PM" ? 12 : 0);
+            let newMinutes = minutes + 5;
   
-            // Handle overflow past 59 minutes
-            if (snoozeTime.getMinutes() >= 60) {
-              snoozeTime.setHours(snoozeTime.getHours() + 1);
-              snoozeTime.setMinutes(snoozeTime.getMinutes() - 60);
+            // Handle minute overflow past 59
+            if (newMinutes >= 60) {
+              newMinutes -= 60;
+              newHours += 1;
             }
   
-            // Format back to 12-hour time
-            const newTime = snoozeTime.toLocaleTimeString([], {
+            // Handle hour overflow past 23
+            if (newHours >= 24) {
+              newHours -= 24;
+            }
+  
+            // Convert back to 12-hour format with AM/PM
+            const newTime = new Date(0, 0, 0, newHours, newMinutes).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
               hour12: true,
             });
   
-            // Update the alarm's time
+            // Update the alarm's time and reset hasRung
             return { ...alarm, time: newTime, hasRung: false };
           }
           return alarm;
@@ -183,11 +184,7 @@ const Alarm = () => {
       // Clear the ringing alarm state
       setRingingAlarm(null);
     }
-  };
-  
-  
-  
-  
+  };  
 
   const handleStopAlarm = () => {
     if (alarmSoundRef.current) {
