@@ -3,7 +3,6 @@ import "../../css/alarm.css";
 import AlarmModal from "../elements/AlarmModal";
 
 const Alarm = () => {
-  
   useEffect(() => {
     document.title = "Sleep Buddies - Alarms";
   }, []);
@@ -29,7 +28,7 @@ const Alarm = () => {
   }>({
     title: "",
     description: "",
-    time: "", // Let time be empty initially, it will be set in the AlarmModal
+    time: "",
     sound: true,
     frequency: []
   });
@@ -47,7 +46,9 @@ const Alarm = () => {
   const handleSaveAlarm = () => {
     if (newAlarm.time) {
       const alarmTitle = newAlarm.title.trim() === "" ? "Alarm" : newAlarm.title;
-      setAlarms([...alarms, { ...newAlarm, title: alarmTitle }]);
+      // Ensure the title is exactly 16 characters long by padding it with spaces
+      const paddedTitle = alarmTitle.padEnd(16, " ");
+      setAlarms([...alarms, { ...newAlarm, title: paddedTitle }]);
       handleCloseModal();
     } else {
       alert("Please select a time for the alarm.");
