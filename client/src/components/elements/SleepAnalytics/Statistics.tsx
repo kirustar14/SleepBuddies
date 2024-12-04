@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import { addHours } from "../../utils/sleep-utils";
+
+type Log = {
+    date: Date;
+    hours: number;
+};
 
 export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) => void }> = ({ updateSleepData }) => {
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -42,6 +48,13 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
 
         const validDays = newHoursSlept.filter(hours => hours > 0); // Only count days with non-zero hours
         const totalSleep = validDays.reduce((acc, hours) => acc + hours, 0);
+
+        // add to json
+        const entry = {
+            date: new Date('2024-12-01'), // December 1, 2024
+            hours: 7,
+        }
+        // addHours(entry);
 
         setSleepTimes(newSleepTimes);
         setWakeTimes(newWakeTimes);
