@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../css/alarm.css";
 import AlarmModal from "../elements/AlarmModal";
 
 const Alarm = () => {
   
   useEffect(() => {
-        document.title = "Sleep Buddies - Alarms";
-    }, []);
+    document.title = "Sleep Buddies - Alarms";
+  }, []);
   
   const [alarms, setAlarms] = useState<Array<{
     title: string;
