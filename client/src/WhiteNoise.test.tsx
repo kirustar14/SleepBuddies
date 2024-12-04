@@ -1,100 +1,89 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
 import MusicPlayer from './components/pages/music'; // Import the MusicPlayer component
-import useSound from 'use-sound'; // Mock the use-sound hook
+// Mock playlist to use in tests
+const whiteNoiseSounds = [
+  { name: "White Noise", file: "white-noise.mp3" },
+  { name: "Rain", file: "rain-sound.mp3" },
+  { name: "Ocean", file: "ocean-sound.mp3" },
+  { name: "Forest", file: "forest-sound.mp3" },
+];
 
-// Mocking the `use-sound` hook
-jest.mock('use-sound', () => jest.fn());
-
-describe('MusicPlayer Component', () => {
+describe("MusicPlayer Component", () => {
   beforeEach(() => {
-    // Mock the use-sound hook to return dummy play, pause, and stop functions
-    (useSound as jest.Mock).mockReturnValue([
-      jest.fn(), // play function
-      { pause: jest.fn(), stop: jest.fn() }, // pause and stop functions
-    ]);
+    jest.spyOn(window, "Audio").mockImplementation(() => ({
+      play: jest.fn(),
+      pause: jest.fn(),
+      load: jest.fn(),
+      src: "",
+      currentTime: 0,
+    }) as any); // Mock Audio object for testing
   });
 
-  test('renders the component correctly', () => {
-    render(<MusicPlayer />);
-    
-    // Check for static elements like title and cover image
-    expect(screen.getByText(/Playing Now/i)).toBeInTheDocument();
-    expect(screen.getByAltText(/Music cover/i)).toBeInTheDocument();
-    expect(screen.getByText(/White Noise/i)).toBeInTheDocument();
-    
-    // Check if the select dropdown is rendered
-    expect(screen.getByLabelText(/Choose White Noise/i)).toBeInTheDocument();
-    expect(screen.getByRole('combobox')).toBeInTheDocument();
-    
-    // Check for the play button
-    expect(screen.getByRole('button')).toBeInTheDocument();
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
-  test('play/pause button toggles correctly', async () => {
+  it("plays the track when the play button is clicked", () => {
     render(<MusicPlayer />);
-    
-    const playButton = screen.getByRole('button', {
-      name: /play/i,
-    });
-    const pauseButton = screen.getByRole('button', {
-      name: /pause/i,
-    });
-    
-    // Initially, it should show the play button
-    expect(playButton).toBeInTheDocument();
-    
-    // Simulate play button click
+    const playButton = screen.getByRole("button", { name: /play/i });
     fireEvent.click(playButton);
 
-    // Now the pause button should be rendered after play is triggered
-    await waitFor(() => expect(pauseButton).toBeInTheDocument());
-    
-    // Simulate pause button click
+    expect(window.Audio.prototype.play).toHaveBeenCalled();
+  });
+
+  it("pauses the track when the pause button is clicked", () => {
+    render(<MusicPlayer />);
+    const playButton = screen.getByRole("button", { name: /play/i });
+    fireEvent.click(playButton); // First play the track
+
+    const pauseButton = screen.getByRole("button", { name: /pause/i });
     fireEvent.click(pauseButton);
 
-    // Now it should revert back to the play button
-    await waitFor(() => expect(playButton).toBeInTheDocument());
+    expect(window.Audio.prototype.pause).toHaveBeenCalled();
   });
 
-  test('sound changes when the selector option is changed', async () => {
+  it("skips to the next track when the next button is clicked", () => {
     render(<MusicPlayer />);
+    const nextButton = screen.getByRole("button", { name: /skip next/i });
 
-    const selectElement = screen.getByRole('combobox');
-    fireEvent.change(selectElement, { target: { value: 'rain-sound.mp3' } });
-
-    // Check if the sound is updated correctly in the state (in the mock)
-    expect(useSound).toHaveBeenCalledWith('rain-sound.mp3', expect.any(Object));
-  });
-
-  test('skip next and previous buttons are rendered and clickable', () => {
-    render(<MusicPlayer />);
-    
-    const prevButton = screen.getByRole('button', {
-      name: /skip previous/i,
-    });
-    const nextButton = screen.getByRole('button', {
-      name: /skip next/i,
-    });
-    
-    // Check if both buttons are rendered
-    expect(prevButton).toBeInTheDocument();
-    expect(nextButton).toBeInTheDocument();
-    
-    // Check if clicking the buttons does not break the app (since they're mocked to stop)
-    fireEvent.click(prevButton);
     fireEvent.click(nextButton);
+
+    const nowPlaying = screen.getByText(/Rain|Ocean|Forest/i); // Matches the next track name
+    expect(nowPlaying).toBeInTheDocument();
   });
 
-  test('stops the sound after changing the selection', () => {
+  it("skips to the previous track when the previous button is clicked", () => {
     render(<MusicPlayer />);
-  
-    const selectElement = screen.getByLabelText(/Choose White Noise:/i);
-  
-    // Simulate changing the sound selection
-    fireEvent.change(selectElement, { target: { value: 'rain-sound.mp3' } });
-  
-    // Ensure the stop function is called
-    const stopMock = (useSound as jest.Mock).mock.results[0].value[1].stop;
-    expect(stopMock).toHaveBeenCalled();
+
+    const previousButton = screen.getByRole("button", { name: /skip previous/i });
+    fireEvent.click(previousButton);
+
+    const nowPlaying = screen.getByText(/Forest/i); // Assuming circular playlist logic
+    expect(nowPlaying).toBeInTheDocument();
+  });
+
+  it("loops back to the last track when skipping previous from the first track", () => {
+    render(<MusicPlayer />);
+
+    const previousButton = screen.getByRole("button", { name: /skip previous/i });
+    fireEvent.click(previousButton);
+
+    const nowPlaying = screen.getByText(/Forest/i); // Last track in the whiteNoiseSounds
+    expect(nowPlaying).toBeInTheDocument();
+  });
+
+  it("loops back to the first track when skipping next from the last track", () => {
+    render(<MusicPlayer />);
+
+    // Simulate skipping to the last track
+    const nextButton = screen.getByRole("button", { name: /skip next/i });
+    for (let i = 0; i < whiteNoiseSounds.length; i++) {
+      fireEvent.click(nextButton);
+    }
+
+    const nowPlaying = screen.getByText(/White Noise/i); // First track in the playlist
+    expect(nowPlaying).toBeInTheDocument();
   });
 });
