@@ -54,7 +54,7 @@ const MusicPlayer = () => {
     if (isPlaying) {
       audioRef.current.play().catch((error) => console.error("Playback error:", error));
     }
-  }, [currentIndex, currentPlaylist]);
+  }, [currentIndex, currentPlaylist, isPlaying]);
 
   const togglePlayPause = () => {
     if (isPlaying) {
@@ -90,6 +90,9 @@ const MusicPlayer = () => {
 
   // Function to switch between playlists
   const switchPlaylist = (playlist: string) => {
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0; // Reset playback state
+  
     if (playlist === "music") {
       setCurrentPlaylist(musicSounds);
     } else {
@@ -98,6 +101,7 @@ const MusicPlayer = () => {
     setCurrentIndex(0); // Reset to first track of the new playlist
     setIsPlaying(false); // Stop playback when switching
   };
+  
 
   return (
     <div className="component">
