@@ -45,8 +45,29 @@ const Sleep = () => {
 
     return (
         <>
-            
             <h1>Sleep Analytics</h1>
+            {averageSleep >= sleepGoal && averageSleep > 0 && (
+                <div className="feedback">
+                    <img
+                        src={GoodJobImage}
+                        alt="Good Job!"
+                        style={{ width: "100px", marginTop: "20px" }}
+                    />
+                    <h2>Great work! You're exceeding your sleep goal!</h2>
+                </div>
+            )}
+
+            {averageSleep < sleepGoal && averageSleep > 0 && (
+                <div className="feedback">
+                    <img
+                        src={BadJobImage}
+                        alt="Bad Job!"
+                        style={{ width: "100px", marginTop: "20px" }}
+                    />
+                    <h2>Oh-no! Try sleeping more to hit your goal!</h2>
+                </div>
+            )}
+
             <div className="sleep-goal-container">
                 <label htmlFor="sleep-goal">
                     <strong>Set Your Sleep Goal (hours): </strong>
@@ -74,27 +95,6 @@ const Sleep = () => {
                 <div className="item"><Statistics updateSleepData={updateSleepData}/></div> 
             </div>
 
-            {averageSleep >= sleepGoal && averageSleep > 0 && (
-                <div className="feedback">
-                    <img
-                        src={GoodJobImage}
-                        alt="Good Job!"
-                        style={{ width: "200px", marginTop: "20px" }}
-                    />
-                    <h2>Great work! You're exceeding your sleep goal!</h2>
-                </div>
-            )}
-
-            {averageSleep < sleepGoal && averageSleep > 0 && (
-                <div className="feedback">
-                    <img
-                        src={BadJobImage}
-                        alt="Bad Job!"
-                        style={{ width: "200px", marginTop: "20px" }}
-                    />
-                    <h2>Oh-no! Try sleeping more to hit your goal!</h2>
-                </div>
-            )}
         </>
     );
 };

@@ -76,6 +76,7 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
                     <div key={index}>
                         <label>{day} ({weekDates[index]}):</label>
                         <input
+                            className="smallInput"
                             data-testid={"start" + day}
                             type="time"
                             value={sleepTimes[index]}
@@ -83,6 +84,7 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
                         />
                         <span> to </span>
                         <input
+                            className="smallInput"
                             data-testid={"end" + day}
                             type="time"
                             value={wakeTimes[index]}
