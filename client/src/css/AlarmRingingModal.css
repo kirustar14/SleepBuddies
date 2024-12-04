@@ -1,0 +1,58 @@
+.alarm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Ensure it appears behind the modal */
+  }
+  
+  .alarm-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it appears above the overlay */
+    text-align: center;
+  }
+  
+  .alarm-popup h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .stop-alarm-button,
+  .snooze-alarm-button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .stop-alarm-button {
+    background-color: #e53e3e;
+    color: white;
+  }
+  
+  .stop-alarm-button:hover {
+    background-color: #c53030;
+  }
+  
+  .snooze-alarm-button {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .snooze-alarm-button:hover {
+    background-color: #45a049;
+  }
+  
