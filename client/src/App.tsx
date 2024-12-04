@@ -12,6 +12,7 @@ import Meditation from "./components/pages/meditation";
 import Alarm from "./components/pages/alarm";
 import Welcome from './components/pages/welcome';
 import Music from "./components/pages/music";
+import Journal from "./components/pages/journal";
 
 // TODO For later
 // export let sessionLoggedIn = false;
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/meditation" Component={Meditation}/>
                 <Route path="/alarm" Component={Alarm}/>
                 <Route path="/music" Component={Music}/>
+                <Route path="/journal" Component={Journal}/>
             </Routes>
         </div>
     );
