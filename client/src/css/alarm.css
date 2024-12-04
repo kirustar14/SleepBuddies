@@ -1,5 +1,6 @@
+/* General Alarm Page Styling */
 .alarm-page {
-  padding: 0px;
+  padding: 0;
 }
 
 .alarm-header {
@@ -28,12 +29,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.3s ease;
 }
 
 .add-alarm-button:hover {
   background-color: #f1f1f1;
 }
 
+/* Note Styling */
+.alarm-note {
+  font-size: 0.9em;
+  color: #555;
+  margin: 10px 20px;
+  text-align: left;
+}
+
+/* Alarm List Styling */
 .alarm-list {
   margin-top: 20px;
   padding: 0 20px;
@@ -44,70 +55,46 @@
   padding: 20px;
   margin-bottom: 15px;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
+.alarm-item.inactive {
+  opacity: 0.5;
+}
+
+/* Alarm Title, Time, and Toggle */
 .alarm-title-time-container {
-  display: grid;
-  grid-template-columns: 4fr 1fr 1fr; /* Adjusted grid: 4/6 for title, 1/6 for time, 1/6 for toggle */
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
 }
 
-.alarm-title-time {
-  display: flex;
-  align-items: center;
-}
-
 .alarm-title {
-  font-size: 1.6em;
+  font-size: 1.4em;
   font-weight: bold;
   color: black;
   margin: 0;
 }
 
 .alarm-time {
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-weight: bold;
   color: black;
-  text-align: center;
-}
-
-.alarm-description-frequency {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.alarm-description {
-  font-size: 1.2em;
-  color: #555;
-  margin: 0;
-}
-
-.alarm-frequency {
-  font-size: 1em;
-  color: #777;
   text-align: right;
-  margin: 0;
-}
-
-.alarm-sound {
-  font-size: 1em;
-  color: #777;
-  text-align: right;
-  margin-top: 10px;
 }
 
 .alarm-toggle {
   position: relative;
   display: inline-block;
-  width: 50px;
-  height: 25px;
+  width: 25px;
+  height: 12.5px;
   margin-left: 20px;
-  text-align: right;
 }
 
 .alarm-toggle input {
@@ -122,20 +109,20 @@
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  transition: background-color 0.4s;
+  transition: background-color 0.4s ease;
   border-radius: 25px;
 }
 
 .alarm-toggle .slider:before {
   position: absolute;
   content: "";
-  height: 21px;
-  width: 21px;
+  height: 10.5px;
+  width: 10.5px;
   background-color: white;
   border-radius: 50%;
-  top: 2px;
-  left: 2px;
-  transition: transform 0.4s;
+  top: 1px;
+  left: 1px;
+  transition: transform 0.4s ease;
 }
 
 .alarm-toggle input:checked + .slider {
@@ -143,5 +130,63 @@
 }
 
 .alarm-toggle input:checked + .slider:before {
-  transform: translateX(25px);
+  transform: translateX(12.5px);
+}
+
+/* Sound Status and Frequency */
+.alarm-sound-frequency {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.alarm-sound,
+.alarm-frequency {
+  margin: 0;
+  font-size: 1em;
+  color: #777;
+}
+
+/* Alarm Description Styling */
+.alarm-description {
+  margin-top: 10px;
+  font-size: 1em;
+  color: #555;
+  text-align: left; /* Ensures text is always left-aligned */
+}
+
+/* Alarm Actions Styling */
+.alarm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.edit-alarm-button,
+.delete-alarm-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+}
+
+.edit-alarm-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.edit-alarm-button:hover {
+  background-color: #45a049;
+}
+
+.delete-alarm-button {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.delete-alarm-button:hover {
+  background-color: #c53030;
 }
