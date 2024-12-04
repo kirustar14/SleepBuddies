@@ -52,6 +52,9 @@ const App = () => {
                             <li className="menu-item">
                                 <Link to="/music">Music</Link>
                             </li>
+                            <li className="menu-item">
+                                <Link to="/journal">Journal</Link>
+                            </li>
                         </ul>
                         <button className="help-button" onClick={() => setShowHelp(true)}>Help</button>
                     </nav>
@@ -69,6 +72,7 @@ const App = () => {
                             <li><strong>Meditation:</strong> Access guided meditation exercises.</li>
                             <li><strong>Alarm:</strong> Set and manage your alarms.</li>
                             <li><strong>Music:</strong> Play calming music for relaxation.</li>
+                            <li><strong>Journal:</strong> Record your thoughts, track your sleep patterns, and reflect on your day.</li>
                         </ul>
                     </div>
                 </div>
@@ -84,6 +88,7 @@ const App = () => {
                     <Route path="/meditation" Component={Meditation} />
                     <Route path="/alarm" Component={Alarm} />
                     <Route path="/music" Component={Music} />
+                    <Route path="/journal" Component={Journal} />
                 </Routes>
             </main>
         </div>
