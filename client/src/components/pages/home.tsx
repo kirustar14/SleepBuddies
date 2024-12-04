@@ -3,6 +3,7 @@ import Meditation from "../elements/Meditation";
 import Sleep from "../elements/Sleep";
 import Alarm from "../elements/Alarm";
 import Music from "../elements/Music";
+import Journal from "../elements/Journal";
 
 const Home = () => {
 
@@ -18,6 +19,7 @@ const Home = () => {
                 <Meditation/>
                 <Alarm/>
                 <Music/>
+                <Journal/>
             </div>
         </>
     );
