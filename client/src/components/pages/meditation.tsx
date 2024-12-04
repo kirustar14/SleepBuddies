@@ -98,10 +98,14 @@ const Meditation = () => {
       } else if (direction === "prev") {
         if (step > 0) {
           setStep((prevStep) => prevStep - 1);
+        } else {
+          setTheme("");
+          setStep(0);
         }
       }
     }
   };
+  
 
   const handleStartOver = () => {
     setStep(0);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
-import '../../css/journal.css'; 
+import '../../css/journal.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
@@ -65,7 +65,7 @@ const Journal = () => {
       console.log('Entry saved', response.data);
       setEntry('');
       setMood('');
-      setJournalEntries([response.data, ...journalEntries]);  // Prepend new entry
+      setJournalEntries([response.data, ...journalEntries]); // Prepend new entry
     } catch (error) {
       console.error('Error saving entry', error);
     } finally {
@@ -92,6 +92,20 @@ const Journal = () => {
     ],
   };
 
+  const moodChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false, // Allows manual control over the size
+    plugins: {
+      legend: {
+        labels: {
+          font: {
+            size: 16, // Enlarges legend labels
+          },
+        },
+      },
+    },
+  };
+
   return (
     <div className="journal-container">
       <div className="tabs">
@@ -105,7 +119,7 @@ const Journal = () => {
           {/* Question of the Day */}
           <div className="question-container">
             <h3>Question of the Day</h3>
-            <p className="question-of-the-day">{questionOfTheDay}</p>  {/* Updated class name here */}
+            <p className="question-of-the-day">{questionOfTheDay}</p>
           </div>
           <textarea
             className="journal-entry-textarea"
@@ -138,7 +152,9 @@ const Journal = () => {
       {activeTab === 'chart' && (
         <div className="mood-chart">
           <h3>Mood Distribution</h3>
-          <Pie data={moodData} />
+          <div className="chart-container">
+            <Pie data={moodData} options={moodChartOptions} />
+          </div>
         </div>
       )}
 

@@ -126,4 +126,14 @@
   color: #666;
 }
 
+.chart-container {
+  width: 60%; 
+  margin: 0 auto; 
+  position: relative;
+  height: 300px; 
+}
+
+
+
+
 
