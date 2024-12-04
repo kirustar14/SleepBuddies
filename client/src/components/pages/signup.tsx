@@ -9,6 +9,8 @@ import axios from "axios";
 import {API_BASE_URL} from "../constants/constants";
 import {Link} from "react-router-dom";
 import {checkUsernameExists, fetchUsers} from "../utils/user-utils";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 
 const SignUpPage = () => {
     const [isChecked, setIsChecked] = useState(false);
@@ -16,6 +18,7 @@ const SignUpPage = () => {
     const [password, setPassword] = useState<string>('');
     const [confirmPw, setConfirmPw] = useState<string>('');
 
+    const [usernameExists, openUsernameExistsBox] = React.useState(false);
     const [emptyField, openEmptyFieldBox] = React.useState(false);
     const [pwMatch, openPasswordMatchBox] = React.useState(false);
     const [accCreated, openAccCreatedBox] = React.useState(false);
@@ -46,16 +49,13 @@ const SignUpPage = () => {
     const handleCredentials = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
-        console.log(fetchUsers());
-
         if (await checkUsernameExists(username)) {
             console.error("Username already exists!");
-        }
-        if (username === '' || password === '') {
+            openUsernameExistsBox(true);
+        } else if (username === '' || password === '') {
             console.error("Field cannot be empty");
             openEmptyFieldBox(true);
-        }
-        if (password !== confirmPw) {
+        } else if (password !== confirmPw) {
             console.error("Passwords don't match");
             openPasswordMatchBox(true);
         } else {
@@ -73,14 +73,21 @@ const SignUpPage = () => {
 
     const handleEmptyFieldClose = () => {
         openEmptyFieldBox(false);
+        refreshPage();
     };
 
     const handlePwMatchClose = () => {
         openPasswordMatchBox(false);
+        refreshPage();
     };
 
     const handleAccCreatedClose = ()=> {
         openAccCreatedBox(false);
+    };
+
+    const handleUsernameExistsClose = ()=> {
+        openUsernameExistsBox(false);
+        refreshPage();
     };
 
     useEffect(() => {
@@ -158,6 +165,25 @@ const SignUpPage = () => {
                     Sign Up
                 </button>
             </form>
+
+            <Dialog className="username-exists-dialog"
+                    open={usernameExists}
+                    onClose={handleUsernameExistsClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Username Already Exists!"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Please try another username.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleUsernameExistsClose}>Try again</Button>
+                </DialogActions>
+            </Dialog>
 
             <Dialog className="emptyfield-dialog"
                     open={emptyField}
