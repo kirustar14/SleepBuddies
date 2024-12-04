@@ -1,7 +1,7 @@
 import axios from "axios";
 import {API_BASE_URL, hashLength} from "../constants/constants";
 
-export const fetchUsers = async(): Promise<string[]> => {
+export const fetchUsers = async (): Promise<string[]> => {
     let userData: string[] | PromiseLike<string[]> = [];
     try {
         const response = await axios.get(API_BASE_URL + "/users");

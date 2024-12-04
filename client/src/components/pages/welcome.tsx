@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import Login from "../elements/Login";
 import Signup from "../elements/Signup";
 import "../../css/welcome.css";
@@ -18,14 +18,14 @@ const Welcome = () => {
     //         </>
     //     );
     // } else {
-        return (
-            <>
-                <div className="welcome_page-div">
-                    <Login/>
-                    <Signup/>
-                </div>
-            </>
-        );
+    return (
+        <>
+            <div className="welcome_page-div">
+                <Login/>
+                <Signup/>
+            </div>
+        </>
+    );
     // }
 };
 

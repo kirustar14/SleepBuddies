@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import "../../css/signup.css";
 import {generateSaltedHash} from "../utils/encryption";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -23,9 +23,9 @@ const SignUpPage = () => {
     const [pwMatch, openPasswordMatchBox] = React.useState(false);
     const [accCreated, openAccCreatedBox] = React.useState(false);
 
-    function refreshPage(){
+    function refreshPage() {
         window.location.reload();
-    };
+    }
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
@@ -81,11 +81,11 @@ const SignUpPage = () => {
         refreshPage();
     };
 
-    const handleAccCreatedClose = ()=> {
+    const handleAccCreatedClose = () => {
         openAccCreatedBox(false);
     };
 
-    const handleUsernameExistsClose = ()=> {
+    const handleUsernameExistsClose = () => {
         openUsernameExistsBox(false);
         refreshPage();
     };
@@ -98,7 +98,7 @@ const SignUpPage = () => {
         <div className="signup-page">
             <h1>Sign Up</h1>
             {/* Username*/}
-            <form className="signup-form" >
+            <form className="signup-form">
                 <div className="input-group">
                     <label>Username:</label>
                     <input

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import "../../css/login.css";
 import {checkCorrectPassword} from "../utils/encryption";
 import Dialog from "@mui/material/Dialog";
@@ -72,11 +72,11 @@ const LoginPage = () => {
                 <button type="submit" className="login-button" onClick={handleSubmit}>Log In</button>
             </form>
 
-            <Dialog className="login-dialog"
-                open={wrongPw}
-                onClose={handleWrongPwBoxClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
+            <Dialog className="wrongpw-dialog"
+                    open={wrongPw}
+                    onClose={handleWrongPwBoxClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
                     {"Invalid credentials"}
@@ -91,7 +91,7 @@ const LoginPage = () => {
                 </DialogActions>
             </Dialog>
 
-            <Dialog className="login-dialog"
+            <Dialog className="loggedin-dialog"
                     open={loggedIn}
                     onClose={handleLoggedInBoxClose}
                     aria-labelledby="alert-dialog-title"

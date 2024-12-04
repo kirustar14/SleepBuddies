@@ -8,9 +8,9 @@ const cors = require("cors");
 const app = express();
 const port = 8080;
 
-// The has for this secion
-// TODO create secret for development
-const thisHash = generateRandomHash(10);
+// The hash for this session
+// TODO create secret for deployment
+const sessionHash = generateRandomHash(10);
 
 app.use(cors());
 app.use(express.json());
