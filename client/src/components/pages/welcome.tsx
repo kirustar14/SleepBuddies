@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import Login from "../elements/Login";
 import Signup from "../elements/Signup";
 import "../../css/welcome.css";
@@ -9,6 +9,15 @@ const Welcome = () => {
         document.title = "Sleep Buddies";
     }, []);
 
+    // if (sessionLoggedIn) {
+    //     return (
+    //         <>
+    //             <div className="welcome_page-div">
+    //                 <Home/>
+    //             </div>
+    //         </>
+    //     );
+    // } else {
     return (
         <>
             <div className="welcome-header">
@@ -20,6 +29,7 @@ const Welcome = () => {
             </div>
         </>
     );
+    // }
 };
 
 export default Welcome;

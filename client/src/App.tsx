@@ -13,6 +13,15 @@ import Alarm from "./components/pages/alarm";
 import Welcome from './components/pages/welcome';
 import Music from "./components/pages/music";
 
+// TODO For later
+// export let sessionLoggedIn = false;
+// export let user = "guest";
+//
+// export function setLoggedIn(username: string) {
+//     sessionLoggedIn = true;
+//     user = username;
+
+
 const App = () => {
     const location = useLocation(); // Get the current route
     // Check if the navbar should be displayed
