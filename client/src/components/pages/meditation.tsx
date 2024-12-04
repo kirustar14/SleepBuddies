@@ -93,7 +93,7 @@ const Meditation = () => {
   const handleNavigation = (direction: "next" | "prev") => {
     if (theme && meditationThemes[theme]) {
       if (direction === "next") {
-        if (step < meditationThemes[theme].length) {
+        if (step < meditationThemes[theme].length - 1) {
           setStep((prevStep) => prevStep + 1);
         }
       } else if (direction === "prev") {
@@ -104,6 +104,8 @@ const Meditation = () => {
           setStep(0);
         }
       }
+    }
+  };
 
   const handleStartOver = () => {
     setStep(0);
