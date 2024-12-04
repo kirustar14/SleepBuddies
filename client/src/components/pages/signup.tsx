@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import axios from "axios";
 import {API_BASE_URL} from "../constants/constants";
+import {Link} from "react-router-dom";
+import {checkUsernameExists, fetchUsers} from "../utils/user-utils";
 
 const SignUpPage = () => {
     const [isChecked, setIsChecked] = useState(false);
@@ -16,29 +18,39 @@ const SignUpPage = () => {
 
     const [emptyField, openEmptyFieldBox] = React.useState(false);
     const [pwMatch, openPasswordMatchBox] = React.useState(false);
+    const [accCreated, openAccCreatedBox] = React.useState(false);
+
+    function refreshPage(){
+        window.location.reload();
+    };
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
 
-    const handleSubmitInfo = async (username: string, submitPw: string) => {
+    const handleSubmitInfo = async (username: string, submitPw: string): Promise<boolean> => {
         try {
             await axios.post(API_BASE_URL + "/users", {
                 username,
                 encryptedPw: submitPw,
             });
-            alert("Account created successfully.");
+            console.log("User info submitted, account created.");
+            return true;
         } catch (error) {
             console.error("Error creating account:", error);
             alert("Failed to create account. Please try again.");
         }
+        return false;
     };
 
-    const handleCredentials = (e: { preventDefault: () => void; }) => {
+    const handleCredentials = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
-        // TODO Check if username already in database
+        console.log(fetchUsers());
 
+        if (await checkUsernameExists(username)) {
+            console.error("Username already exists!");
+        }
         if (username === '' || password === '') {
             console.error("Field cannot be empty");
             openEmptyFieldBox(true);
@@ -48,16 +60,16 @@ const SignUpPage = () => {
             openPasswordMatchBox(true);
         } else {
             let hash = generateSaltedHash(password);
-            console.log(hash);
             if (hash === '' || hash === null) {
                 console.error("Hash gen error");
                 throw Error("Hash is null");
             }
-            handleSubmitInfo(username, hash).then(r => Promise<null>);
-            // TODO adds success message
-            // TODO jump back to welcome page
+            console.log("Hash Generated");
+            if (await handleSubmitInfo(username, hash).then(r => Promise<boolean>)) {
+                openAccCreatedBox(true);
+            }
         }
-    }
+    };
 
     const handleEmptyFieldClose = () => {
         openEmptyFieldBox(false);
@@ -65,6 +77,10 @@ const SignUpPage = () => {
 
     const handlePwMatchClose = () => {
         openPasswordMatchBox(false);
+    };
+
+    const handleAccCreatedClose = ()=> {
+        openAccCreatedBox(false);
     };
 
     useEffect(() => {
@@ -166,6 +182,21 @@ const SignUpPage = () => {
                 </DialogTitle>
                 <DialogActions>
                     <Button onClick={handlePwMatchClose}>Try again</Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog className="acc-created-dialog"
+                    open={accCreated}
+                    onClose={handleAccCreatedClose}
+                    aria-labelledby="alert-dialog-title"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Account Created"}
+                </DialogTitle>
+                <DialogActions>
+                    <Link to="/login">
+                        <Button>Login</Button>
+                    </Link>
                 </DialogActions>
             </Dialog>
         </div>

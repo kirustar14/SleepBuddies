@@ -11,7 +11,7 @@ const initDB = async () => {
     // Create a table for the users
     await db.exec(`
         CREATE TABLE IF NOT EXISTS users (        
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT NOT NULL,
             encryptedPw TEXT NOT NULL,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP

@@ -24,13 +24,14 @@ app.use(express.json());
         res.status(200).send({data: "Hello, TypeScript Express!"});
     });
 
-    // GET endpoint: Retrieve all users
+    // GET endpoint: Retrieve all user info
     app.get("/users", async (req: Request, res: Response) => {
         try {
             const usersEntries = await db.all(`SELECT * FROM users ORDER BY timestamp DESC`);
             res.status(200).send(usersEntries);
+            console.log("User entries retrieved successfully");
         } catch (err) {
-            res.status(500).send({error: "Failed to retrieve users entries."});
+            res.status(500).send({error: "Failed to retrieve user entries."});
         }
     });
 
@@ -39,7 +40,7 @@ app.use(express.json());
         const {username, encryptedPw} = req.body;
 
         if (!username || !encryptedPw) {
-            return res.status(400).send({error: "username and encryptedPw are required."});
+            return res.status(400).send({error: "username and password are required."});
         }
 
         try {
