@@ -8,12 +8,13 @@ const initDB = async () => {
         driver: sqlite3.Database,
     });
 
-    // TODO change to actual format
+    // Create a table for the users
     await db.exec(`
-        CREATE TABLE IF NOT EXISTS expenses (        
+        CREATE TABLE IF NOT EXISTS users (        
             id INTEGER PRIMARY KEY,
             username TEXT NOT NULL,
-            encryptedPw TEXT NOT NULL
+            encryptedPw TEXT NOT NULL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         );
     `);
 

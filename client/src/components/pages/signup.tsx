@@ -5,6 +5,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
+import axios from "axios";
+import {API_BASE_URL} from "../constants/constants";
 
 const SignUpPage = () => {
     const [isChecked, setIsChecked] = useState(false);
@@ -17,6 +19,19 @@ const SignUpPage = () => {
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
+    };
+
+    const handleSubmitInfo = async (username: string, submitPw: string) => {
+        try {
+            await axios.post(API_BASE_URL + "/users", {
+                username,
+                encryptedPw: submitPw,
+            });
+            alert("Account created successfully.");
+        } catch (error) {
+            console.error("Error creating account:", error);
+            alert("Failed to create account. Please try again.");
+        }
     };
 
     const handleCredentials = (e: { preventDefault: () => void; }) => {
@@ -38,7 +53,7 @@ const SignUpPage = () => {
                 console.error("Hash gen error");
                 throw Error("Hash is null");
             }
-            // TODO send server username and hash
+            handleSubmitInfo(username, hash).then(r => Promise<null>);
             // TODO adds success message
             // TODO jump back to welcome page
         }

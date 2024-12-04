@@ -92,7 +92,7 @@ const Meditation = () => {
   
     setIsSubmitting(true);
     try {
-      await axios.post(API_BASE_URL, {
+      await axios.post(API_BASE_URL + "/journal", {
         mood,
         entry: userMessage,
       });

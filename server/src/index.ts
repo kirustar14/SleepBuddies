@@ -24,6 +24,35 @@ app.use(express.json());
         res.status(200).send({data: "Hello, TypeScript Express!"});
     });
 
+    // GET endpoint: Retrieve all users
+    app.get("/users", async (req: Request, res: Response) => {
+        try {
+            const usersEntries = await db.all(`SELECT * FROM users ORDER BY timestamp DESC`);
+            res.status(200).send(usersEntries);
+        } catch (err) {
+            res.status(500).send({error: "Failed to retrieve users entries."});
+        }
+    });
+
+    // POST endpoint: Create a new user
+    app.post("/users", async (req: Request, res: Response) => {
+        const {username, encryptedPw} = req.body;
+
+        if (!username || !encryptedPw) {
+            return res.status(400).send({error: "username and encryptedPw are required."});
+        }
+
+        try {
+            const result = await db.run(
+                `INSERT INTO users (username, encryptedPw) VALUES (?, ?)`,
+                [username, encryptedPw]
+            );
+            res.status(201).send({id: result.lastID, username, encryptedPw, timestamp: new Date().toISOString()});
+        } catch (err) {
+            res.status(500).send({error: "Failed to save the user."});
+        }
+    });
+
     // GET endpoint: Retrieve all journal entries
     app.get("/journal", async (req: Request, res: Response) => {
         try {
@@ -56,6 +85,7 @@ app.use(express.json());
     // Function to clear the journal entries when the server shuts down
     const clearDatabaseOnExit = async () => {
         try {
+            await db.run(`DELETE FROM users`);  // Deletes all entries in the users table
             await db.run(`DELETE FROM journal`);  // Deletes all entries in the journal table
             console.log("Database cleared!");
         } catch (err) {
