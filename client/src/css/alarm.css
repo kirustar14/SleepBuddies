@@ -48,10 +48,16 @@
   position: relative;
 }
 
+.alarm-title-time-container {
+  display: grid;
+  grid-template-columns: 4fr 1fr 1fr; /* Adjusted grid: 4/6 for title, 1/6 for time, 1/6 for toggle */
+  align-items: center;
+  gap: 10px;
+}
+
 .alarm-title-time {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .alarm-title {
@@ -101,6 +107,7 @@
   width: 50px;
   height: 25px;
   margin-left: 20px;
+  text-align: right;
 }
 
 .alarm-toggle input {

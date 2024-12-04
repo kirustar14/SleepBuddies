@@ -46,14 +46,26 @@ const Alarm = () => {
   const handleSaveAlarm = () => {
     if (newAlarm.time) {
       const alarmTitle = newAlarm.title.trim() === "" ? "Alarm" : newAlarm.title;
-      // Ensure the title is exactly 16 characters long by padding it with spaces
+  
+      // Split the time into hour, minute, and AM/PM parts (assuming 12-hour format with AM/PM suffix)
+      const [hourMinute, period] = newAlarm.time.split(" ");
+      let [hour, minute] = hourMinute.split(":");
+  
+      // Ensure the hour is always two digits
+      hour = hour.padStart(2, "0");
+  
+      // Construct the formatted time string
+      const formattedTime = `${hour}:${minute} ${period}`;
+  
+      // Update the alarm with the formatted time
       const paddedTitle = alarmTitle.padEnd(16, " ");
-      setAlarms([...alarms, { ...newAlarm, title: paddedTitle }]);
+      setAlarms([...alarms, { ...newAlarm, title: paddedTitle, time: formattedTime }]);
       handleCloseModal();
     } else {
       alert("Please select a time for the alarm.");
     }
   };
+  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -78,13 +90,19 @@ const Alarm = () => {
       <div className="alarm-list">
         {alarms.map((alarm, index) => (
           <div key={index} className="alarm-item">
-            <div className="alarm-title-time">
-              <h2 className="alarm-title">{alarm.title}</h2>
-              <strong className="alarm-time">{alarm.time}</strong>
-              <label className="alarm-toggle">
-                <input type="checkbox" />
-                <span className="slider"></span>
-              </label>
+            <div className="alarm-title-time-container">
+              <div className="alarm-title-time alarm-grid-title">
+                <h2 className="alarm-title">{alarm.title}</h2>
+              </div>
+              <div className="alarm-title-time alarm-grid-time">
+                <strong className="alarm-time">{alarm.time}</strong>
+              </div>
+              <div className="alarm-title-time alarm-grid-toggle">
+                <label className="alarm-toggle">
+                  <input type="checkbox" />
+                  <span className="slider"></span>
+                </label>
+              </div>
             </div>
             <div className="alarm-description-frequency">
               <p className="alarm-description">{alarm.description}</p>
