@@ -54,7 +54,7 @@ const Home = () => {
         <>
             <main className="home-content">
                 <div className="greeting-container">
-                    <h2 className="greeting">{greeting}, User.</h2>
+                    <h2 className="greeting">{greeting}, Buddy!</h2>
                     <p className="motivational-quote">{dailyQuote}</p>
                 </div>
                 <div className="sleep-buddy-container">
