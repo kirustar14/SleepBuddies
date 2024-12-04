@@ -88,7 +88,7 @@ const App = () => {
                     <Route path="/meditation" Component={Meditation} />
                     <Route path="/alarm" Component={Alarm} />
                     <Route path="/music" Component={Music} />
-                    <Route path="/journal" Component={Journal} />
+                    <Route path="/journal" Component={Journal}/>
                 </Routes>
             </main>
         </div>
