@@ -10,17 +10,17 @@ import Home from "./components/pages/home";
 import Sleep from "./components/pages/sleep";
 import Meditation from "./components/pages/meditation";
 import Alarm from "./components/pages/alarm";
-import welcome from './components/pages/welcome';
+import Welcome from './components/pages/welcome';
 import Music from "./components/pages/music";
 
 function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <h1>Sleep Buddies</h1>
+                <h1>Sleep Buddies 🌠</h1>
             </header>
             <Routes>
-                <Route path="/" Component={welcome}/>
+                <Route path="/" Component={Welcome}/>
                 <Route path="/login" Component={Login}/>
                 <Route path="/signup" Component={signup}/>
                 <Route path="/home" Component={Home}/>

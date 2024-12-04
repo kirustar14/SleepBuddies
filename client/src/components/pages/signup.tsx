@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../css/signup.css";
 
 const SignUpPage = () => {
@@ -7,6 +7,10 @@ const SignUpPage = () => {
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
+
+    useEffect(() => {
+        document.title = "Sign Up for Sleep Buddies";
+    }, []);
 
     return (
         <div className="signup-page">
