@@ -1,13 +1,14 @@
-import Image from "../../assets/clock.svg";
-import {Link} from "react-router-dom";
+// Import necessary libraries
+import { Link } from "react-router-dom";
+import "../../css/alarm.css";
 
 const Alarm = () => {
     return (
         <Link className="clickable" to="/alarm">
             <div className="applet">
-                <img className="image" src={Image} alt={"Alarm icon"}/>
+                <div className="alarm-page-title">Alarms</div>
                 <div className="overlay">
-                    <div className="overlayText">Alarm</div>
+                    <div className="overlayText">Alarms</div>
                 </div>
             </div>
         </Link>

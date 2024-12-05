@@ -1,100 +1,360 @@
-import React, { useState, useEffect } from "react";
-import AlarmModal from "../elements/AlarmModal";
+import React, { useState, useEffect, useRef } from "react";
 import "../../css/alarm.css";
+import { v4 as uuidv4 } from "uuid"; // Importing uuid for unique IDs
+import AlarmModal from "../elements/AlarmModal";
+import AlarmRingingModal from "../elements/AlarmRingingModal";
+
+// Define the type for an alarm
+type AlarmType = {
+  id: string; // Unique ID for each alarm
+  title: string;
+  time: string;
+  description: string;
+  frequency: string[]; // Days of the week, e.g., ["Mon", "Wed"]
+  sound: boolean;
+  active: boolean;
+  hasRung?: boolean; // Tracks if the alarm has already rung
+};
 
 const Alarm = () => {
-  
-  useEffect(() => {
-        document.title = "Sleep Buddies - Alarms";
-    }, []);
-  
-  const [alarmTime, setAlarmTime] = useState<string>("");
-  const [savedAlarmTime, setSavedAlarmTime] = useState<string>("");
-  const [isAlarmTriggered, setIsAlarmTriggered] = useState<boolean>(false);
+  const [alarms, setAlarms] = useState<AlarmType[]>([
+    {
+      id: uuidv4(),
+      title: "Medication Alarm",
+      time: "08:00 PM",
+      description: "Take evening medication",
+      frequency: ["Mon", "Wed", "Fri"],
+      sound: true,
+      active: true,
+      hasRung: false,
+    },
+    {
+      id: uuidv4(),
+      title: "Brush Teeth Alarm",
+      time: "09:00 PM",
+      description: "Reminder to brush your teeth before bed",
+      frequency: ["Tues", "Thurs"],
+      sound: true,
+      active: true,
+      hasRung: false,
+    },
+  ]);
 
-  // Handle change in alarm time input
-  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAlarmTime(event.target.value);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [newAlarm, setNewAlarm] = useState<AlarmType>({
+    id: uuidv4(),
+    title: "",
+    description: "",
+    time: "",
+    sound: true,
+    frequency: [],
+    active: true,
+    hasRung: false,
+  });
+
+  const [ringingAlarm, setRingingAlarm] = useState<AlarmType | null>(null);
+  const alarmSoundRef = useRef<HTMLAudioElement | null>(null);
+
+  // Helper function to convert time string to minutes since midnight
+  const parseTimeToMinutes = (time: string): number => {
+    const [hourMinute, period] = time.split(" ");
+    const [hour, minute] = hourMinute.split(":").map(Number);
+    const isPM = period === "PM";
+    const adjustedHour = hour % 12 + (isPM ? 12 : 0);
+    return adjustedHour * 60 + minute;
   };
 
-  // Save the alarm time
-  const handleSave = () => {
-    setSavedAlarmTime(alarmTime);
-    setIsAlarmTriggered(false); // Reset if previously triggered
+  // Function to sort alarms by time
+  const sortAlarmsByTime = (alarms: AlarmType[]) => {
+    return [...alarms].sort(
+      (a, b) => parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time)
+    );
   };
 
-  // Effect to check if the current time matches the alarm time
+  // Monitor alarms and play the ringing alarm
   useEffect(() => {
-    if (savedAlarmTime) {
-      const interval = setInterval(() => {
-        const currentTime = new Date();
-        const formattedCurrentTime = currentTime.toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
+    const checkAlarms = () => {
+      const current = new Date();
+      const currentDay = current.toLocaleString("en-US", { weekday: "short" });
+      const currentMinutes = current.getHours() * 60 + current.getMinutes();
 
-        if (formattedCurrentTime === savedAlarmTime) {
-          setIsAlarmTriggered(true);
-          clearInterval(interval);
+      alarms.forEach((alarm) => {
+        if (
+          alarm.active &&
+          alarm.sound &&
+          !alarm.hasRung && // Check if it hasn't already rung
+          parseTimeToMinutes(alarm.time) === currentMinutes &&
+          (alarm.frequency.includes(currentDay) || alarm.frequency.length === 0)
+        ) {
+          if (alarmSoundRef.current) {
+            alarmSoundRef.current.play();
+            alarmSoundRef.current.loop = true;
+          }
+          setRingingAlarm(alarm); // Set the ringing alarm
+          setAlarms((prevAlarms) =>
+            prevAlarms.map((a) =>
+              a.id === alarm.id ? { ...a, hasRung: true } : a
+            )
+          ); // Mark alarm as rung
         }
-      }, 1000);
+      });
+    };
 
-      return () => clearInterval(interval);
-    }
-  }, [savedAlarmTime]);
+    const interval = setInterval(checkAlarms, 1000);
+    return () => clearInterval(interval);
+  }, [alarms]);
 
-  // Stop the alarm modal
-  const handleStop = () => {
-    setIsAlarmTriggered(false);
+  // Reset alarms at midnight to enable recurring alarms
+  useEffect(() => {
+    const resetAlarms = () => {
+      setAlarms((prevAlarms) =>
+        prevAlarms.map((alarm) => ({
+          ...alarm,
+          hasRung: false, // Reset hasRung for all alarms
+        }))
+      );
+    };
+
+    const now = new Date();
+    const timeUntilMidnight =
+      new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).getTime() -
+      now.getTime();
+
+    const midnightTimeout = setTimeout(() => {
+      resetAlarms();
+      setInterval(resetAlarms, 24 * 60 * 60 * 1000); // Repeat daily
+    }, timeUntilMidnight);
+
+    return () => clearTimeout(midnightTimeout);
+  }, []);
+
+  const handleDeleteAlarm = (alarmId: string) => {
+    setAlarms((prevAlarms) => prevAlarms.filter((alarm) => alarm.id !== alarmId));
   };
 
-  // Snooze the alarm for 5 minutes
-  const handleSnooze = () => {
-    const snoozeMinutes = 5;
-    const newAlarmTime = new Date();
-    newAlarmTime.setMinutes(newAlarmTime.getMinutes() + snoozeMinutes);
+  const handleSnoozeAlarm = () => {
+    if (ringingAlarm) {
+      setAlarms((prevAlarms) =>
+        prevAlarms.map((alarm) => {
+          if (alarm.id === ringingAlarm.id) {
+            if (alarmSoundRef.current) {
+              alarmSoundRef.current.pause();
+              alarmSoundRef.current.currentTime = 0;
+            }
+  
+            const snoozeTime = new Date();
+            const [hoursStr, minutesStr, period] = alarm.time.split(/[: ]/);
+  
+            // Parse hours and minutes safely
+            const hours = parseInt(hoursStr, 10);
+            const minutes = parseInt(minutesStr, 10);
+  
+            if (isNaN(hours) || isNaN(minutes)) {
+              console.error("Invalid time format in alarm.");
+              return alarm; // Leave the alarm unchanged
+            }
+  
+            // Convert to 24-hour time and calculate snoozed time
+            const newHours = (hours % 12) + (period === "PM" ? 12 : 0);
+            snoozeTime.setHours(newHours);
+            snoozeTime.setMinutes(minutes + 5); // Add 5 minutes
+  
+            // Handle overflow past 59 minutes
+            if (snoozeTime.getMinutes() >= 60) {
+              snoozeTime.setHours(snoozeTime.getHours() + 1);
+              snoozeTime.setMinutes(snoozeTime.getMinutes() - 60);
+            }
+  
+            // Format back to 12-hour time
+            const newTime = snoozeTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            });
+  
+            // Update the alarm's time
+            return { ...alarm, time: newTime, hasRung: false };
+          }
+          return alarm;
+        })
+      );
+  
+      // Clear the ringing alarm state
+      setRingingAlarm(null);
+    }
+  };
+  
+  
+  
+  
 
-    const formattedNewAlarmTime = newAlarmTime.toLocaleTimeString("en-GB", {
-      hour: "2-digit",
-      minute: "2-digit",
+  const handleStopAlarm = () => {
+    if (alarmSoundRef.current) {
+      alarmSoundRef.current.pause();
+      alarmSoundRef.current.currentTime = 0;
+    }
+
+    if (ringingAlarm) {
+      if (
+        ringingAlarm.frequency.length === 0 ||
+        ringingAlarm.frequency.includes("Just once")
+      ) {
+        handleDeleteAlarm(ringingAlarm.id);
+      }
+    }
+
+    setRingingAlarm(null);
+  };
+
+  const handleAddAlarmClick = () => {
+    setEditIndex(null);
+    setNewAlarm({
+      id: uuidv4(),
+      title: "",
+      description: "",
+      time: "",
+      sound: true,
+      frequency: [],
+      active: true,
+      hasRung: false,
     });
+    setIsModalOpen(true);
+  };
 
-    setSavedAlarmTime(formattedNewAlarmTime);
-    setIsAlarmTriggered(false);
+  const handleSaveAlarm = () => {
+    const updatedAlarm = {
+      ...newAlarm,
+      title: newAlarm.title.trim() || "Alarm",
+    };
+
+    let updatedAlarms;
+    if (editIndex !== null) {
+      updatedAlarms = alarms.map((alarm, index) =>
+        index === editIndex ? updatedAlarm : alarm
+      );
+    } else {
+      updatedAlarms = [...alarms, updatedAlarm];
+    }
+
+    setAlarms(sortAlarmsByTime(updatedAlarms));
+    setIsModalOpen(false);
+  };
+
+  const handleToggleAlarm = (index: number) => {
+    const updatedAlarms = alarms.map((alarm, i) =>
+      i === index ? { ...alarm, active: !alarm.active } : alarm
+    );
+    setAlarms(sortAlarmsByTime(updatedAlarms));
   };
 
   return (
     <div className="alarm-page">
+      {/* Audio element for alarm sound */}
+      <audio ref={alarmSoundRef} src="/daybreak_iphone_alarm.mp3" />
 
-    <div className="alarm-icon-container">
-        <img src="/alarm-bear.jpg" alt="Alarm" className="alarm-icon" />
-    </div>
+      {/* Header */}
+      <div className="alarm-header">
+        <h1 className="alarm-page-title">Alarms</h1>
+        <button className="add-alarm-button" onClick={handleAddAlarmClick}>
+          +
+        </button>
+      </div>
 
-    <div className="alarm-setting-inline">
-        <label htmlFor="alarmTime" className="alarm-label">Set Alarm:</label>
-        <input
-          type="time"
-          id="customTime"
-          value={alarmTime}
-          onChange={handleTimeChange}
-          placeholder="Enter custom time"
-        />
-        <button onClick={handleSave}>Save Alarm Time</button>
-    </div>
+      {/* Alarm List */}
+      <div className="alarm-list">
+        {alarms.map((alarm, index) => (
+          <div
+            key={alarm.id}
+            className={`alarm-item ${alarm.active ? "" : "inactive"}`}
+          >
+            <div className="alarm-title-time-container">
+              <div className="alarm-grid-title">
+                <h2 className="alarm-title">{alarm.title}</h2>
+              </div>
+              <div className="alarm-grid-time">
+                <strong className="alarm-time">{alarm.time}</strong>
+              </div>
+              <div className="alarm-grid-toggle">
+                <label className="alarm-toggle">
+                  <input
+                    type="checkbox"
+                    checked={alarm.active}
+                    onChange={() => handleToggleAlarm(index)}
+                  />
+                  <span className="slider"></span>
+                </label>
+              </div>
+            </div>
+            <div className="alarm-sound-frequency">
+              <span className="alarm-sound">
+                Sound: {alarm.sound ? "On" : "Off"}
+              </span>
+              <p className="alarm-frequency">
+                {alarm.frequency.join(", ") || "Just once"}
+              </p>
+            </div>
+            <div className="alarm-description">
+              <p className="description-title">
+                Description: {alarm.description}
+              </p>
+            </div>
 
+            <div className="alarm-actions">
+              <button
+                className="edit-alarm-button"
+                onClick={() => {
+                  setEditIndex(index);
+                  setNewAlarm(alarms[index]);
+                  setIsModalOpen(true);
+                }}
+              >
+                Edit
+              </button>
+              <button
+                className="delete-alarm-button"
+                onClick={() => handleDeleteAlarm(alarm.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
 
-      {savedAlarmTime && (
-        <div className="saved-alarm">
-          <p>Saved Alarm Time: {savedAlarmTime}</p>
-        </div>
-      )}
-
-      {isAlarmTriggered && (
+      {/* Alarm Modal */}
+      {isModalOpen && (
         <AlarmModal
-          onStop={handleStop}
-          onSnooze={handleSnooze}
+          newAlarm={newAlarm}
+          setNewAlarm={setNewAlarm}
+          handleSaveAlarm={handleSaveAlarm}
+          handleCloseModal={() => setIsModalOpen(false)}
+          handleInputChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setNewAlarm({ ...newAlarm, [e.target.name]: e.target.value })
+          }
+          handleFrequencyChange={(day: string) =>
+            setNewAlarm((prevAlarm) => ({
+              ...prevAlarm,
+              frequency: prevAlarm.frequency.includes(day)
+                ? prevAlarm.frequency.filter((d) => d !== day)
+                : [...prevAlarm.frequency, day],
+            }))
+          }
         />
       )}
+
+      {/* Ringing Alarm Modal */}
+      {ringingAlarm && (
+        <>
+          <div className="alarm-overlay"></div> {/* Semi-transparent background */}
+          <AlarmRingingModal
+            ringingAlarm={ringingAlarm}
+            handleStopAlarm={handleStopAlarm}
+            handleSnoozeAlarm={handleSnoozeAlarm}
+          />
+        </>
+      )}
+
     </div>
   );
 };
