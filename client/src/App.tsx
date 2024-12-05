@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import "./css/applet.css"
 import "./css/App.css";
 import "./css/home.css"
@@ -13,15 +13,7 @@ import Alarm from "./components/pages/alarm";
 import Welcome from './components/pages/welcome';
 import Music from "./components/pages/music";
 import Journal from "./components/pages/journal";
-
-// TODO For later
-// export let sessionLoggedIn = false;
-// export let user = "guest";
-//
-// export function setLoggedIn(username: string) {
-//     sessionLoggedIn = true;
-//     user = username;
-
+import {logout} from "./components/utils/user-cred";
 
 const App = () => {
     const location = useLocation(); // Get the current route
@@ -29,6 +21,11 @@ const App = () => {
     const hideNavbar = ["/", "/login", "/signup"].includes(location.pathname);
 
     const [showHelp, setShowHelp] = useState(false);
+
+    function handleLogout() {
+        logout();
+        alert("You have been logged out");
+    }
 
     return (
         <div className="App">
@@ -56,7 +53,13 @@ const App = () => {
                                 <Link to="/journal">Journal</Link>
                             </li>
                         </ul>
-                        <button className="help-button" onClick={() => setShowHelp(true)}>Help</button>
+
+                        <ul>
+                            <button className="help-button" onClick={() => setShowHelp(true)}>Help</button>
+                            <Link to="/">
+                                <button className="logout-button" onClick={handleLogout}>Log Out</button>
+                            </Link>
+                        </ul>
                     </nav>
                 </header>
             )}
@@ -72,7 +75,9 @@ const App = () => {
                             <li><strong>Meditation:</strong> Access guided meditation exercises.</li>
                             <li><strong>Alarm:</strong> Set and manage your alarms.</li>
                             <li><strong>Music:</strong> Play calming music for relaxation.</li>
-                            <li><strong>Journal:</strong> Record your thoughts, track your sleep patterns, and reflect on your day.</li>
+                            <li><strong>Journal:</strong> Record your thoughts, track your sleep patterns, and reflect
+                                on your day.
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -80,14 +85,14 @@ const App = () => {
 
             <main>
                 <Routes>
-                    <Route path="/" Component={Welcome} />
-                    <Route path="/login" Component={Login} />
-                    <Route path="/signup" Component={Signup} />
-                    <Route path="/home" Component={Home} />
-                    <Route path="/sleep" Component={Sleep} />
-                    <Route path="/meditation" Component={Meditation} />
-                    <Route path="/alarm" Component={Alarm} />
-                    <Route path="/music" Component={Music} />
+                    <Route path="/" Component={Welcome}/>
+                    <Route path="/login" Component={Login}/>
+                    <Route path="/signup" Component={Signup}/>
+                    <Route path="/home" Component={Home}/>
+                    <Route path="/sleep" Component={Sleep}/>
+                    <Route path="/meditation" Component={Meditation}/>
+                    <Route path="/alarm" Component={Alarm}/>
+                    <Route path="/music" Component={Music}/>
                     <Route path="/journal" Component={Journal}/>
                 </Routes>
             </main>
