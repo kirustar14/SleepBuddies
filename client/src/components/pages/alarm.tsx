@@ -72,6 +72,10 @@ const Alarm = () => {
     );
   };
 
+  useEffect(() => {
+    document.title = "Sleep Buddies - Alarms";
+  }, []);
+
   // Monitor alarms and play the ringing alarm
   useEffect(() => {
     const checkAlarms = () => {
