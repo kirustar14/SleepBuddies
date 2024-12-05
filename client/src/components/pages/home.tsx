@@ -4,7 +4,6 @@ import Sleep from "../elements/Sleep";
 import Alarm from "../elements/Alarm";
 import Music from "../elements/Music";
 import Journal from "../elements/Journal";
-import {getLoggedIn} from "../constants/user-cred";
 
 const Home = () => {
 

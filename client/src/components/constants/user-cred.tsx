@@ -1,27 +1,27 @@
-let sessionLoggedIn = false;
-let user = "Guest";
-let hashedPw = "Guest"
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 export function setLoggedIn(username: string, hash: string) {
-    sessionLoggedIn = true;
-    user = username;
-    hashedPw = hash;
-    console.log(sessionLoggedIn, user, hashedPw);
+    cookies.set('sessionLoggedIn', true, { path: '/' });
+    cookies.set('user', username, { path: '/' });
+    cookies.set('hashedPw', hash, { path: '/' });
 }
 
 export function logout() {
-    sessionLoggedIn = false;
+    cookies.set('sessionLoggedIn', false, { path: '/' });
+    cookies.set('user', 'Guest', { path: '/' });
+    cookies.set('hashedPw', 'Guest', { path: '/' });
 }
 
 export function getLoggedIn(): boolean {
-    console.log(sessionLoggedIn);
-    return sessionLoggedIn;
+    console.log("Logged In: " + cookies.get('sessionLoggedIn'));
+    return cookies.get('sessionLoggedIn');
 }
 
 export function getUsername(): string {
-    return user;
+    return cookies.get('user');
 }
 
 export function getHash(): string {
-    return hashedPw;
+    return cookies.get('hashedPw');
 }
