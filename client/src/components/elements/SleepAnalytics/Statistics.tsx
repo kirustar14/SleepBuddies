@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addHours, fetchHours } from "../../utils/sleep-utils";
+import { addHours } from "../../utils/sleep-utils";
 
 export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) => void }> = ({ updateSleepData }) => {
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];

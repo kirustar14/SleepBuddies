@@ -15,7 +15,7 @@ export const Graph: React.FC<{ hoursSlept: number[], goal:number }> = ({ hoursSl
     //so that toggle rerenders
     useEffect(() => {
         console.log("changed view to: ", view);
-    }, [toggleView]);
+    }, [view]);
 
     const sleepData = [
         ["Day", "Hours", { role: "style" }],
