@@ -109,7 +109,7 @@ const MusicPlayer = () => {
 
       <h2
         style={{
-          fontSize: "4em",  // Adjust the size of the font
+          fontSize: "2em",  // Adjust the size of the font
           color: "#6a69ae",   // Change the color
           fontFamily: "Arial, sans-serif", // Specify a font
           marginBottom: "0.5em", // Add some space below the title
@@ -127,7 +127,7 @@ const MusicPlayer = () => {
       </div>
 
       <div>
-        <label htmlFor="soundSelector" style={{ color: "#6a69ae", marginBottom: "4em", fontSize: "2.5em"}}>
+        <label htmlFor="soundSelector" style={{ color: "#6a69ae", marginBottom: "2em", fontSize: "2.5em"}}>
           Choose Sound:
         </label>
         <select
@@ -139,7 +139,7 @@ const MusicPlayer = () => {
             display: "block",
             margin: "1em auto",
             padding: "1em",
-            fontSize: "1.5em",
+            fontSize: "1em",
             borderRadius: "10px",
             border: "3px solid #6a69ae",
             width: "55%",
@@ -154,33 +154,33 @@ const MusicPlayer = () => {
         </select>
       </div>
 
-      <div className="controls">
-  <button className="previousButton" onClick={playPreviousTrack} aria-label="skip previous">
-    <IconContext.Provider value={{ size: "5em", color: "#6a69ae" }}>
-      <BiSkipPrevious />
-    </IconContext.Provider>
-  </button>
+      <div>
+        <button className="playButton" onClick={playPreviousTrack} aria-label="skip previous">
+          <IconContext.Provider value={{ size: "3em", color: "#6a69ae" }}>
+            <BiSkipPrevious />
+          </IconContext.Provider>
+        </button>
 
-  {!isPlaying ? (
-    <button className="playButton" onClick={togglePlayPause} aria-label="play">
-      <IconContext.Provider value={{ size: "6em", color: "#6a69ae" }}>
-        <AiFillPlayCircle />
-      </IconContext.Provider>
-    </button>
-  ) : (
-    <button className="playButton" onClick={togglePlayPause} aria-label="pause">
-      <IconContext.Provider value={{ size: "6em", color: "#6a69ae" }}>
-        <AiFillPauseCircle />
-      </IconContext.Provider>
-    </button>
-  )}
+        {!isPlaying ? (
+          <button className="playButton" onClick={togglePlayPause} aria-label="play">
+            <IconContext.Provider value={{ size: "3em", color:  "#6a69ae" }}>
+              <AiFillPlayCircle />
+            </IconContext.Provider>
+          </button>
+        ) : (
+          <button className="playButton" onClick={togglePlayPause} aria-label="pause">
+            <IconContext.Provider value={{ size: "3em", color:  "#6a69ae" }}>
+              <AiFillPauseCircle />
+            </IconContext.Provider>
+          </button>
+        )}
 
-  <button className="nextButton" onClick={playNextTrack} aria-label="skip next">
-    <IconContext.Provider value={{ size: "5em", color: "#6a69ae" }}>
-      <BiSkipNext />
-    </IconContext.Provider>
-  </button>
-</div>
+        <button className="playButton" onClick={playNextTrack} aria-label="skip next">
+          <IconContext.Provider value={{ size: "3em", color:  "#6a69ae" }}>
+            <BiSkipNext />
+          </IconContext.Provider>
+        </button>
+      </div>
     </div>
   );
 };
