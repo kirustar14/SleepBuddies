@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { addHours, updateHours, fetchHours } from "../../utils/sleep-utils";
-import {type Log} from "./types";
+import { addHours, fetchHours } from "../../utils/sleep-utils";
 
 export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) => void }> = ({ updateSleepData }) => {
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -40,7 +39,7 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
             newHoursSlept[index] = calculateSleepDuration(sleepTime, wakeTime);
 
             const dateObj = new Date(weekDates[index]).toISOString();
-            const logs = await fetchHours();
+            // const logs = await fetchHours();
             // const logExists = logs.find((log: Log) => log.date === dateObj);
             
             // add to json

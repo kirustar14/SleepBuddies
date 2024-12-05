@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { getLogs } from "./SleepLog";
 import { Chart } from "react-google-charts";
 import {type Log} from "./types";
@@ -8,12 +8,13 @@ export const Graph: React.FC<{ hoursSlept: number[], goal:number }> = ({ hoursSl
     const [view, setView] = useState(true);
 
     //allow user to select which data to view
-    const toggleView = () => {
-        setView(!view);    
-    }
+    const toggleView = useCallback(() => {
+        setView((prevView) => !prevView);
+    }, []);
 
     //so that toggle rerenders
     useEffect(() => {
+        console.log("changed view to: ", view);
     }, [toggleView]);
 
     const sleepData = [

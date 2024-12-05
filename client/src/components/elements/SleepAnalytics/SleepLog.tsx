@@ -35,7 +35,6 @@ let defaultLogs: Log[] = [
 
 export const SleepLogs = () => {
     const [logs, setLogs] = useState<Log[]>(defaultLogs);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const getLogs = async () => {
@@ -43,7 +42,7 @@ export const SleepLogs = () => {
                 const logs = await fetchHours();
                 setLogs(logs);
             } catch (error) {
-                setError("Failed to fetch sleep logs");
+                console.error("Failed to fetch logs:", error);
             }
         };
 
