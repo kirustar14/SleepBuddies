@@ -1,167 +1,108 @@
-
-.container {
-    min-height: 100vh;
+/* Meditation container with smaller background size */
+.meditation-container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center;    /* Center vertically */
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, #e0f7fa, #80deea);
-}
-
-.meditation-content {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 30px;
-    padding: 50px 40px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 700px;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
     animation: fadeIn 1s ease-out;
-
-    /* Center self if Flexbox fails */
-    margin: auto; /* Helps in case Flexbox has issues */
-}
-
-.cloud {
-    position: absolute;
-    top: 10%;
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Correct alignment shift */
-    width: 300px;
-    height: 150px;
-    background-color: #f9f9f9;
-    border-radius: 50%;
-    opacity: 0.85;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    z-index: -1;
-    animation: moveClouds 60s linear infinite;
-}
-
-
-.meditation-content {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 30px;
-    padding: 50px 40px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 700px;
-    animation: fadeIn 1s ease-out;
-}
-
-.title {
-    font-size: 42px;
-    color: #00796b;
-    margin-bottom: 20px;
-    font-weight: 700;
-    font-family: 'Nunito', sans-serif;
-}
-
-.content {
-    font-size: 20px;
-    color: #37474f;
-    margin-bottom: 30px;
-    line-height: 1.7;
-    font-family: 'Quicksand', sans-serif;
-}
-
-.button {
-    background: #4c9ed9;
-    color: white;
-    padding: 15px 40px;
-    font-size: 20px;
-    font-weight: 600;
-    border-radius: 25px;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    border: none;
-    outline: none;
-    margin-top: 20px;
-}
-
-.button:hover {
-    background-color: #00796b;
-    transform: scale(1.05);
-}
-
-.arrow-container {
-    display: flex;
-    justify-content: space-between;
     width: 100%;
-    max-width: 700px;
-    margin-top: 20px;
+    height: 60vh; /* Further reduced height for the background image */
+    color: white; /* Ensure all text in the container is white */
 }
 
-.arrow {
-    background: #4c9ed9;
-    color: white;
-    padding: 15px;
-    font-size: 24px;
-    font-weight: bold;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    border: none;
-    outline: none;
+/* Adjustments for each theme */
+.meditation-container.full-body-relaxation {
+    background-image: url("../assets/water.webp");
 }
 
-.arrow:hover {
-    background-color: #00796b;
-    transform: scale(1.1);
+.meditation-container.believe-in-yourself {
+    background-image: url("../assets/forest.webp");
 }
 
-.home-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #00796b;
-    color: white;
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    border: none;
-    outline: none;
+.meditation-container.time-to-sleep {
+    background-image: url("../assets/night.webp");
 }
 
-.home-button:hover {
-    background-color: #4c9ed9;
-    transform: scale(1.1);
+.meditation-container.mindful-breathing {
+    background-image: url("../assets/sunrise.webp");
 }
 
-.thank-you {
-    font-size: 26px;
-    color: #f57c00;
-    font-weight: 600;
-    font-family: 'Nunito', sans-serif;
-    margin-top: 30px;
+.meditation-container.positive-energy-boost {
+    background-image: url("../assets/nature.webp");
 }
 
-/* Added subtle animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
+.meditation-container.stress-relief {
+    background-image: url("../assets/calm.webp");
+}
+
+.meditation-container.self-compassion {
+    background-image: url("../assets/serenity.webp");
+}
+
+/* Ensure responsiveness */
+@media (max-width: 768px) {
+    .meditation-content {
+        padding: 40px 30px;
     }
-    to {
-        opacity: 1;
-        transform: scale(1);
+    .page-title {
+        font-size: 48px; /* Increased font size */
+        color: white; /* White color for the page title */
+    }
+    .navigation-buttons button {
+        font-size: 20px; /* Increased button font size */
+        padding: 20px 40px; /* Increased button padding */
+    }
+
+    /* Adjust meditation container height for tablets */
+    .meditation-container {
+        height: 50vh; /* Adjusted height for smaller screens */
     }
 }
 
-@keyframes moveClouds {
-    from {
-        transform: translateX(-100%);
+@media (max-width: 480px) {
+    .meditation-content {
+        padding: 30px 20px;
     }
-    to {
-        transform: translateX(100%);
+
+    /* Meditation content */
+    .meditation-content h2 {
+        font-size: 50px; /* Increased font size */
+        color: white; /* White color for the title */
+        font-weight: 600;
+        margin-bottom: 20px;
     }
+    
+    /* For the theme selector title */
+    .theme-selector h2 {
+        font-size: 36px; /* Increased font size */
+        color: white; /* White color for theme selection title */
+    }
+
+    .page-title {
+        font-size: 36px; /* Increased font size */
+        color: white; /* White color for the page title */
+    }
+
+    .navigation-buttons button {
+        font-size: 20px; /* Increased button font size */
+        padding: 15px 35px; /* Increased button padding */
+    }
+
+    /* Adjust meditation container height for mobile */
+    .meditation-container {
+        height: 40vh; /* Further reduced height for mobile screens */
+    }
+
+    /* Ensure all text in the container is white and has good visibility */
+    .meditation-container p {
+        font-size: 24px; /* Increased font size for paragraphs */
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds shadow for better visibility */
+    }
+
 }
 
 
