@@ -107,6 +107,7 @@ const AlarmModal = ({
             placeholder="Alarm"
           />
           <div className="alarm-title-info">
+            <p className="alarm-title-note">16 letters maximum</p>
             <p className="alarm-title-count">{newAlarm.title.length}/16</p>
           </div>
         </div>
