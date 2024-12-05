@@ -29,7 +29,7 @@ instances
 
 To run the server:
 
-```angular2html
+```
 cd server
 npm install
 npm start
@@ -37,7 +37,7 @@ npm start
 
 To run the client:
 
-```angular2html
+```
 cd client
 npm install
 npm start
