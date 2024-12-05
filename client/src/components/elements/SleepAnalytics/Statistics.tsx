@@ -28,7 +28,7 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
         return wakeDecimal - sleepDecimal;
     };
 
-    const handleTimeChange = async (index: number, sleepTime: string, wakeTime: string) => {
+    const handleTimeChange = (index: number, sleepTime: string, wakeTime: string) => {
         const newSleepTimes = [...sleepTimes];
         const newWakeTimes = [...wakeTimes];
         newSleepTimes[index] = sleepTime;
@@ -48,7 +48,7 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
                 hours: newHoursSlept[index],
             }
 
-            await addHours(entry);
+            addHours(entry);
 
             // if (logExists){
             //     await updateHours(entry);
@@ -113,7 +113,7 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
                     </div>
                 ))}
             </div>
-            <h3>Average Hours Slept this Week: {averageSleep.toFixed(2)}</h3>
+            <h3 data-testid="averageH">Average Hours Slept this Week: {averageSleep.toFixed(2)}</h3>
         </>
     );
 };
