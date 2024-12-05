@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { addHours } from "../../utils/sleep-utils";
 
 export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) => void }> = ({ updateSleepData }) => {
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -36,6 +37,24 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
         const newHoursSlept = [...hoursSlept];
         if (sleepTime && wakeTime) {
             newHoursSlept[index] = calculateSleepDuration(sleepTime, wakeTime);
+
+            const dateObj = new Date(weekDates[index]).toISOString();
+            // const logs = await fetchHours();
+            // const logExists = logs.find((log: Log) => log.date === dateObj);
+            
+            // add to json
+            const entry = {
+                date: dateObj,
+                hours: newHoursSlept[index],
+            }
+
+            addHours(entry);
+
+            // if (logExists){
+            //     await updateHours(entry);
+            // } else {
+            //     await addHours(entry);
+            // }
         } else {
             newHoursSlept[index] = 0; // No data, set hours slept to 0
         }
@@ -94,7 +113,7 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
                     </div>
                 ))}
             </div>
-            <h3>Average Hours Slept this Week: {averageSleep.toFixed(2)}</h3>
+            <h3 data-testid="averageH">Average Hours Slept this Week: {averageSleep.toFixed(2)}</h3>
         </>
     );
 };

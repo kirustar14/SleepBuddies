@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import '../../css/Sleep.css';
 
-import { SleepLog } from "../elements/SleepAnalytics/SleepLog";
+import { SleepLog, SleepLogs } from "../elements/SleepAnalytics/SleepLog";
 import { Graph } from "../elements/SleepAnalytics/Graph";
 import { Statistics } from "../elements/SleepAnalytics/Statistics";
 
@@ -90,6 +90,9 @@ const Sleep = () => {
                         worstDay={worstDay}
                         goal={sleepGoal}
                     />
+
+                    {/* TO BE FINISHED ADDING */}
+                    <SleepLogs/> 
                 </div>
                 <div className="item"><Graph hoursSlept={hoursSlept} goal={sleepGoal}/></div>
                 <div className="item"><Statistics updateSleepData={updateSleepData}/></div> 
