@@ -13,7 +13,7 @@ import Alarm from "./components/pages/alarm";
 import Welcome from './components/pages/welcome';
 import Music from "./components/pages/music";
 import Journal from "./components/pages/journal";
-import {logout} from "./components/constants/user-cred";
+import {logout} from "./components/utils/user-cred";
 
 const App = () => {
     const location = useLocation(); // Get the current route

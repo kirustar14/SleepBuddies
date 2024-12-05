@@ -9,7 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import {getUserHash} from "../utils/user-utils";
 import {Link} from "react-router-dom";
-import {setLoggedIn} from "../constants/user-cred";
+import {setLoggedIn} from "../utils/user-cred";
 
 const LoginPage = () => {
     const [username, setUsername] = useState<string>('');

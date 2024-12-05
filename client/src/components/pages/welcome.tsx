@@ -3,7 +3,7 @@ import Home from "../elements/Home";
 import Login from "../elements/Login";
 import Signup from "../elements/Signup";
 import "../../css/welcome.css";
-import {getLoggedIn} from "../constants/user-cred";
+import {getLoggedIn} from "../utils/user-cred";
 
 const Welcome = () => {
 

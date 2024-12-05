@@ -3,7 +3,7 @@ import "../../css/home.css";
 import MorningSB from "../../assets/MorningSB.png";
 import AfternoonSB from "../../assets/AfternoonSB.png"
 import NightSB from "../../assets/NightSB.png"
-import {getUsername} from "../constants/user-cred";
+import {getUsername} from "../utils/user-cred";
 
 const Home = () => {
 
