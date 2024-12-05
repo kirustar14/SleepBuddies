@@ -8,7 +8,7 @@ const cors = require("cors");
 const app = express();
 const port = 8080;
 
-// The hash for this session
+// The public hash for this session
 // TODO create secret for deployment
 const sessionHash = generateRandomHash(10);
 
@@ -21,7 +21,7 @@ app.use(express.json());
 
     // Root endpoint to test if the server is running
     app.get("/", (req: Request, res: Response) => {
-        res.status(200).send({data: "Hello, TypeScript Express!"});
+        res.status(200).send({data: "Database for SleepBuddies. Session hash: " + sessionHash});
     });
 
     // GET endpoint: Retrieve all user info
