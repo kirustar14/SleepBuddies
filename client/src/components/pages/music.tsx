@@ -154,33 +154,33 @@ const MusicPlayer = () => {
         </select>
       </div>
 
-      <div>
-        <button className="playButton" onClick={playPreviousTrack} aria-label="skip previous">
-          <IconContext.Provider value={{ size: "8em", color: "#6a69ae" }}>
-            <BiSkipPrevious />
-          </IconContext.Provider>
-        </button>
+      <div className="controls">
+  <button className="previousButton" onClick={playPreviousTrack} aria-label="skip previous">
+    <IconContext.Provider value={{ size: "5em", color: "#6a69ae" }}>
+      <BiSkipPrevious />
+    </IconContext.Provider>
+  </button>
 
-        {!isPlaying ? (
-          <button className="playButton" onClick={togglePlayPause} aria-label="play">
-            <IconContext.Provider value={{ size: "8em", color:  "#6a69ae" }}>
-              <AiFillPlayCircle />
-            </IconContext.Provider>
-          </button>
-        ) : (
-          <button className="playButton" onClick={togglePlayPause} aria-label="pause">
-            <IconContext.Provider value={{ size: "8em", color:  "#6a69ae" }}>
-              <AiFillPauseCircle />
-            </IconContext.Provider>
-          </button>
-        )}
+  {!isPlaying ? (
+    <button className="playButton" onClick={togglePlayPause} aria-label="play">
+      <IconContext.Provider value={{ size: "6em", color: "#6a69ae" }}>
+        <AiFillPlayCircle />
+      </IconContext.Provider>
+    </button>
+  ) : (
+    <button className="playButton" onClick={togglePlayPause} aria-label="pause">
+      <IconContext.Provider value={{ size: "6em", color: "#6a69ae" }}>
+        <AiFillPauseCircle />
+      </IconContext.Provider>
+    </button>
+  )}
 
-        <button className="playButton" onClick={playNextTrack} aria-label="skip next">
-          <IconContext.Provider value={{ size: "8em", color:  "#6a69ae" }}>
-            <BiSkipNext />
-          </IconContext.Provider>
-        </button>
-      </div>
+  <button className="nextButton" onClick={playNextTrack} aria-label="skip next">
+    <IconContext.Provider value={{ size: "5em", color: "#6a69ae" }}>
+      <BiSkipNext />
+    </IconContext.Provider>
+  </button>
+</div>
     </div>
   );
 };
