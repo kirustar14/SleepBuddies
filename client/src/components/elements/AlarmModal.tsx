@@ -1,7 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import "../../css/AlarmModal.css";
 
-const AlarmModal = ({
+interface AlarmType {
+  id: string;
+  title: string;
+  time: string;
+  description: string;
+  frequency: string[];
+  sound: boolean;
+  active: boolean;
+  hasRung?: boolean;
+}
+
+interface AlarmModalProps {
+  newAlarm: AlarmType;
+  setNewAlarm: React.Dispatch<React.SetStateAction<AlarmType>>;
+  handleSaveAlarm: () => void;
+  handleCloseModal: () => void;
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleFrequencyChange: (day: string) => void;
+}
+
+const AlarmModal: React.FC<AlarmModalProps> = ({
   newAlarm,
   setNewAlarm,
   handleSaveAlarm,
@@ -9,11 +29,10 @@ const AlarmModal = ({
   handleInputChange,
   handleFrequencyChange,
 }) => {
-  // Set initial state for hour, minute, and period
-  const [hour, setHour] = useState(1);
-  const [minute, setMinute] = useState("00");
-  const [period, setPeriod] = useState("AM");
-  const [confirmedTime, setConfirmedTime] = useState("");
+  const [hour, setHour] = useState<number | string>(1);
+  const [minute, setMinute] = useState<string>("00");
+  const [period, setPeriod] = useState<string>("AM");
+  const [confirmedTime, setConfirmedTime] = useState<string>("");
 
   useEffect(() => {
     if (newAlarm.time) {
@@ -25,8 +44,8 @@ const AlarmModal = ({
     }
   }, [newAlarm.time]);
 
-  const handleHourChange = (e) => {
-    let newHour = parseInt(e.target.value, 10);
+  const handleHourChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newHour = parseInt(e.target.value, 10);
     if (!isNaN(newHour) && newHour >= 1 && newHour <= 12) {
       setHour(newHour);
     } else if (e.target.value === "") {
@@ -40,18 +59,15 @@ const AlarmModal = ({
     }
   };
 
-  const handleMinuteChange = (e) => {
-    let newMinute = e.target.value;
-
-    // Allow only numeric characters and an empty string
+  const handleMinuteChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newMinute = e.target.value;
     if (/^\d{0,2}$/.test(newMinute)) {
       setMinute(newMinute);
     }
   };
 
   const handleMinuteBlur = () => {
-    let numericMinute = parseInt(minute, 10);
-
+    const numericMinute = parseInt(minute, 10);
     if (minute === "") {
       setMinute("00"); // Reset to "00" if input is empty after clicking out
     } else if (!isNaN(numericMinute)) {
@@ -69,7 +85,6 @@ const AlarmModal = ({
   };
 
   const handleSaveTime = () => {
-    // Save the selected time when the "Save Time" button is clicked
     const finalHour = hour || 1;
     const finalMinute = minute.padStart(2, "0");
     const formattedTime = `${finalHour}:${finalMinute} ${period}`;
@@ -78,7 +93,6 @@ const AlarmModal = ({
   };
 
   const handleSave = () => {
-    // Ensure the user clicks "Save Time" before saving the alarm
     if (!confirmedTime) {
       alert("Please confirm the alarm time by clicking 'Save Time' before saving.");
       return;
@@ -178,7 +192,7 @@ const AlarmModal = ({
               <input
                 type="radio"
                 name="sound"
-                value={true}
+                value="true"
                 checked={newAlarm.sound === true}
                 onChange={() => setNewAlarm({ ...newAlarm, sound: true })}
               />
@@ -188,7 +202,7 @@ const AlarmModal = ({
               <input
                 type="radio"
                 name="sound"
-                value={false}
+                value="false"
                 checked={newAlarm.sound === false}
                 onChange={() => setNewAlarm({ ...newAlarm, sound: false })}
               />
@@ -217,7 +231,7 @@ const AlarmModal = ({
           <button
             className="alarm-modal-save-button"
             onClick={handleSave}
-            disabled={!confirmedTime} // Disable "Save" button until time is confirmed
+            disabled={!confirmedTime}
           >
             Save
           </button>
