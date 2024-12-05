@@ -1,9 +1,20 @@
-//import { title } from "process";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getLogs } from "./SleepLog";
 import { Chart } from "react-google-charts";
+import {type Log} from "./types";
 // https://www.react-google-charts.com/docs/quick-walkthrough
 
 export const Graph: React.FC<{ hoursSlept: number[], goal:number }> = ({ hoursSlept, goal }) =>{
+    const [view, setView] = useState(true);
+
+    //allow user to select which data to view
+    const toggleView = () => {
+        setView(!view);    
+    }
+
+    //so that toggle rerenders
+    useEffect(() => {
+    }, [toggleView]);
 
     const sleepData = [
         ["Day", "Hours", { role: "style" }],
@@ -17,21 +28,44 @@ export const Graph: React.FC<{ hoursSlept: number[], goal:number }> = ({ hoursSl
     ];
 
     const options = {
-        title: "Sleep Trends in a 1 Week Period",
+        title: view ? "Sleep Trends in a 1 Week Period" : "Sleep Trends in Total History",
         hAxis: {title: "Days"},
         vAxis: {title: "Hours"},
         backgroundColor: "white",
     };
+
+    const [logs, setLogs] = useState<Log[]>([]);
+
+    useEffect(() => {
+        const fetchLogs = async () => {
+            try {
+                const data = await getLogs();
+                setLogs(data);
+            } catch (error) {
+                console.error("Failed to fetch logs", error);
+            }
+        };
+
+        fetchLogs();
+    }, []);
+
+    const allData = [
+        ["Day", "Hours", { role: "style" }],
+        ...logs.map((log) => {
+            return [new Date(log.date).toISOString(), log.hours, log.hours >= goal ? "#2DA84E" : "#E52B2B"];
+        }),
+    ];
 
     return (
         <>
             <h2>Sleep Throughout the Week</h2>
             <Chart
                 chartType="ColumnChart"
-                data={sleepData}
+                data={view ? sleepData : allData}
                 options={options}
             />
-            
+            <br></br>
+            <button onClick={toggleView}>Switch Views</button>
         </>
     );
 };

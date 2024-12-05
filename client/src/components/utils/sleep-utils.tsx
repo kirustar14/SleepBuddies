@@ -37,3 +37,23 @@ export const fetchHours = async (): Promise<Log[]> => {
 
     return logList;
 }
+
+export const updateHours = async (log: Log): Promise<Log> => {
+    if (!log.date) {
+        throw new Error("no date given");
+    }
+
+    const response = await fetch(API_BASE_URL + `/sleepLogs/${log.date}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(log),
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to update hours");
+    }
+
+    return response.json();
+};

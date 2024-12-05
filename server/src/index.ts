@@ -89,6 +89,7 @@ app.use(express.json());
         try {
             await db.run(`DELETE FROM users`);  // Deletes all entries in the users table
             await db.run(`DELETE FROM journal`);  // Deletes all entries in the journal table
+            await db.run(`DELETE FROM sleepLogs`);  // Deletes all entries in the sleepLogs table
             console.log("Database cleared!");
         } catch (err) {
             console.error("Error clearing the database:", err);

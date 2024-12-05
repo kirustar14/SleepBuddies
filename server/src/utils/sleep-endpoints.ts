@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Database } from "sqlite";
-import {addHoursServer, getHoursServer} from "./sleep-utils";
+import {addHoursServer, getHoursServer, updateHoursServer} from "./sleep-utils";
 
 export function createSleepEndpoints(app: any, db: Database){
     app.post("/sleepLogs", async (req: Request, res: Response) => {
@@ -9,5 +9,9 @@ export function createSleepEndpoints(app: any, db: Database){
 
     app.get("/sleepLogs", async (req: Request, res: Response) => {
         getHoursServer(req, res, db);
+    });
+
+    app.get("/sleepLogs", async (req: Request, res: Response) => {
+        updateHoursServer(req, res, db);
     });
 }

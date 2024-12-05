@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchHours } from "../../utils/sleep-utils";
+import {type Log} from "./types";
 
 interface SleepLogProps {
     averageSleep: number;
@@ -21,11 +22,6 @@ export const SleepLog: React.FC<SleepLogProps> = ({ averageSleep, bestDay, worst
 };
 
 // SOME TESTING CHANGES
-type Log = {
-    date: Date;
-    hours: number;
-};
-
 let defaultLogs: Log[] = [
     {
         date: new Date('2024-12-01'), // December 1, 2024
@@ -61,7 +57,7 @@ export const SleepLogs = () => {
                 <ul>
                     {logs.map((log, index) => (
                         <li key={index}>
-                            <strong>{new Date(log.date).toLocaleDateString()}:</strong> {log.hours} hours
+                            <strong>{new Date(log.date).toLocaleDateString()}:</strong> {log.hours.toFixed(2)} hours
                         </li>
                     ))}
                 </ul>
@@ -70,4 +66,13 @@ export const SleepLogs = () => {
             )}
         </div>
     );
+};
+
+export const getLogs = async (): Promise<Log[]> => {
+    try {
+        const logs = await fetchHours();
+        return logs;
+    } catch (error) {
+        throw new Error("Failed to fetch sleep logs");
+    }
 };

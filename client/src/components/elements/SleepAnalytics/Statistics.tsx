@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import { addHours } from "../../utils/sleep-utils";
-
-type Log = {
-    date: Date;
-    hours: number;
-};
+import { addHours, updateHours, fetchHours } from "../../utils/sleep-utils";
+import {type Log} from "./types";
 
 export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) => void }> = ({ updateSleepData }) => {
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -33,7 +29,7 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
         return wakeDecimal - sleepDecimal;
     };
 
-    const handleTimeChange = (index: number, sleepTime: string, wakeTime: string) => {
+    const handleTimeChange = async (index: number, sleepTime: string, wakeTime: string) => {
         const newSleepTimes = [...sleepTimes];
         const newWakeTimes = [...wakeTimes];
         newSleepTimes[index] = sleepTime;
@@ -42,19 +38,28 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
         const newHoursSlept = [...hoursSlept];
         if (sleepTime && wakeTime) {
             newHoursSlept[index] = calculateSleepDuration(sleepTime, wakeTime);
+
+            const dateObj = new Date(weekDates[index]);
+            const logs = await fetchHours();
+            const specificLog = logs.find((log: Log) => log.date.toISOString === dateObj.toISOString);
+            
+            // add to json
+            const entry = {
+                date: dateObj,
+                hours: newHoursSlept[index],
+            }
+
+            if (specificLog){
+                updateHours(entry)
+            } else {
+                addHours(entry);
+            }
         } else {
             newHoursSlept[index] = 0; // No data, set hours slept to 0
         }
 
         const validDays = newHoursSlept.filter(hours => hours > 0); // Only count days with non-zero hours
         const totalSleep = validDays.reduce((acc, hours) => acc + hours, 0);
-
-        // add to json
-        const entry = {
-            date: new Date('2024-12-01'), // December 1, 2024
-            hours: 7,
-        }
-        // addHours(entry);
 
         setSleepTimes(newSleepTimes);
         setWakeTimes(newWakeTimes);
