@@ -13,6 +13,7 @@ import Alarm from "./components/pages/alarm";
 import Welcome from './components/pages/welcome';
 import Music from "./components/pages/music";
 import Journal from "./components/pages/journal";
+import {logout} from "./components/constants/user-cred";
 
 const App = () => {
     const location = useLocation(); // Get the current route
@@ -20,6 +21,11 @@ const App = () => {
     const hideNavbar = ["/", "/login", "/signup"].includes(location.pathname);
 
     const [showHelp, setShowHelp] = useState(false);
+
+    function handleLogout() {
+        logout();
+        alert("You have been logged out");
+    }
 
     return (
         <div className="App">
@@ -47,7 +53,13 @@ const App = () => {
                                 <Link to="/journal">Journal</Link>
                             </li>
                         </ul>
-                        <button className="help-button" onClick={() => setShowHelp(true)}>Help</button>
+
+                        <ul>
+                            <button className="help-button" onClick={() => setShowHelp(true)}>Help</button>
+                            <Link to="/">
+                                <button className="logout-button" onClick={handleLogout}>Log Out</button>
+                            </Link>
+                        </ul>
                     </nav>
                 </header>
             )}

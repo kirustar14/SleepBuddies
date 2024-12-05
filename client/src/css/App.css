@@ -149,7 +149,7 @@ body {
 }
 
 .help-button {
-    margin-right: 0px;
+    margin-right: 20px;
     background-color: #3f9647;
     color: white;
     border: none;
@@ -162,4 +162,20 @@ body {
 
 .help-button:hover {
     background-color: #307136; 
+}
+
+.logout-button {
+    margin-right: 0px;
+    background-color: #c91717;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #713030;
 }

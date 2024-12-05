@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/home.css";
 import MorningSB from "../../assets/MorningSB.png";
 import AfternoonSB from "../../assets/AfternoonSB.png"
@@ -15,7 +15,11 @@ const Home = () => {
     useEffect(() => {
         document.title = "Sleep Buddies - Home";
 
-        setUser(getUsername);
+        if (getUsername() === "Guest") {
+            setUser("Buddy");
+        } else {
+            setUser(getUsername());
+        }
 
         const hour = new Date().getHours(); //get the current hour (0-23) from user local
         if (hour < 12) {
