@@ -9,7 +9,11 @@ Project for Team 17, UC San Diego CSE 110 Fall 2024
 
 ## Introduction
 
-[add intro]
+College students often have difficulty falling and getting good quality sleep. Our app allows our users to monitor 
+their sleep schedule with weekly reports based on their sleep. The app also includes a white noise and meditation feature
+to help users relax before bedtime. This will reduce the stress college students face because of lack of sleep / poor 
+sleep.
+
 
 ## Requirements
 
