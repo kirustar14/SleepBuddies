@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "../../css/home.css";
 import MorningSB from "../../assets/MorningSB.png";
 import AfternoonSB from "../../assets/AfternoonSB.png"
 import NightSB from "../../assets/NightSB.png"
+import {getUsername} from "../constants/user-cred";
 
 const Home = () => {
 
+    const [user, setUser] = useState("");
     const [greeting, setGreeting] = useState("");
     const [image, setImage] = useState("");
     const [dailyQuote, setDailyQuote] = useState("");
 
     useEffect(() => {
         document.title = "Sleep Buddies - Home";
+
+        setUser(getUsername);
 
         const hour = new Date().getHours(); //get the current hour (0-23) from user local
         if (hour < 12) {
@@ -54,7 +58,7 @@ const Home = () => {
         <>
             <main className="home-content">
                 <div className="greeting-container">
-                    <h2 className="greeting">{greeting}, Buddy!</h2>
+                    <h2 className="greeting">{greeting}, {user}!</h2>
                     <p className="motivational-quote">{dailyQuote}</p>
                 </div>
                 <div className="sleep-buddy-container">
