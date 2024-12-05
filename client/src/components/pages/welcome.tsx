@@ -1,7 +1,9 @@
 import React, {useEffect} from "react";
+import Home from "../elements/Home";
 import Login from "../elements/Login";
 import Signup from "../elements/Signup";
 import "../../css/welcome.css";
+import {getLoggedIn} from "../constants/user-cred";
 
 const Welcome = () => {
 
@@ -9,24 +11,24 @@ const Welcome = () => {
         document.title = "Sleep Buddies";
     }, []);
 
-    // if (sessionLoggedIn) {
-    //     return (
-    //         <>
-    //             <div className="welcome_page-div">
-    //                 <Home/>
-    //             </div>
-    //         </>
-    //     );
-    // } else {
-    return (
-        <>
-            <div className="welcome_page-div">
-                <Login/>
-                <Signup/>
-            </div>
-        </>
-    );
-    // }
+    if (getLoggedIn()) {
+        return (
+            <>
+                <div className="welcome_page-div">
+                    <Home/>
+                </div>
+            </>
+        );
+    } else {
+        return (
+            <>
+                <div className="welcome_page-div">
+                    <Login/>
+                    <Signup/>
+                </div>
+            </>
+        );
+    }
 };
 
 export default Welcome;
