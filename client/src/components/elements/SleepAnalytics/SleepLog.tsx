@@ -24,11 +24,11 @@ export const SleepLog: React.FC<SleepLogProps> = ({ averageSleep, bestDay, worst
 // SOME TESTING CHANGES
 let defaultLogs: Log[] = [
     {
-        date: new Date('2024-12-01'), // December 1, 2024
+        date: new Date('2024-12-01').toISOString(), // December 1, 2024
         hours: 7,
     },
     {
-        date: new Date('2024-12-01'), // December 1, 2024
+        date: new Date('2024-12-01').toISOString(), // December 1, 2024
         hours: 9,
     },
 ];

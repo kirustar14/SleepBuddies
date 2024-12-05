@@ -1,5 +1,5 @@
 //for storing the date and sleep hours
 export type Log = {
-    date: Date;
+    date: string;
     hours: number;
 };

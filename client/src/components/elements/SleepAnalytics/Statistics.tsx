@@ -39,9 +39,9 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
         if (sleepTime && wakeTime) {
             newHoursSlept[index] = calculateSleepDuration(sleepTime, wakeTime);
 
-            const dateObj = new Date(weekDates[index]);
+            const dateObj = new Date(weekDates[index]).toISOString();
             const logs = await fetchHours();
-            const specificLog = logs.find((log: Log) => log.date.toISOString === dateObj.toISOString);
+            // const logExists = logs.find((log: Log) => log.date === dateObj);
             
             // add to json
             const entry = {
@@ -49,11 +49,13 @@ export const Statistics: React.FC<{ updateSleepData: (newHoursSlept: number[]) =
                 hours: newHoursSlept[index],
             }
 
-            if (specificLog){
-                updateHours(entry)
-            } else {
-                addHours(entry);
-            }
+            await addHours(entry);
+
+            // if (logExists){
+            //     await updateHours(entry);
+            // } else {
+            //     await addHours(entry);
+            // }
         } else {
             newHoursSlept[index] = 0; // No data, set hours slept to 0
         }

@@ -1,9 +1,5 @@
 import { API_BASE_URL } from "../constants/constants";
-
-type Log = {
-    date: Date;
-    hours: number;
-}
+import {type Log} from "../elements/SleepAnalytics/types";
 
 export const addHours = async (log: Log): Promise<Log> => {
     const response = await fetch(API_BASE_URL + "/sleepLogs", {
@@ -43,16 +39,22 @@ export const updateHours = async (log: Log): Promise<Log> => {
         throw new Error("no date given");
     }
 
-    const response = await fetch(API_BASE_URL + `/sleepLogs/${log.date}`, {
-        method: "PUT",
+    const formattedDate = new Date(log.date).toISOString();
+
+    console.log("Updating hours for date:", formattedDate);
+
+    const response = await fetch(API_BASE_URL + "/sleepLogs", {
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(log),
+        body: JSON.stringify({hours: log.hours}),
     });
 
     if (!response.ok) {
-        throw new Error("Failed to update hours");
+        // throw new Error("Failed to update hours: " + log.date);
+        const errorDetails = await response.text();
+        throw new Error(`Failed to update hours for ${log.date}: ${response.status} - ${errorDetails}`);
     }
 
     return response.json();

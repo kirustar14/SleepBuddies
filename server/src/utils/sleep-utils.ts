@@ -3,7 +3,6 @@ import { Database } from "sqlite";
 
 export async function addHoursServer(req: Request, res: Response, db: Database){
     try {
-        // need to figure out data format
         const {date, hours} = req.body as {date: string, hours: number};
 
         if (!date || !hours){

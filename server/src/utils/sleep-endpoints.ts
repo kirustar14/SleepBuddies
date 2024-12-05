@@ -11,7 +11,7 @@ export function createSleepEndpoints(app: any, db: Database){
         getHoursServer(req, res, db);
     });
 
-    app.get("/sleepLogs", async (req: Request, res: Response) => {
+    app.patch("/sleepLogs", async (req: Request, res: Response) => {
         updateHoursServer(req, res, db);
     });
 }

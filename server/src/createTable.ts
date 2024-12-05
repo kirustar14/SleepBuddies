@@ -32,7 +32,7 @@ const initDB = async () => {
     await db.exec(`
         CREATE TABLE IF NOT EXISTS sleepLogs (        
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            date DATE NOT NULL,
+            date TEXT NOT NULL,
             hours DECIMAL NOT NULL
         );
     `);
