@@ -16,8 +16,9 @@ export function setLoggedIn(username: string, hash: string) {
     } catch (e) {
         console.error("Error creating account:" + e);
         alert("Error creating account");
-    } finally {
         logout();
+    } finally {
+        console.log("Login Status:" + getLoggedIn() + ", " + getUsername() + ", " + getHash());
     }
 }
 
