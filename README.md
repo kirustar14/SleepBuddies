@@ -18,6 +18,42 @@ sleep.
 
 This project uses React in Typescript, and requires `Node.js` and `npm`
 
+To install **Node.js** and **npm** on your system, follow the instructions below based on your operating system.
+
+### Installing npm on macOS:
+1. **Install Homebrew (if not already installed):**
+   Homebrew is a package manager for macOS. Open a terminal and run:
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+2. **Install Node.js and npm:**
+   Once Homebrew is installed, use it to install Node.js (npm is bundled with Node.js):
+   ```bash
+   brew install node
+   ```
+
+3. **Verify Installation:**
+   After installation, verify that both Node.js and npm were installed successfully by running:
+   ```bash
+   node -v
+   npm -v
+   ```
+
+### Installing npm on Windows:
+1. **Download Node.js:**
+   Go to the official Node.js website: [https://nodejs.org/](https://nodejs.org/) and download the latest stable version of Node.js for Windows.
+
+2. **Run the Installer:**
+   After downloading, run the installer and follow the instructions in the setup wizard. Ensure that the option to install npm is selected during installation.
+
+3. **Verify Installation:**
+   After installation, open a command prompt and verify that both Node.js and npm were installed successfully by running:
+   ```bash
+   node -v
+   npm -v
+   ```
+
 Refer to [npm documentations](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) for installation 
 instructions
 
