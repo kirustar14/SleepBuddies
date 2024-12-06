@@ -19,7 +19,6 @@ type MeditationTheme =
   | "stress-relief"
   | "self-compassion";
 
-
 const Meditation = () => {
   const [step, setStep] = useState(0);
   const [theme, setTheme] = useState<MeditationTheme | "">("");
@@ -93,15 +92,12 @@ const Meditation = () => {
   const handleNavigation = (direction: "next" | "prev") => {
     if (theme && meditationThemes[theme]) {
       if (direction === "next") {
-        if (step < meditationThemes[theme].length - 1) {
-          setStep((prevStep) => prevStep + 1);
-        }
+        setStep((prevStep) => Math.min(prevStep + 1, meditationThemes[theme].length));
       } else if (direction === "prev") {
-        if (step > 0) {
-          setStep((prevStep) => prevStep - 1);
-        } else {
+        if (step === 0) {
           setTheme("");
-          setStep(0);
+        } else {
+          setStep((prevStep) => Math.max(prevStep - 1, 0));
         }
       }
     }
@@ -121,7 +117,6 @@ const Meditation = () => {
         backgroundPosition: "center",
       }}
     >
-      {/* Hide the theme selector if a theme is selected */}
       {!theme && (
         <div className="theme-selector">
           <h2 style={{ color: "white", fontSize: "2rem" }}>Choose Meditation Type</h2>
@@ -140,7 +135,7 @@ const Meditation = () => {
         <div className="meditation-content">
           {step < meditationThemes[theme].length ? (
             <>
-              <h2 style={{ color: "white", fontSize: "2rem"  }}>{meditationThemes[theme][step].title}</h2>
+              <h2 style={{ color: "white", fontSize: "2rem" }}>{meditationThemes[theme][step].title}</h2>
               <p style={{ color: "white", fontSize: "1.5rem" }}>{meditationThemes[theme][step].content}</p>
               <div className="navigation">
                 <button onClick={() => handleNavigation("prev")}>Previous</button>
@@ -149,7 +144,7 @@ const Meditation = () => {
             </>
           ) : (
             <div className="final-slide">
-              <h2 style={{ color: "white", fontSize: "2rem"  }}>Good Job!</h2>
+              <h2 style={{ color: "white", fontSize: "2rem" }}>Good Job!</h2>
               <p style={{ color: "white", fontSize: "1.5rem" }}>Congratulations on completing this session!</p>
               <button className="start-over-btn" onClick={handleStartOver}>
                 Start Over
