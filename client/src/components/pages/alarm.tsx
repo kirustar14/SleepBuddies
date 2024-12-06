@@ -18,26 +18,7 @@ type AlarmType = {
 
 const Alarm = () => {
   const [alarms, setAlarms] = useState<AlarmType[]>([
-    {
-      id: uuidv4(),
-      title: "Medication Alarm",
-      time: "08:00 PM",
-      description: "Take evening medication",
-      frequency: ["Mon", "Wed", "Fri"],
-      sound: true,
-      active: true,
-      hasRung: false,
-    },
-    {
-      id: uuidv4(),
-      title: "Brush Teeth Alarm",
-      time: "09:00 PM",
-      description: "Reminder to brush your teeth before bed",
-      frequency: ["Tues", "Thurs"],
-      sound: true,
-      active: true,
-      hasRung: false,
-    },
+
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,6 +52,10 @@ const Alarm = () => {
       (a, b) => parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time)
     );
   };
+
+  useEffect(() => {
+    document.title = "Sleep Buddies - Alarms";
+  }, []);
 
   // Monitor alarms and play the ringing alarm
   useEffect(() => {
@@ -143,37 +128,38 @@ const Alarm = () => {
               alarmSoundRef.current.currentTime = 0;
             }
   
-            const snoozeTime = new Date();
-            const [hoursStr, minutesStr, period] = alarm.time.split(/[: ]/);
+            const [hourMinute, period] = alarm.time.split(" ");
+            const [hours, minutes] = hourMinute.split(":").map(Number);
   
-            // Parse hours and minutes safely
-            const hours = parseInt(hoursStr, 10);
-            const minutes = parseInt(minutesStr, 10);
-  
+            // Validate and handle potential parsing issues
             if (isNaN(hours) || isNaN(minutes)) {
               console.error("Invalid time format in alarm.");
               return alarm; // Leave the alarm unchanged
             }
   
-            // Convert to 24-hour time and calculate snoozed time
-            const newHours = (hours % 12) + (period === "PM" ? 12 : 0);
-            snoozeTime.setHours(newHours);
-            snoozeTime.setMinutes(minutes + 5); // Add 5 minutes
+            // Convert to 24-hour format for calculations
+            let newHours = (hours % 12) + (period === "PM" ? 12 : 0);
+            let newMinutes = minutes + 5;
   
-            // Handle overflow past 59 minutes
-            if (snoozeTime.getMinutes() >= 60) {
-              snoozeTime.setHours(snoozeTime.getHours() + 1);
-              snoozeTime.setMinutes(snoozeTime.getMinutes() - 60);
+            // Handle minute overflow past 59
+            if (newMinutes >= 60) {
+              newMinutes -= 60;
+              newHours += 1;
             }
   
-            // Format back to 12-hour time
-            const newTime = snoozeTime.toLocaleTimeString([], {
+            // Handle hour overflow past 23
+            if (newHours >= 24) {
+              newHours -= 24;
+            }
+  
+            // Convert back to 12-hour format with AM/PM
+            const newTime = new Date(0, 0, 0, newHours, newMinutes).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
               hour12: true,
             });
   
-            // Update the alarm's time
+            // Update the alarm's time and reset hasRung
             return { ...alarm, time: newTime, hasRung: false };
           }
           return alarm;
@@ -183,11 +169,7 @@ const Alarm = () => {
       // Clear the ringing alarm state
       setRingingAlarm(null);
     }
-  };
-  
-  
-  
-  
+  };  
 
   const handleStopAlarm = () => {
     if (alarmSoundRef.current) {
@@ -263,64 +245,79 @@ const Alarm = () => {
 
       {/* Alarm List */}
       <div className="alarm-list">
-        {alarms.map((alarm, index) => (
-          <div
-            key={alarm.id}
-            className={`alarm-item ${alarm.active ? "" : "inactive"}`}
-          >
-            <div className="alarm-title-time-container">
-              <div className="alarm-grid-title">
-                <h2 className="alarm-title">{alarm.title}</h2>
-              </div>
-              <div className="alarm-grid-time">
-                <strong className="alarm-time">{alarm.time}</strong>
-              </div>
-              <div className="alarm-grid-toggle">
-                <label className="alarm-toggle">
-                  <input
-                    type="checkbox"
-                    checked={alarm.active}
-                    onChange={() => handleToggleAlarm(index)}
-                  />
-                  <span className="slider"></span>
-                </label>
-              </div>
-            </div>
-            <div className="alarm-sound-frequency">
-              <span className="alarm-sound">
-                Sound: {alarm.sound ? "On" : "Off"}
-              </span>
-              <p className="alarm-frequency">
-                {alarm.frequency.join(", ") || "Just once"}
-              </p>
-            </div>
-            <div className="alarm-description">
-              <p className="description-title">
-                Description: {alarm.description}
-              </p>
-            </div>
-
-            <div className="alarm-actions">
-              <button
-                className="edit-alarm-button"
-                onClick={() => {
-                  setEditIndex(index);
-                  setNewAlarm(alarms[index]);
-                  setIsModalOpen(true);
-                }}
-              >
-                Edit
-              </button>
-              <button
-                className="delete-alarm-button"
-                onClick={() => handleDeleteAlarm(alarm.id)}
-              >
-                Delete
-              </button>
-            </div>
+        {/* Show appropriate message based on whether alarms exist */}
+        {alarms.length === 0 ? (
+          <div className="empty-alarm-message">
+            <p>No alarms set. Click + to add an alarm!</p>
           </div>
-        ))}
+        ) : (
+          <>
+            {/* Always show "Click + to add an alarm" when alarms exist */}
+            <div className="add-alarm-message">
+              <p>Click + to add an alarm</p>
+            </div>
+            {alarms.map((alarm, index) => (
+              <div
+                key={alarm.id}
+                className={`alarm-item ${alarm.active ? "" : "inactive"}`}
+              >
+                <div className="alarm-title-time-container">
+                  <div className="alarm-grid-title">
+                    <h2 className="alarm-title">{alarm.title}</h2>
+                  </div>
+                  <div className="alarm-grid-time">
+                    <strong className="alarm-time">{alarm.time}</strong>
+                  </div>
+                  <div className="alarm-grid-toggle">
+                    <label className="alarm-toggle">
+                      <input
+                        type="checkbox"
+                        checked={alarm.active}
+                        onChange={() => handleToggleAlarm(index)}
+                      />
+                      <span className="slider"></span>
+                    </label>
+                  </div>
+                </div>
+                <div className="alarm-sound-frequency">
+                  <span className="alarm-sound">
+                    Sound: {alarm.sound ? "On" : "Off"}
+                  </span>
+                  <p className="alarm-frequency">
+                    {alarm.frequency.join(", ") || "Just once"}
+                  </p>
+                </div>
+                <div className="alarm-description">
+                  <p className="description-title">
+                    Description: {alarm.description}
+                  </p>
+                </div>
+                <div className="alarm-actions">
+                  <button
+                    className="edit-alarm-button"
+                    onClick={() => {
+                      setEditIndex(index);
+                      setNewAlarm(alarms[index]);
+                      setIsModalOpen(true);
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="delete-alarm-button"
+                    onClick={() => handleDeleteAlarm(alarm.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </div>
+
+
+
 
       {/* Alarm Modal */}
       {isModalOpen && (
