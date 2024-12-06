@@ -109,10 +109,10 @@ const MusicPlayer = () => {
 
       <h2
         style={{
-          fontSize: "2.8em",  // Adjust the size of the font
+          fontSize: "3em",  // Adjust the size of the font
           color: "#6a69ae",   // Change the color
-  
-          marginBottom: "1em", // Add some space below the title
+          
+          marginBottom: "0.8em", // Add some space below the title
           marginTop: "1em",
           fontWeight: "bold",
 
