@@ -109,10 +109,13 @@ const MusicPlayer = () => {
 
       <h2
         style={{
-          fontSize: "2em",  // Adjust the size of the font
+          fontSize: "3em",  // Adjust the size of the font
           color: "#6a69ae",   // Change the color
-          fontFamily: "Arial, sans-serif", // Specify a font
-          marginBottom: "0.5em", // Add some space below the title
+          
+          marginBottom: "0.8em", // Add some space below the title
+          marginTop: "1em",
+          fontWeight: "bold",
+
         }}
       >
         Now Playing
@@ -125,9 +128,11 @@ const MusicPlayer = () => {
         <h3 className="title">{currentPlaylist[currentIndex].name}</h3>
         <p className="subTitle">Soothing Sounds</p>
       </div>
+      
+
 
       <div>
-        <label htmlFor="soundSelector" style={{ color: "#6a69ae", marginBottom: "2em", fontSize: "2.5em"}}>
+        <label htmlFor="soundSelector" style={{ color: "#6a69ae", marginBottom: "2em", fontSize: "2.5em",  fontWeight: "bold"}}>
           Choose Sound:
         </label>
         <select
@@ -143,7 +148,8 @@ const MusicPlayer = () => {
             borderRadius: "10px",
             border: "3px solid #6a69ae",
             width: "55%",
-            color: "#4f4e8e"
+            color: "#4f4e8e",
+            
           }}
         >
           {currentPlaylist.map((sound, index) => (
