@@ -1,134 +1,135 @@
 /* General Container */
 .journal-container {
-  width: 90%;
-  margin: 20px auto;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Question of the Day */
 .question-of-the-day {
-  margin-bottom: 20px;
-  font-size: 1.2em;
-  color: #333;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    color: #333;
 }
 
 /* Mood Selection */
 .mood-selection {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .mood-button {
-  min-width: 50px;
-  padding: 15px;
-  font-size: 1.5em;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #f8f8f8;
-  transition: background 0.3s;
+    min-width: 50px;
+    padding: 15px;
+    font-size: 1.5em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    transition: background 0.3s;
 }
 
 .mood-button.selected {
-  background-color: #e0e0e0;
+    background-color: #e0e0e0;
 }
 
 .mood-button:hover {
-  background-color: #f0f0f0;
+    background-color: #f0f0f0;
 }
 
 /* Journal Entry Textarea */
 .journal-entry-textarea {
-  width: 100%;
-  height: 150px;width: 95%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  font-size: 1em;
-  font-family: Arial, sans-serif;
-  resize: none;
+    width: 100%;
+    height: 150px;
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    resize: none;
 }
 
 /* Save Entry Button */
 .save-entry-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
 .save-entry-button:disabled {
-  background-color: #ddd;
-  cursor: not-allowed;
+    background-color: #ddd;
+    cursor: not-allowed;
 }
 
 .save-entry-button:hover {
-  background-color: #45a049;
+    background-color: #45a049;
 }
 
 /* Mood Chart Section */
 .mood-chart {
-  margin-top: 30px;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 10px;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
 }
 
 .mood-chart h3 {
-  text-align: center;
-  color: #333;
+    text-align: center;
+    color: #333;
 }
 
 .mood-chart canvas {
-  width: 100% !important;
-  height: auto !important;
-  display: block;
-  margin: 0 auto;
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
 }
 
 /* Past Entries Section */
 .past-entries {
-  max-height: 70vh;
-  overflow-y: auto;
-  margin-top: 30px;
+    max-height: 70vh;
+    overflow-y: auto;
+    margin-top: 30px;
 }
 
 .entry-card {
-  margin-bottom: 20px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 
 .entry-card strong {
-  font-size: 1.1em;
-  color: #333;
+    font-size: 1.1em;
+    color: #333;
 }
 
 .entry-card em {
-  font-style: italic;
-  color: #555;
+    font-style: italic;
+    color: #555;
 }
 
 .entry-card p {
-  color: #666;
+    color: #666;
 }
 
 .chart-container {
-  width: 60%; 
-  margin: 0 auto; 
-  position: relative;
-  height: 300px; 
+    width: 60%;
+    margin: 0 auto;
+    position: relative;
+    height: 300px;
 }
