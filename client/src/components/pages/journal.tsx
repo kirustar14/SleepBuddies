@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import Button from '@mui/material/Button';
 import '../../css/journal.css';
+import { Stack } from '@mui/material';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
@@ -109,9 +111,11 @@ const Journal = () => {
   return (
     <div className="journal-container">
       <div className="tabs">
-        <button className={activeTab === 'journal' ? 'active' : ''} onClick={() => setActiveTab('journal')}>Journal Entry</button>
-        <button className={activeTab === 'chart' ? 'active' : ''} onClick={() => setActiveTab('chart')}>Mood Chart</button>
-        <button className={activeTab === 'entries' ? 'active' : ''} onClick={() => setActiveTab('entries')}>Past Entries</button>
+        <Stack spacing={2} direction="row" width="460px" margin="auto">
+          <Button variant="contained" className={activeTab === 'journal' ? 'active' : ''} onClick={() => setActiveTab('journal')}>Journal Entry</Button>
+          <Button variant="contained" className={activeTab === 'chart' ? 'active' : ''} onClick={() => setActiveTab('chart')}>Mood Chart</Button>
+          <Button variant="contained" className={activeTab === 'entries' ? 'active' : ''} onClick={() => setActiveTab('entries')}>Past Entries</Button>
+        </Stack>
       </div>
 
       {activeTab === 'journal' && (
