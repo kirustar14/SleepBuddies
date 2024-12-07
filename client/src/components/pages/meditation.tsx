@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import {Stack} from "@mui/material";
 import "../../css/meditation.css";
 
 // Images for themes
@@ -138,17 +140,19 @@ const Meditation = () => {
               <h2 style={{ color: "white", fontSize: "2rem" }}>{meditationThemes[theme][step].title}</h2>
               <p style={{ color: "white", fontSize: "1.5rem" }}>{meditationThemes[theme][step].content}</p>
               <div className="navigation">
-                <button onClick={() => handleNavigation("prev")}>Previous</button>
-                <button onClick={() => handleNavigation("next")}>Next</button>
+                <Stack spacing={2} direction="row" width="170px" margin="auto">
+                  <Button variant="contained" onClick={() => handleNavigation("prev")}>Previous</Button>
+                  <Button variant="contained" onClick={() => handleNavigation("next")}>Next</Button>
+                </Stack>
               </div>
             </>
           ) : (
             <div className="final-slide">
               <h2 style={{ color: "white", fontSize: "2rem" }}>Good Job!</h2>
               <p style={{ color: "white", fontSize: "1.5rem" }}>Congratulations on completing this session!</p>
-              <button className="start-over-btn" onClick={handleStartOver}>
+              <Button variant="contained" className="start-over-btn" onClick={handleStartOver}>
                 Start Over
-              </button>
+              </Button>
             </div>
           )}
         </div>
