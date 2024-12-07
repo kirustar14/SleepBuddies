@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { getLogs } from "./SleepLog";
 import { Chart } from "react-google-charts";
 import {type Log} from "./types";
+import Button from "@mui/material/Button";
 // https://www.react-google-charts.com/docs/quick-walkthrough
 
 export const Graph: React.FC<{ hoursSlept: number[], goal:number }> = ({ hoursSlept, goal }) =>{
@@ -66,7 +67,7 @@ export const Graph: React.FC<{ hoursSlept: number[], goal:number }> = ({ hoursSl
                 options={options}
             />
             <br></br>
-            <button onClick={toggleView}>Switch Views</button>
+            <Button variant="contained" onClick={toggleView}>Switch Views</Button>
         </>
     );
 };
